@@ -34,38 +34,57 @@ function loginAPrubit() {
 	// Se utiliza API de Facebook para obtener datos y enviarlos a backend
   	FB.api('/me',{fields: 'email' }, function(response){
 
-  		// Se hace llamada AJAX
-	  	$.ajax({
+  		// Expresion regular para verificar email
+  		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	  		data: {email: response.email},
+  		// se chequea si se obtiene el email (ya que aveces se puede obtener solo el numero de contacto)
+  		if(re.test(String(response.email).toLowerCase())){
 
-	  		dataType:'json',
+	  		// Se hace llamada AJAX
+		  	$.ajax({
 
-	  		type: 'POST',
+		  		data: {email: response.email},
 
-	  		url: urlIndex,
+		  		dataType:'json',
 
-	  		success: function(responseAJAX){
+		  		type: 'POST',
 
-	  			// Si fue todo correcto
-	  			if(responseAJAX.usuarioExiste && responseAJAX.logueado){
+		  		url: urlIndex,
 
-	  				// Se redirige hacia el index
-					location.assign(urlIndex);
+		  		success: function(responseAJAX){
 
-	  			}
+		  			// Si fue todo correcto
+		  			if(responseAJAX.usuarioExiste && responseAJAX.logueado){
 
-	  			// si usuario no esta registrado
-	  			else if(!responseAJAX.usuarioExiste){
+		  				// Se redirige hacia el index
+						location.assign(urlIndex);
 
-	  				// Se redirige hacia registro
-	  				location.assign(urlRegistroUsuarioPorSM);
+		  			}
 
-	  			};
+		  			// si usuario no esta registrado
+		  			else if(!responseAJAX.usuarioExiste){
 
-	  		},
+		  				// Se redirige hacia registro
+		  				location.assign(urlRegistroUsuarioPorSM);
 
-	  	});
+		  			};
+
+		  		},
+
+		  	});
+
+  		}
+
+  		// Si no se obtiene email
+  		else(){
+
+  			// Mensaje a usuario
+  			alert("Para registrarte en Prubit, necesitamos tu email, por lo que debes registrarte en Facebook con tu email.");
+
+  			// Se recarga la pagina
+  			location.reload();
+
+  		};
 
 	});
 

@@ -44,40 +44,55 @@ $(document).ready(function() {
 	        	// Se utiliza API de Facebook para obtener datos y enviarlos a backend
 	          	FB.api('/me',{fields: 'first_name, last_name, email, gender' }, function(response){
 
-	          		// Se hace llamada AJAX
-	        	  	$.ajax({
+	          		// Expresion regular para verificar email
+	          		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	        	  		data: {password: password,firstName: response.first_name, lastName: response.last_name, email: response.email, gender: response.gender},
+	          		// se chequea si se obtiene el email (ya que aveces se puede obtener solo el numero de contacto)
+	          		if(re.test(String(response.email).toLowerCase())){
 
-	        	  		dataType:'json',
+		          		// Se hace llamada AJAX
+		        	  	$.ajax({
 
-	        	  		type: 'POST',
+		        	  		data: {password: password,firstName: response.first_name, lastName: response.last_name, email: response.email, gender: response.gender},
 
-	        	  		url: urlRegistroUsuarioPorSM,
+		        	  		dataType:'json',
 
-	        	  		success: function(responseAJAX){
+		        	  		type: 'POST',
 
-	        	  			// Si fue todo correcto
-	        	  			if(responseAJAX.logueado){
+		        	  		url: urlRegistroUsuarioPorSM,
 
-	        	  				// Se redirige hacia el index
-	        					location.assign(urlIndex);
+		        	  		success: function(responseAJAX){
 
-	        	  			}
+		        	  			// Si fue todo correcto
+		        	  			if(responseAJAX.logueado){
 
-	        	  			// si usuario no esta registrado
-	        	  			else if(!responseAJAX.logueado){
+		        	  				// Se redirige hacia el index
+		        					location.assign(urlIndex);
 
-	        	  				console.log(responseAJAX.logueado);
+		        	  			}
 
-	        	  				// Se redirige hacia registro
-	        	  				// location.assign(urlRegistroUsuarioPorSM);
+		        	  			// si usuario no esta registrado
+		        	  			else if(!responseAJAX.logueado){
 
-	        	  			};
+		        	  				// Hacer algo
+		        	  			};
 
-	        	  		},
+		        	  		},
 
-	        	  	});
+		        	  	});
+
+	        	  	}
+
+	        	  	// Si no se obtiene email
+		    		else(){
+
+		    			// Mensaje a usuario
+		    			alert("Para registrarte en Prubit, necesitamos tu email, por lo que debes registrarte en Facebook con tu email.");
+
+		    			// Se redirige hacia login inicial
+		    			location.assign(urlLogin);
+		    			
+		    		};
 
 	        	});
 
