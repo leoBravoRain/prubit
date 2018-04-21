@@ -76,7 +76,7 @@ function loginAPrubit() {
   		}
 
   		// Si no se obtiene email
-  		else(){
+  		else{
 
   			// Mensaje a usuario
   			alert("Para registrarte en Prubit, necesitamos tu email, por lo que debes registrarte en Facebook con tu email.");
