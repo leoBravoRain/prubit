@@ -1,0 +1,102 @@
+{% extends "comunes/base/base_Company.html" %}
+
+{% load static %}
+
+{% block jsVariables %}
+
+	<script type="text/javascript">
+
+		// Url para obtener datos para graficar
+
+		var urlGetDataForStatictics = "{% url 'misEstadisticasEmpresa:getDataForStatictics' %}";
+
+		// Variable para indicar que se desean mostrar los datos asociados a las veces en que se han probado una prenda
+
+		var numberOfTimesItHasBeenTried = "{{numberOfTimesItHasBeenTried}}";
+
+		
+		// Variable para indicar que se desean mostrar los datos asociados a las veces en que se han redirigido a comprar una prenda
+
+		var numberOfTimesItHasBeenRedirectedToBuy = "{{numberOfTimesItHasBeenRedirectedToBuy}}";
+
+
+		// Variable para indicar que se desean mostrar los datos asociados a las veces en que se han publicado las prendas en el sitio 
+
+		var numberOfTimesItHasBeenPublished = "{{numberOfTimesItHasBeenPublished}}";
+		
+	</script>
+
+{% endblock jsVariables %}
+
+{% block content %} 
+	
+	<!-- Aplicacion para actualizar prendas desde filtro de prendas -->
+
+	<!-- <div ng-app="basicApp"> -->
+	<div id="divAngularApp" ng-controller="myStaticticsController">
+
+		<!-- Controlador para cambiar las prendas desde el filtro -->
+
+		<!-- <div ng-controller="myStaticticsController"> -->
+
+			<!-- Contenedor de grafico dibujado desde controlador angularjs usando canvasjs -->
+
+			<div id="chartContainer" style="height:300px; width:100%;">
+				
+			</div>
+
+			<button class="btn btn-default numberOfTimessItHasBeenTried buttonStyle">
+
+				Prendas probadas
+
+			</button>
+
+			<button class="btn btn-default numberOfTimessItHasBeenRedirectedToBuy buttonStyle">
+
+				Prendas compradas
+
+			</button>
+
+			<button class="btn btn-default numberOfTimesItHasBeenPublished buttonStyle">
+
+				Prendas publicadas
+
+			</button>
+
+		<!-- </div> -->
+
+	</div>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	<!-- Se cargan los codigos del archivo padre (baseCompany.html) -->
+
+	{{ block.super }}
+	
+	<script src ="{% static 'angularJS/comun/aplicaciones/postsAppSinNgInfiniteScroll.js' %}">
+
+	</script>
+	
+	<!-- Se carga controlador de aplicacion angular -->
+
+	<script src ="{% static 'misEstadisticasEmpresa/angularJS/myStaticticsController.js' %}">
+
+	</script>
+
+	<!-- Se inicializan las diferentes apps de angularjs (ya que no se pueden inicializar aut mas de 1 app en un template)  Se deben inicializar despues de cargar las apps y los controladores asociados-->
+
+	<script type="text/javascript" src="{% static 'angularJS/comun/aplicaciones/startUpAppsManually.js' %}">
+
+	</script>
+	
+	<!-- Se carga libreria canvasjs que dibuja los graficos en pantalla-->
+
+	<script type ="text/javascript" src="{% static 'misEstadisticasEmpresa/javascript/canvasJs/canvasjs.min.js' %}">
+
+	</script>
+	
+	
+{% endblock javascriptCodes %}
+

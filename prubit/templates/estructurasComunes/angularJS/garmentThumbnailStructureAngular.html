@@ -1,0 +1,151 @@
+
+{% if source == "dressingRoom" %}
+
+	{% if section == "catalog" %}
+
+		<div class="post panel panel-default text-center">
+
+	{% elif section == "garmentsStack" %}
+
+		<div class="panel panel-default text-center prendaPanelCola" id="{[ post.garment.pk ]}">
+
+	{% endif %}
+
+{% elif  source == "companyAcceptedGarments" %}
+
+	<div class="eachGarmentPanel post panel panel-default text-center garmentThumbnail" id = "{[ post.garment.pk ]}">	
+
+{% else %}
+
+	<div class="post panel panel-default text-center smallMargin garmentThumbnail" >
+
+{% endif %}
+
+	<div class="panel-body">
+
+		<!-- Div para  probar la prenda-->
+		{% if section == "garmentsStack" %}
+
+			<div>
+
+				<button id="{[ post.garment.pk ]}" class = "btn btn-default ForTryGarment forTry" type="	button" > 
+
+					<!-- <span class="glyphicon glyphicon-sunglasses">
+
+					</span> -->
+
+					Probarmela
+
+				</button>
+
+			</div>
+
+		{% endif %}
+
+		<!-- Div para imagen de prenda -->
+
+		<div>
+
+			<img class="thumbnail img-responsive center-block" src="{[ urlMedia + post.garment.fields.photo ]}">
+
+		</div>
+
+		<!-- div de nombre de prenda -->
+
+		<div>
+
+			{% if source == "companyAcceptedGarments" or source == "companyToCheckGarments" or source == "companyRefusedGarments" %}
+
+				<a href = "{[ urlGarmentDetails +  post.garment.pk +'/'+ view]}" class="bodyLetter" >
+
+			{% elif source == 'dressingRoom' %}
+
+				<a class="bodyLetter" target="_blank" href = "{[ urlGarmentDetails +  post.garment.pk ]}">
+
+			{% else %}
+
+				<a href = "{[ urlGarmentDetails +  post.garment.pk ]}" class="bodyLetter" >
+
+			{% endif %}
+
+				{[ post.garment.fields.name ]}
+
+			</a>
+
+		</div>
+
+		<!-- Div de marca de prenda -->
+
+		<!-- <div class = "bodyLetter">
+
+			{[ post.trademark.fields.name ]}
+
+		</div> -->
+
+		<!-- Div de nombre de compañia -->
+		<div>
+
+			<a class="bodyLetter" href ="{[ post.urlForRedirectToCompanyProfile ]}">
+
+				{[ post.company.fields.name ]}
+
+			</a>
+
+		</div>
+
+		<!-- Si se carga desde el probador -->
+
+		{% if source == "dressingRoom" %}
+
+			<!-- Si es que es la seccion que muestra las prendas -->
+
+			{% if section == "catalog" %}
+
+				<div>
+
+					<button id="{[ post.garment.pk ]}" class="btn btn-default ForTryGarment" type="button" > 	
+
+						<!-- <span class="glyphicon glyphicon-sunglasses">
+
+						</span> -->
+
+						Probarmela
+
+					</button>
+
+				</div>
+
+			{% endif %}
+
+		{% endif %}
+
+		<!-- Si se carga desde la cola del panel de prendas -->
+
+		{% if section == "garmentsStack" %}
+
+			<div>
+
+				<button class="deleteStack btn btn-default" id ="{[ post.garment.pk ]}">
+
+					Eliminar
+
+				</button>
+
+			</div>
+
+		{% endif %}
+
+		<!-- Boton para agregar prenda a posteo de compañia -->
+
+		<div ng-if="windowForAddGarmentToPost">
+
+			<button class="buttonAddGarmentToPost" id="{[ post.garment.pk ]}">
+
+				Agregar prenda a post
+				
+			</button>
+
+		</div>
+
+	</div>
+</div>	

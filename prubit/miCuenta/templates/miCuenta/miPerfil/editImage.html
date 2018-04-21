@@ -1,0 +1,93 @@
+
+{% extends "comunes/base/base.html" %}
+
+{% load static %}
+
+{% block jsVariables %}
+
+	<script type="text/javascript">
+
+		var source = "{{source}}";
+
+		var urlComeBack = "{{ urlComeBack }}";
+
+		var urlMedia = "{% get_media_prefix %}";
+
+		// Url para rotar imagen
+		var urlRotateImage = "{% url 'miCuenta:rotateImage' %}";
+
+		// Modelo de foto
+		var source = "{{source}}";
+
+	</script>
+
+{% endblock jsVariables %}
+
+{% block content %}
+
+	<!-- Titulo de seccion -->
+
+	<h2>
+
+		Editar foto
+
+	</h2>
+
+
+	<!-- Seccion para mostrar las fotos -->
+	
+	<div class="row" id="photosPanel">
+
+		<div class="postPanel container-fluid row panel panel-default  col-md-offset-2 col-md-8">
+
+			<div class="panel-body">
+
+				<!-- div para foto de usuario -->
+
+				<div> 
+
+					<img class="img-responsive center-block" src="{{photo.photo.url}}">
+
+				</div>
+
+				<!-- div para pie de foto -->
+
+				<div class="inline"> 
+
+					<!-- Boton para girar la foto -->
+					<button class="btn btn-default rotateImage" id="{{ photo.id }}">
+
+						Girar
+
+					</button>
+
+					<!-- Boton para regresar a fotos de perfil -->
+					<button class="btn btn-default" onclick="location.href=urlComeBack">
+
+						Volver
+
+					</button>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	{{ block.super }}
+
+	<script type="text/javascript" src="{% static 'javascript/comun/commonFunctions.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'miCuenta/javascript/miPerfil/editImage.js' %}">
+
+	</script>
+
+{% endblock javascriptCodes %}

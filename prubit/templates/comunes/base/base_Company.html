@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>
+		{% block title %}
+		{% endblock title %}
+	</title>
+	{% load bootstrap3 %}
+	{% bootstrap_css %}
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href = "{% static '/css/global/global.css' %}">
+</head>
+<body>
+
+
+	<!-- Barra de navegacion responsiva. Se despliega un boton si la pantalla es de celular-->
+
+	<nav class="nav navbar navbar-default navbar-toggleable-lg  navbar-fixed-top">
+
+		<!-- Boton para desplegar barra de navegacion -->
+
+		<button class="navbar-toggler visible-xs visible-sm visible-md btn btn-default col-xs-2" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation" id="smallScreenNavButton">
+
+			<span class="glyphicon glyphicon-align-justify">
+				
+			</span>
+
+		</button>
+
+		<!-- Termino de barra de busqueda -->
+
+		<!-- Barra de navegacion -->
+
+		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+
+			<div class="container-fluid">
+
+				<div class ="navbar-header hidden-xs hidden-sm hidden-md">
+
+					<h1 id = "titleOfNavBar"> 
+						
+						Prubit 
+
+					</h1>
+
+				</div>
+
+				<div>
+
+					<!-- Div para contener extremo izquierdo de barra de navegacion -->
+
+					<ul class="nav navbar-nav">
+
+						<li> 
+
+							<a href="{% url 'inicioUsuario:index' %}"> 
+
+								<!-- <span class="glyphicon glyphicon-home">
+								</span> -->
+
+								<h6 class="itemOfNavBar"> 
+
+									Inicio
+
+								</h6>
+
+							</a> 
+
+						</li>
+
+						<!-- Menu de mis prendas -->
+						
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown"> 
+
+								<h6 class="itemOfNavBar">
+
+									Mis Prendas 
+
+								</h6>
+
+							</a> 
+							<ul class="dropdown-menu multi-level">
+								<li> 
+									<a  href ="{% url 'misPrendasEmpresa:myGarmentsCompany' %}"> 
+										Mis prendas aceptadas
+									</a>
+								</li>
+								<li> 
+									<a  href ="{% url 'misPrendasEmpresa:AddGarmentPhotoCompany'%}"> 
+										Agregar prenda
+									</a>
+								</li>
+								<li> 
+									<a  href= "{% url 'misPrendasEmpresa:myToCheckGarments' %}"> 
+										Mis prendas a chequear
+									</a>
+								</li>
+								<li> 
+									<a  href= "{% url 'misPrendasEmpresa:myRefusedGarments' %}"> 
+										Mis prendas rechazadas
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<!-- Menu de mis estadisticas -->
+						<li> 
+
+							<a href="{% url 'misEstadisticasEmpresa:myStatisticsCompany' %}"> 
+							
+								<h6 class="itemOfNavBar">
+
+									Mis estadísticas
+
+								</h6>
+
+							</a> 
+
+						</li>
+
+						<!-- Popover de notificaciones para pantallas mas pequeñas que las de un PC-->
+
+						<li class = "visible-xs visible-sm visible-md" >
+
+							<!-- popover que se carga utilizando jquery -->
+
+							<!-- <a href="" data-toggle="popover" data-templatefile="template.html"> -->
+
+							<button data-toggle="popover" data-templatefile="template.html" style="border:none;" class="navBarColor">
+
+								<span id="notificationAlertSmallScreen" class="glyphicon glyphicon-bell whiteColor">
+
+								</span>
+
+							</button>
+							
+							<!-- Este div con ese id es necesario para mostrar el popover -->
+
+							<div id="divNotificationsApp" style="display:none;" ng-controller="notificationsController">
+
+								<ul>
+
+									<div ng-if="notificationsList.length>0" style="overflow-y:scroll;max-height: 200px;">
+
+										<div ng-repeat="notification in notificationsList">
+
+											<li class="notification">
+
+												<a href="{[ notification.url ]}">
+
+													{[ notification.text ]}
+
+												</a>
+
+											</li>
+
+										</div>
+
+									</div>
+
+								</ul>
+
+							</div>
+
+						</li>
+
+						<!-- Logout de Prubit -->
+
+						<li class = "visible-xs visible-sm visible-md"> 
+
+							<a  href="{% url 'inicioUsuario:logout' %}">
+
+								<span class="glyphicon glyphicon-remove-circle whiteColor">
+
+								</span> 
+
+							</a> 
+
+						</li>
+
+					</ul>
+
+
+					<!-- Div para contener extremo derecho de barra de navegacion. Se oculta para tamaño pequeño -->
+
+					<ul class ="nav navbar-nav navbar-right hidden-xs hidden-sm hidden-md">
+
+						<!-- Popover de notificaciones -->
+
+						<li>
+
+							<!-- popover que se carga utilizando jquery -->
+
+							<!-- <a href="" data-toggle="popover" data-templatefile="template.html"> -->
+
+							<button data-toggle="popover" data-templatefile="template.html" style="border:none; position: relative;top: 50%;transform: translateY(70%);" class="navBarColor">
+
+								<span id="notificationAlertLargeScreen" class="glyphicon glyphicon-bell whiteColor">
+
+								</span>
+
+							</button>
+							
+							<!-- Este div con ese id es necesario para mostrar el popover -->
+
+							<div id="divNotificationsApp" style="display:none;" ng-controller="notificationsController">
+
+								<ul>
+
+									<div ng-if="notificationsList.length>0">
+
+										<div ng-repeat="notification in notificationsList">
+
+											<li class="notification">
+
+												<a href="{[ notification.url ]}">
+
+													{[ notification.text ]}
+
+												</a>
+
+											</li>
+
+										</div>
+
+									</div>
+
+								</ul>
+
+							</div>
+
+						</li>
+
+						<li> 
+
+							<a  href="{% url 'inicioUsuario:logout' %}">
+
+								<span class="glyphicon glyphicon-remove-circle whiteColor">
+
+								</span> 
+
+							</a> 
+
+						</li>
+
+					</ul>
+
+				</div>			
+
+			</div>
+
+		</div>
+
+	</nav>
+	
+
+	<!-- Se muestran mensajes -->
+
+	{% if messages %}
+
+	    <ul class="messages">
+
+	        {% for message in messages %}
+
+	            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+
+	        {% endfor %}
+
+	    </ul>
+
+	{% endif %}
+
+	<!-- variables para el sistema de notificaciones -->
+	
+	<script type="text/javascript">
+
+
+		var urlGetCompanyNotifications = "{% url 'sistemaDeNotificaciones:getCompanyNotifications' %}";
+
+
+		var urlSeeNotificationOfLikeToGarmentPostOfCompany = "{% url 'sistemaDeNotificaciones:seeNotificationOfLikeToGarmentPostOfCompany' 0 %}".substring(0,"{% url 'sistemaDeNotificaciones:seeNotificationOfLikeToGarmentPostOfCompany' 0 %}".length-2);
+		
+
+		var urlSeeNotificationOfUserCommentToGarmentPostOfCompany = "{% url 'sistemaDeNotificaciones:seeNotificationOfUserCommentToGarmentPostOfCompany' 0 %}".substring(0,"{% url 'sistemaDeNotificaciones:seeNotificationOfUserCommentToGarmentPostOfCompany' 0 %}".length-2);
+
+
+		var urlSeeNotificationOfSiteAdministrationAcceptedTheGarmentOfCompany = "{% url 'sistemaDeNotificaciones:seeNotificationOfSiteAdministrationAcceptedTheGarmentOfCompany' 0 %}".substring(0,"{% url 'sistemaDeNotificaciones:seeNotificationOfSiteAdministrationAcceptedTheGarmentOfCompany' 0 %}".length-2);
+
+
+		var urlSeeNotificationOfSiteAdministrationRefusedTheGarmentOfCompany = "{% url 'sistemaDeNotificaciones:seeNotificationOfSiteAdministrationRefusedTheGarmentOfCompany' 0 %}".substring(0,"{% url 'sistemaDeNotificaciones:seeNotificationOfSiteAdministrationRefusedTheGarmentOfCompany' 0 %}".length-2);
+
+
+		// Variable usada para verificar el modelo del usuario actual 
+		var modelOfUser = "company";
+
+
+		var urlSeeNotificationOfUserLikeToCompanyCommentToGarmentCompanyPost = "{% url 'sistemaDeNotificaciones:seeNotificationOfUserLikeToCompanyCommentToGarmentCompanyPost' 0 %}".substring(0,"{% url 'sistemaDeNotificaciones:seeNotificationOfUserLikeToCompanyCommentToGarmentCompanyPost' 0 %}".length-2);
+
+		
+	</script>
+{% block jsVariables %}
+{% endblock jsVariables %}
+
+{% block content %}
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	<script type = "text/javascript" src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+
+	</script>
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js">
+
+	</script>
+
+	<script src ="{% static 'angularJS/comun/aplicaciones/basicApp.js' %}">
+
+	</script>
+
+	<script src ="{% static 'angularJS/company/sistemaDeNotificaciones/companyNotificationsSystemController.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'javascript/company/base/baseCompany.js' %}">
+
+	</script>
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+	</link>
+
+	<script type="text/javascrip" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js">
+
+	</script>
+	
+{% endblock javascriptCodes %}
+
+{% bootstrap_javascript %}
+</body>
+<footer >
+	<div>
+		<p>Todos los derechos reservados 2016</p>
+	</div>
+</footer>
+</html>

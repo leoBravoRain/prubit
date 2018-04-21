@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>
+		{% block title %}
+		{% endblock title %}
+	</title>
+	{% load bootstrap3 %}
+	{% bootstrap_css %}
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% block cssFiles %}
+	{% endblock %}
+</head>
+<body>
+<nav class="nav navbar-default">
+	<div class="container-fluid">
+		<div class ="navbar-header">
+			<h1> Pruvit </h1>
+		</div>
+		<div>
+			<ul class="nav navbar-nav">
+				{% if user.is_authenticated %}
+					<li> 
+						<a href="{% url 'inicioAdministrador:indexSiteAdministration' %}"> 
+							<h4> 
+								Inicio 
+							</h4>  
+						</a> 
+					</li>
+					<li>
+						<a class="dropdown-toggle" data-toggle="dropdown"> 
+							<h4>
+								Tareas
+							</h4> 
+							<span class="caret">
+							</span> 
+						</a>
+						<ul class="dropdown-menu multi-level">
+							<li> 
+								<a  href= "{% url 'tareasAdministrador:checkGarments' %}"> 
+									Revisar prendas 
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a class="dropdown-toggle" data-toggle="dropdown"> 
+							<h4>
+								Historial de prendas
+							</h4> 
+							<span class="caret">
+							</span> 
+						</a>
+						<ul class="dropdown-menu multi-level">
+							<li> 
+								<a  href= "{% url 'historialDePrendas:acceptedGarments' %}"> 
+									Prendas Aceptadas 
+								</a>
+							</li>
+							<li> 
+								<a  href= "{% url 'historialDePrendas:refusedGarments' %}"> 
+									Prendas Rechazadas 
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href ="{% url 'inicioAdministrador:logoutSiteAdministration' %}">
+							Salir
+						</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>			
+	</div>
+</nav>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% block jsVariables %}
+{% endblock jsVariables %}
+
+{% block content %}
+{% endblock content %}
+
+{% block javascriptCodes %}
+{% endblock javascriptCodes %}
+
+{% bootstrap_javascript %}
+</body>
+<footer>
+	<div class="row container">
+		<p>Todos los derechos reservados 2016</p>
+	</div>
+</footer>
+</html>

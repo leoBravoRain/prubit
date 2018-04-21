@@ -1,0 +1,67 @@
+{% extends "comunes/base/base_Company.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<form enctype="multipart/form-data" method = "post" action ="">
+
+	{% csrf_token %}
+
+	{% for field in form %}
+
+		<div class="form-group filterCategoryTittle smallMargin">
+
+			<label>
+
+				{{field.label}}	
+
+			</label>
+
+			<div class="bodyLetter smallMargin">
+
+				{{field}}
+
+			</div>
+
+			{% if field.name == "photo" %}
+
+				<!-- Preview de imagen -->
+
+				<div>
+					
+					<img id="garmentImagePreview" class="smallMargin"/>
+
+				</div>
+
+			{% endif %}
+
+		</div>
+
+	{% endfor %}
+
+	<button type ="submit" name ="__add_button_garmentPhotos_Company"> 
+
+		Agregar 
+
+	</button> 
+
+</form>
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	
+	{{block.super}}
+
+	<!-- Se carga app de angular que carga las notificaciones -->
+	
+	<script type="text/javascript" src="{% static 'angularJS/comun/aplicaciones/startUpAppsManuallyJust1App.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'misPrendasEmpresa/javascript/misPrendas/AddGarmentPhoto_Company.js' %}">
+
+	</script>
+
+{% endblock javascriptCodes %}

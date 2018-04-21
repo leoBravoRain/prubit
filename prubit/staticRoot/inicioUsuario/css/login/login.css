@@ -1,0 +1,110 @@
+
+@font-face{
+	font-family: 'fontBold';
+	src: url("../../fonts/FiraSansExtraCondensed-Bold.ttf"),local('../../fonts/FiraSansExtraCondensed-Bold.ttf');
+}
+
+@font-face{
+	font-family: firaSansExtraBold;
+    src: url('../../../../../../static/fuentes/FiraSansExtraCondensed-ExtraBold.ttf');
+}
+
+@font-face{
+	font-family: latoItalic;
+    src: url('../../../../../../static/fuentes/Lato-Italic.ttf');
+}
+
+.flex-container{
+	display: flex;
+	flex-direction: column;
+ 	align-content: space-between;
+	align-items: center;
+}
+
+.bodyLetter{
+	font-family: latoItalic;
+	color: black;
+}
+
+body{
+	/*background-color: rgba(211,211,211,0.1);*/
+	position: relative;
+}
+
+.messages{
+	margin: 0 auto;
+	margin-top: 20px;
+	max-width: 1000px;
+}
+
+.forgotten-password{
+	margin-top: 10px;
+	font-family: latoItalic;
+}
+.login-form{
+	text-align: center;
+	border-style: solid;
+	border-width: 1px;
+	border-color: grey;
+	/*background-color: rgba(0,0,0,0.9);*/
+	background-color: rgb(156,41,148);
+	border-radius: 3%;
+	margin-top: 60px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.login-form *{
+	margin: 2%;
+	max-width: 100%;
+	max-height: auto;
+}
+
+.login-form .btn{
+	width: 50%;
+}
+
+.login-form .title{
+	font-family: 'firaSansExtraBold';
+	color: white;
+	font-size: 55px;
+	letter-spacing:5px;
+	transform: scale(1,1.1);
+}
+
+.inline{
+	display: inline;
+}
+
+.register-form{
+	text-align: center;
+}
+
+.register-form .tittle{
+	font-size: 14px;
+	color: grey;
+	font-weight: bold;
+}
+
+
+.modal-dialog{
+	max-width: 800px;
+	margin: auto;
+	position: relative;
+	width: 80%;
+	top: 8%;
+}
+
+.modal-body{
+	text-align: center;
+	color: grey;
+}
+.modal-title{
+	font-weight: bold;
+	left: 0;
+}
+/*.form-register .btn{
+	position: relative;
+	left: 29%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}*/

@@ -1,0 +1,514 @@
+{% extends "comunes/base/base.html" %}
+
+{% load static %}
+
+{% block jsVariables %}
+
+	<script type="text/javascript">
+
+		var urlMedia = "{% get_media_prefix %}";
+
+		{% if userForTryOnGarmentPhotoCurrent %}
+
+			var urlBackgroundImage = "{% get_media_prefix %}{{  userForTryOnGarmentPhotoCurrent.photo.photo }}";
+
+		{% else %}
+
+			var urlBackgroundImage = null;
+
+		{% endif %}	
+
+		var urlgetGarmentInformation = "{{request.get_host}}{% url 'prendas:getGarmentInformation' %}";
+
+		var urlStatic = "{% get_static_prefix %}";
+
+		var urlHost = "{{request.get_host}}";
+
+		var urlGarmentDetails = "{% url 'prendas:garmentDetails' 0 %}".substring(0,"{% url 'prendas:garmentDetails' 0 %}".length-2);
+
+		var urlDeleteDressingRoomStack = "{{request.get_host}}{% url 'probador:deleteDressingRoomStack' %}" ;
+
+		var urlChangeGarmentType= '{{request.get_host}}{% url "probador:changeGarmentType" %}';
+
+		var urlChangeGenderGarment = '{{request.get_host}}{% url "probador:changeGenderGarment" %}';
+
+
+		var urlChangeTrademark = '{{request.get_host}}{% url "probador:changeTrademarkGarment" %}';
+
+		var trademarkList = {{trademarksListFormat|safe}};
+
+		var rotateStaticSrc = "{% static 'imagenes/probador/rorateIcon.png' %}";
+
+		var garmentsJson = {{garmentsJson|safe}};
+
+		var trademarksJson = {{trademarksJson|safe}};
+
+		var companiesJson = {{companiesJson|safe}};
+
+		var urlAskGarmentsStack = "{% url 'probador:askGarmentsStack' %}";
+
+		var currentPageNumber = 1;
+
+		var urlCompanyProfile = "{% url 'inicioUsuario:companyProfile' 0 %}".substring(0,"{% url 'inicioUsuario:companyProfile' 0%}".length-2);
+
+		var urlUploadImage = "{% url 'probador:uploadImages' %}";
+
+		var numberPagesList = {{pagesList}};
+
+		// Maximo numero de prendas permitido para probarse
+		var maxGarmentsForTry = {{maxGarmentsForTry}};
+
+		// Tipo de prenda igual a zapato
+		var shoesType = "{{ shoesType.0.id }}";
+
+		// Variable para setear si es primera vez que el usuario se loguea
+		var firstTimeLogged = '{{firstTimeLogged}}'=='True' ? true:false;
+
+	</script>
+
+{% endblock jsVariables %}
+
+{% block content %}
+
+	<!-- Cuadro que se muestra mientras se carga contenido -->
+	<div id="loadingAjax">
+
+		<p id="loadingAjaxText">
+
+			CARGANDO
+
+		</p>
+
+	</div>
+
+	<!-- Aplicacion para actualizar prendas desde filtro de prendas -->
+	<div id="divAngularApp" ng-controller="dressingRoomController">
+
+
+		<!-- Columna para poner filtro y garmentsStack -->
+		<div class="col-md-2 marginForPanels ">	
+
+			<!-- FILTRO DE PRENDAS -->
+			
+
+			<div class="row container-fluid panel panel-default" id="FiltroPrendas" >
+
+				<!-- Cuerpo del panel del filtro de prendas -->
+
+				<div class="panel-body scroll-y" >
+
+					<!-- Filtro por tipos de prenda -->
+
+					<div>
+
+						<div class="filterCategoryTittle">
+
+							Tipos de Prenda
+
+						</div>
+
+						<div>
+
+							{% if GarmentTypeList %}
+
+								<div class="GarmentType itemOfGarmentFilter" ng-click="changeGarmentType('default');" id ="default">
+
+									Todas
+
+								</div>	
+
+								{% for GarmentType in GarmentTypeList %}
+
+									<div class ="GarmentType itemOfGarmentFilter" ng-click="changeGarmentType('{{GarmentType.type1 }}');" id = "{{ GarmentType.type1 }}">
+
+										{{GarmentType.type1}}
+
+									</div>
+
+								{% endfor %} 
+
+							{% else %}
+
+								No hay tipos de prenda
+
+							{% endif %}
+
+						</div>
+
+					</div>
+
+					<!-- Filtro por genero de prenda -->
+
+					<div>
+
+						<div class="filterCategoryTittle">
+
+							Genero 
+
+						</div>
+
+						<div>
+
+							<div>
+
+								{% for gender in gendersList %}
+
+									<div ng-click="changeGender('{{gender.0}}');" class="gender itemOfGarmentFilter" id="{{gender.0}}"> 
+
+										{{gender.0}}
+
+									</div>
+
+								{% endfor %}
+
+							</div>
+
+						</div>
+
+					</div>
+
+					<!-- filtro por marcas -->
+
+					<div>
+
+						<div class="filterCategoryTittle">
+
+							Marcas 
+
+						</div>
+
+						<!-- Filtro para buscar una marca especifica -->
+
+						<div>
+
+							<select id="trademarkFilter" style="width:100px;">
+
+								<option></option>
+
+							</select>
+
+						</div>
+
+						<!-- Lista de marcas -->
+
+						<div>
+
+							<div id = "trademarksList">
+
+								<div class="trademarkElement itemOfGarmentFilter" id="default" ng-click="changeTrademark('default')">
+
+									Todas 
+
+								</div>
+
+								{% for trademark in trademarksList %}
+
+									<div id="{{trademark}}" class="trademarkElement itemOfGarmentFilter" ng-click="changeTrademark('{{trademark}}')"> 
+
+										{{trademark}}
+
+									</div>
+
+								{% endfor %}
+
+							</div>
+
+						</div>
+
+					</div>
+
+				<!-- Cierra cuerpo del panel del filtro de prendas -->
+				</div>
+
+			<!-- Cierra panel del filtro de prendas -->
+			</div>
+
+			<!-- Cola de probador -->
+
+			<div class="row container-fluid panel panel-default " id="Prendas-panel-Cola" >
+
+				<!-- Titulo de panel -->
+
+				<div class="filterCategoryTittle">	
+
+					Prendas en cola 
+
+				</div>
+
+				<!-- Cuerpo de panel -->
+				<div class="panel-body scroll-y" id="prendasPanelColaBody">
+
+					<div ng-if = "garmentsOfGarmentStackList.length>0">
+
+						<!-- Se itera sobre cada posteo -->
+
+						<div ng-repeat="post in garmentsOfGarmentStackList">
+
+							<!-- Se incluye estructura comun -->
+
+							{% include "estructurasComunes/angularJS/garmentThumbnailStructureAngular.html" with source="dressingRoom" section="garmentsStack" %}
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div> 
+
+		</div>
+
+		<!-- Probador -->
+
+		<div class="col-md-7 panel panel-default marginForPanels" id ="probador">
+
+			<!--  Cuerpo del panel del probador -->
+			<div class="panel-body">
+
+				<!-- Div que contiene botones de opciones para editar probador -->
+
+				<div class="text-center">
+
+					<!-- Boton para  ir a mis fotos para probar-->
+					<button class="btn btn-default buttonStyle" onClick="window.location.assign('{% url 'miCuenta:myPhotosForTry' %}');" id="redirectToForTryPhotos" data-toggle="tooltip" data-placement="bottom" title="Cambiar o editar foto para probar"> 
+
+						<span class="glyphicon glyphicon-picture">
+
+						</span>
+
+					</button>
+
+					<!-- Boton para eliminar una prenda del probador -->
+
+					<button class="btn btn-default deleteGarmentButton buttonStyle" data-toggle="tooltip" data-placement="bottom" title="Eliminar prenda seleccionada"> 
+
+						<span class="glyphicon glyphicon-trash">
+
+						</span>
+
+					</button>
+
+					<!-- Boton para sobreponer una prenda sobre otra -->
+
+					<button class ="btn btn-default overlapGarmentButton buttonStyle" data-toggle="tooltip" data-placement="bottom" title="Sobreponer prenda seleccionada"> 
+
+						<span class="glyphicon glyphicon-menu-up">
+
+						</span>
+
+					</button>
+
+					<!-- Boton para girar "como espejo" una prenda-->
+
+					<button class ="btn btn-default mirrorGarmentButton buttonStyle"> 
+
+						<!-- <span class="glyphicon glyphicon-menu-up">
+
+						</span> -->
+
+						Efecto espejo
+
+					</button>
+
+					<!-- Boton para filtro de foto -->
+
+					<input type="checkbox" id="imageFilter" unchecked data-toggle="tooltip" data-placement="bottom" title="Agregar efecto de imagen para prenda"> 
+
+						Filtro para prenda
+
+					<!-- Barra para valor de filtro -->
+
+					<div class="filterValueDiv" style="display:none;">
+
+						<input type="range" id="filterValue" value="0" min="-0.16" max="0.16" step="0.02" class="span22">
+
+					</div>
+
+				<!-- Div que cierra div que contiene botones de opciones para editar probador -->
+				</div>
+
+				<!-- Div para contener mensaje que usuario no tiene foto para probar -->
+
+				<div class="text-center">
+
+					{% if not userForTryOnGarmentPhotoCurrent %}
+
+						{{messageNoPForTryOnGarmentPhotoCurrent}}
+
+					{% endif %}
+
+				<!-- Div que cierra div para contener mensaje que usuario no tiene foto para probar -->
+
+				</div>
+
+				<!-- Canvas que contiene la foto para probar y comentario y boton de comentario-->
+
+				<!-- Se agrega propio CSS ya que es muy especifico el estilo -->
+
+				<div style="display: flex; flex-direction: column; justify-content: center;">
+
+
+					<!-- Canvas que contiene foto -->
+
+					<!-- <div class="smallMargin" style="display: flex; justify-content: center;"> -->
+					<div class="smallMargin" style="display: flex; flex-direction: column; justify-content: center;">
+
+						<!-- <canvas  id="dressingRoom" class="img-responsive" style="border: 2px solid black;"> -->
+						<canvas  id="dressingRoom" style="border: 2px solid black;">
+
+						</canvas>
+
+					</div>
+
+					<!-- Div para input de comentario a foto -->
+
+					<div class=" smallMargin bodyLetter"> 
+
+						<input type="text" placeholder="Agrega un comentario" id ="savePhotoComment" style="width: 100%;" maxlength="300">
+
+					</div>
+
+					<!-- Boton para publicar foto en prubit -->
+
+					<div class=" smallMargin right" style="display: flex; justify-content: flex-end;"> 
+
+						<button class="btn btn-default buttonStyle" id="savePhotoButton" type="button"> 
+
+							Publicar foto
+
+						</button>
+
+					</div>
+
+					<!-- Div para agregar las prendas probadas -->
+					
+					<div id ="garmentTry"> 
+
+					</div> 
+					
+				<!-- Se cierra canvas que contiene la foto para probar -->
+				</div>
+
+			<!--  Se cierra cuerpo del panel del probador -->				
+			</div>
+
+		<!-- Se cierra probador -->
+		</div>
+
+
+		<!-- Catalogo que contiene las prendas -->
+		<!-- Se crea panel para contener contenido -->
+		<div class="col-md-2 panel panel-default marginForPanels">
+
+			<!-- Se fija el cuerpo del panel y se fija su maximo y una barra para hacer scroll -->
+			<div class="panel-body scroll-y"  id ="PrendasPanelBody">
+
+				<!-- Se crea fila para contener las prendas -->
+				<div class="row" id="prendasPanel">
+
+					<!-- Se verifica si es qeu postsList tiene algun elemento (prenda) -->
+					<div ng-if = "postsList.length>0">
+
+						<!-- Se itera sobre cada posteo -->
+						<div ng-repeat="post in postsList">
+
+							<!-- Se incluye estructura comun -->
+
+							{% include "estructurasComunes/angularJS/garmentThumbnailStructureAngular.html" with source="dressingRoom" section="catalog"%}
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Contendor de indice paginas -->
+				<div class="row smallMargin">
+
+					<!-- clase de bootstrap -->
+					<ul>
+
+						<!-- Se agrean los numeros de pagina -->
+						<div ng-repeat="pageNumber in numberPagesList">
+
+							<!-- Se crea evento de click asociado a funcion definida en controlador angular -->
+
+							<li ng-click="changePage(pageNumber);" class="bodyLetter paginationInDressingRoom"> 
+
+								<!-- Se crea el elmento de numero de pagina -->
+
+								<a class="pageNumber smallMargin">
+
+									{[ pageNumber ]} 
+
+								</a>
+
+							</li>
+
+						</div>
+
+					</ul>
+
+				</div>
+
+			</div>
+
+		</div>
+
+
+	<!-- Se cierra aplicacion para actualizar prendas desde filtro de prendas -->
+	</div>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	{{ block.super }}
+
+	<script src ="{% static 'angularJS/comun/aplicaciones/postsAppSinNgInfiniteScroll.js' %}">
+
+	</script> 
+
+	 <script src ="{% static 'probador/angularJS/servicios/addGarmentsOfSpecificPageNumberService.js' %}">
+
+	 </script>
+
+	 <script src ="{% static 'probador/angularJS/dressingRoomController.js' %}">
+
+	 </script>
+
+	<!-- Se inicializan las diferentes apps de angularjs (ya que no se pueden inicializar aut mas de 1 app en un template)  Se deben inicializar despues de cargar las apps y los controladores asociados -->
+
+	<script type="text/javascript" src="{% static 'angularJS/comun/aplicaciones/startUpAppsManually.js' %}">
+
+	</script>
+	
+	<script type ="text/javascript" src="{% static 'probador/javascript/fabric/fabricNuevo.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src="{% static 'javascript/comun/commonFunctions.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'probador/javascript/probador/dressingRoom.js' %}">
+
+	</script>
+
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js">
+
+	</script>
+
+	<!-- Script para cargar cuadro de dialogo usando jquery -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+{% endblock javascriptCodes %}
+
+
+
+
+
+

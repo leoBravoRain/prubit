@@ -1,0 +1,136 @@
+
+{% load static %}
+
+<div class ="row container-fluid">
+	<div class ="panel panel-default ">
+		<div class ="panel-body" id="panelBodyProfileUser">
+
+			<!-- Foto de usuario -->
+
+			<div class="col-md-7">
+				{% if userOtherProfilePhoto %} 
+
+					<img class="img-responsive center-block bigProfilePhoto" src="{% get_media_prefix %}{{ userOtherProfilePhoto.0.photo }}">
+
+				{% else %}
+
+					<img class="img-responsive center-block bigProfilePhoto" src="{% static 'imagenes/fotoDePerfilPorDefecto/fotoDePerfilPorDefecto.png' %}";>
+
+				{% endif %}
+			</div>
+
+			<!-- Informacion de usuario -->
+			<div class="col-md-5">
+
+				<ul id ="ul">
+
+					<li>
+
+						<a class="name" href="{% url 'inicioUsuario:userTestedGarmentsPhotosUser' userSougth.id %}">
+
+							{{userSougth.getFullName}}
+
+						</a>
+
+					</li>
+
+					<!-- Botones para seguir y amistad entre usuarios -->
+					{% if not userSougth.id == me.id %}
+
+						{% if friends %}
+
+							<li>
+
+								<button class="deleteFriend btn btn-default buttonStyle" id ="{{userSougth.id}}" >
+
+									Dejar de ser amigos
+
+								</button>
+
+							</li>
+
+							<li>
+
+								{% if IFollowUser %}
+
+									<button class="unfollowUser btn btn-default buttonStyle" id="{{userSougth.id}}">
+
+										Dejar de seguir
+
+									</button>
+
+								{% else %}
+
+									<button class ="followUser btn btn-default buttonStyle" id="{{userSougth.id}}">
+
+										Seguir a usuario
+
+									</button>
+
+								{% endif %}
+							</li>
+						{% else %}
+
+							<!-- Si el usuario no es publico -->
+
+							{% if not userSougth.public %}
+
+								<!-- Si ya envie invitacion de amistad -->
+
+								{% if ISentInvitation %}
+
+									<li>
+
+										<button class ="cancelInvitationFriend btn btn-default buttonStyle" id="{{userSougth.id}}">
+
+											Cancelar invitación
+
+										</button>
+
+									</li>
+
+								{% elif OtherSentInvitation %}
+
+									<li> 
+
+										<button class ="acceptInvitation btn btn-default buttonStyle" id="{{userSougth.id}}" >
+
+											Aceptar solicitud 
+
+										</button>
+
+									</li>							
+
+								{% else %}
+
+									<div>
+
+										<button class="InvitationBtn btn btn-default buttonStyle" id="{{userSougth.id}}"> 
+
+											Enviar invitación para ser amigos
+
+										</button> 
+
+									</div>
+
+								{% endif %}
+							{% else %}
+								<li>
+									{% if IFollowUser %}
+										<button class="unfollowUser btn btn-default buttonStyle" id="{{userSougth.id}}">
+											Dejar de seguir
+										</button>
+									{% else %}
+										<button class ="followUser btn btn-default buttonStyle" id="{{userSougth.id}}">
+											Seguir a usuario
+										</button>
+									{% endif %}
+								</li>
+							{% endif %}
+						{% endif %}
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

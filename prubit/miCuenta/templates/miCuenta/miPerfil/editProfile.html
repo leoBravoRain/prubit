@@ -1,0 +1,61 @@
+{% extends "comunes/base/base.html" %}
+
+{% load static %}
+
+{% block title %}
+
+	Prubit
+
+{% endblock title %}
+
+{% block jsVariables %}
+
+{% endblock jsVariables %}
+
+{% block content %}
+
+<form method = "post" action ="" >
+
+	{% csrf_token %}
+
+	{% for field in form %}
+
+		<div class="form-group">
+
+			<label class="filterCategoryTittle">
+
+				{{field.label}}
+
+			</label>
+
+			<div  class="bodyLetter">
+
+				{{field}}
+ 				
+			</div>
+
+		</div>
+
+	{% endfor %}
+
+	<button class="btn btn-default buttonStyle" type ="submit"> 
+
+		Actualizar Informacion 
+		
+	</button> 
+
+</form>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	{{ block.super }}
+
+	<!-- Se carga app de angular que carga las notificaciones -->
+	
+	<script type="text/javascript" src="{% static 'angularJS/comun/aplicaciones/startUpAppsManuallyJust1App.js' %}">
+
+	</script>
+
+{% endblock javascriptCodes %}

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+	<html lang="en">
+
+	<head>
+
+		<title>
+
+			{% block title %}
+
+			{% endblock title %}
+
+		</title>
+
+		{% load bootstrap3 %}
+
+		{% bootstrap_css %}
+
+		<meta charset="utf-8">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		{% load static %}
+
+		<link rel="stylesheet" type="text/css" href = "{% static '/css/global/global.css' %}">
+
+	</head>
+
+	<body>
+
+		<!-- Barra de navegacion responsiva. Se despliega un boton si la pantalla es de celular-->
+
+		<nav class="nav navbar navbar-default navbar-toggleable-lg  navbar-fixed-top">
+
+			<!-- Boton para desplegar barra de navegacion -->
+
+			<button class="navbar-toggler visible-xs visible-sm visible-md btn btn-default col-xs-2" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation" id="smallScreenNavButton">
+
+				<span class="glyphicon glyphicon-align-justify">
+					
+				</span>
+
+			</button>
+
+			<!-- Barra de busqueda solo visible para pantallas mas pequeñas que la del escritorio (menores a large)-->
+
+			<div class="visible-xs visible-sm visible-md">
+
+				<input placeholder="Buscar amigos o compañias " class ="searchEngine" style="width: 70%;"> 
+
+			</div>
+
+			<!-- Termino de barra de busqueda -->
+
+			<!-- Barra de navegacion -->
+
+			<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+
+				<div class="container-fluid">
+
+					<div class ="navbar-header hidden-xs hidden-sm hidden-md">
+
+						<h1 id = "titleOfNavBar"> 
+							
+							Prubit 
+
+						</h1>
+
+					</div>
+
+					<div>
+
+						<!-- Div para contener extremo izquierdo de barra de navegacion -->
+
+						<ul class="nav navbar-nav">
+
+							<li> 
+
+								<a href="{% url 'inicioUsuario:index' %}"> 
+
+									<!-- <span class="glyphicon glyphicon-home">
+									</span> -->
+
+									<h6 class="itemOfNavBar"> 
+
+										Inicio
+
+									</h6>
+
+								</a> 
+
+							</li>
+
+							<li> 
+
+								<a href= "{% url 'probador:dressingRoom' request.session.gender %}"> 
+
+									<!-- <img class="icon-nav-bar" src="{% static 'prototype1/img/icon/shirt.ico' %}"> -->
+
+									<h6 class="itemOfNavBar">
+
+										Probador
+
+									</h6>
+
+								</a>
+
+							</li>
+
+							<li class="dropdown">
+
+								<a class="dropdown-toggle" data-toggle="dropdown"> 
+
+									<h6 class="itemOfNavBar">
+
+										Catálogo
+
+									</h6> 
+
+								</a>
+
+								<ul class="dropdown-menu multi-level">
+
+									<li> 
+
+										<a  href= "{% url 'catalogo:catalog' 'Female'%}"> 
+
+											Mujer 
+
+										</a>
+
+									</li>
+
+									<li> 
+
+										<a  href= "{% url 'catalogo:catalog' 'Male'%}"> 
+
+											Hombre 
+
+										</a>
+
+									</li>
+
+								</ul>
+
+							</li>
+
+							<li class="dropdown">
+
+								<a class="dropdown-toggle" data-toggle="dropdown"> 
+
+									<h6 class="itemOfNavBar"> 
+
+										Mi cuenta 
+
+									</h6> 
+
+
+								</a>
+
+								<ul class="dropdown-menu multi-level">
+
+									<li> 
+
+										<a  href= "{% url 'miCuenta:myProfile' %}"> 
+
+											Mi perfil
+
+										</a>
+
+									</li>
+
+									<li> 
+
+										<a href ="{% url 'miCuenta:myPhotosForTry' %}"> 
+
+											Mis fotos para probar 
+
+										</a> 
+
+									</li>
+
+									<li> 
+
+										<a href ="{% url 'miCuenta:myTestedGarmentPhotos' %}"> 
+
+											Mis fotos probadas 
+
+										</a> 
+
+									</li>
+
+									<li> 
+
+										<a href ="{% url 'miCuenta:myFavoriteGarments' request.session.gender %}"> 
+
+											Prendas favoritas 
+
+										</a> 
+
+									</li>
+
+								</ul>
+
+							</li>
+
+							<!-- Popover de notificaciones para pantallas mas pequeñas que las de un PC-->
+
+							<li class = "visible-xs visible-sm visible-md" >
+
+								<!-- popover que se carga utilizando jquery -->
+
+								<!-- <a href="" data-toggle="popover" data-templatefile="template.html"> -->
+
+								<button data-toggle="popover" data-templatefile="template.html" style="border:none;" class="navBarColor">
+
+									<span id="notificationAlertSmallScreen" class="glyphicon glyphicon-bell whiteColor">
+
+									</span>
+
+								</button>
+								
+								<!-- Este div con ese id es necesario para mostrar el popover -->
+
+								<div id="divNotificationsApp" style="display:none;" ng-controller="notificationsController">
+
+									<ul>
+
+										<div ng-if="notificationsList.length>0" style="overflow-y:scroll;max-height: 200px;">
+
+											<div ng-repeat="notification in notificationsList">
+
+												<li class="notification">
+
+													<a href="{[ notification.url ]}">
+
+														{[ notification.text ]}
+
+													</a>
+
+												</li>
+
+											</div>
+
+										</div>
+
+									</ul>
+
+								</div>
+
+							</li>
+
+							<!-- Invitaciones de amistad -->
+
+							<li class = "visible-xs visible-sm visible-md"> 
+
+								<a href="{%url 'inicioUsuario:IndexInvitationFriends' %}"> 
+
+									<span class="glyphicon glyphicon-user whiteColor">
+
+									</span>
+
+								</a>
+
+							</li>
+
+							<!-- Logout de Prubit -->
+
+							<li class = "visible-xs visible-sm visible-md"> 
+
+								<a class = "logoutButton">
+
+									<span class="glyphicon glyphicon-remove-circle whiteColor">
+
+									</span> 
+
+								</a> 
+
+							</li>
+
+						</ul>
+
+						<!-- Barra de busqueda -->
+
+						<div class="inline hidden-xs hidden-sm hidden-md">
+
+							<input placeholder="Buscar amigos o compañias" class ="searchEngine"> 
+						</div>
+
+
+						<!-- Div para contener extremo derecho de barra de navegacion. Se oculta para tamaño pequeño -->
+
+						<ul class ="nav navbar-nav navbar-right hidden-xs hidden-sm hidden-md">
+
+							<!-- Popover de notificaciones -->
+
+							<li>
+
+								<!-- popover que se carga utilizando jquery -->
+
+								<!-- <a href="" data-toggle="popover" data-templatefile="template.html"> -->
+
+								<button data-toggle="popover" data-templatefile="template.html" style="border:none; position: relative;top: 50%;transform: translateY(70%);" class="navBarColor">
+									<span id="notificationAlertLargeScreen" class="glyphicon glyphicon-bell whiteColor">
+
+									</span>
+
+								</button>
+								
+								<!-- Este div con ese id es necesario para mostrar el popover -->
+
+								<div id="divNotificationsApp" style="display:none;" ng-controller="notificationsController">
+
+									<ul>
+
+										<div ng-if="notificationsList.length>0">
+
+											<div ng-repeat="notification in notificationsList">
+
+												<li class="notification">
+
+													<a href="{[ notification.url ]}">
+
+														{[ notification.text ]}
+
+													</a>
+
+												</li>
+
+											</div>
+
+										</div>
+
+									</ul>
+
+								</div>
+
+							</li>
+
+							<li> 
+
+								<a href="{%url 'inicioUsuario:IndexInvitationFriends' %}" data-toggle="tooltip" data-placement="bottom" title="Invitaciones de amistad"> 
+
+									<span  class="glyphicon glyphicon-user whiteColor">
+
+									</span>
+
+								</a>
+
+							</li>
+
+							<li> 
+
+								<a data-toggle="tooltip" data-placement="bottom" title="Cerrar sesión" class = "logoutButton">
+
+									<span class="glyphicon glyphicon-remove-circle whiteColor">
+
+									</span> 
+
+								</a> 
+
+							</li>
+
+						</ul>
+
+					</div>			
+
+				</div>
+
+			</div>
+
+		</nav>
+
+		
+		<!-- Mostrar mensajes -->
+
+		{% if messages %}
+
+		    <ul class="messages">
+
+		        {% for message in messages %}
+
+		            <div 
+
+		            	{% if message.tags %} 
+
+		            		class="alert alert-{{ message.tags }} alert-dismissable"
+
+		            	{% endif %}
+
+		            >
+
+		            	<a href="#" class="close" data-dismiss="alert"> 
+
+		            		&times;
+
+		            	</a>
+
+		            	   	{{ message }}
+
+		            	</a>
+
+		            </li>
+
+		        {% endfor %}
+
+		    </ul>
+
+		{% endif %}
+		
+		<script type="text/javascript">
+
+			// Url para buscar cosas dentro del sitio
+
+			var urlSearchResult = "{% url 'inicioUsuario:searchResult' 0 %}".substring(0,"{% url 'inicioUsuario:searchResult' 0 %}".length-2);
+
+			// url utilizada para obtener notificaciones
+
+			var urlGetNotifications = "{% url 'sistemaDeNotificaciones:getUserNotifications' %}";
+
+			var urlSeeNotificationOfLikeToTestedPhotoUser ="{% url 'sistemaDeNotificaciones:seeNotificationOfLikeToTestedPhotoUser' 0%}".substring(0,"{% url 'sistemaDeNotificaciones:seeNotificationOfLikeToTestedPhotoUser' 0%}".length-2);
+
+			var urlSeeNotificationOfCommentToTestedPhotoUser ="{% url 'sistemaDeNotificaciones:seeNotificationOfCommentToTestedPhotoUser' 0%}".substring(0,"{% url 'sistemaDeNotificaciones:seeNotificationOfCommentToTestedPhotoUser' 0%}".length-2);
+
+			var urlSeeNotificationOfLikeToCommentOfTestedPhoto = "{% url 'sistemaDeNotificaciones:seeNotificationOfLikeToCommentOfTestedPhoto' 0 %}".substring(0,"{% url 'sistemaDeNotificaciones:seeNotificationOfLikeToCommentOfTestedPhoto' 0 %}".length-2);
+
+			var urlSeeNotificationOfNewFriendRelation = "{% url 'sistemaDeNotificaciones:seeNotificationOfNewFriendRelation' 0 %}".substring(0,"{% url 'sistemaDeNotificaciones:seeNotificationOfNewFriendRelation' 0 %}".length-2);
+
+			var urlSeeNotificationOfLikeToUserCommentToGarmentPostOfCompany = "{% url 'sistemaDeNotificaciones:seeNotificationOfLikeToUserCommentToGarmentPostOfCompany' 0 %}".substring(0,"{% url 'sistemaDeNotificaciones:seeNotificationOfLikeToUserCommentToGarmentPostOfCompany' 0 %}".length-2);
+
+
+			var urlSeeNotificationOfFriendInvitation = "{% url 'sistemaDeNotificaciones:seeNotificationOfFriendInvitation' 0 %}".substring(0,"{% url 'sistemaDeNotificaciones:seeNotificationOfFriendInvitation' 0 %}".length-2);
+
+			var urlSeeNotificationOfFollowUser = "{% url 'sistemaDeNotificaciones:seeNotificationOfFollowUser' 0 %}".substring(0,"{% url 'sistemaDeNotificaciones:seeNotificationOfFollowUser' 0 %}".length-2);
+
+			// Variable usada para verificar el modelo del usuario actual 
+			var modelOfUser = "usersite";
+
+			// Logout
+			var urlLogout = "{% url 'inicioUsuario:logout' %}";
+
+		</script>
+
+		{% block jsVariables %}
+
+		{% endblock jsVariables %}
+
+		<div class="container-fluid">
+
+			{% block content %}
+
+			{% endblock content %}
+
+		</div>
+
+		<!-- This is for searcher -->
+		<!-- searcher -->
+
+		{% block javascriptCodes %}
+
+		<script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+
+		</script>
+
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js">
+
+		</script>
+
+		<script src ="{% static 'angularJS/comun/aplicaciones/basicApp.js' %}">
+
+		</script>
+
+		<script src ="{% static 'angularJS/usuarioComun/sistemaDeNotificaciones/userNotificationSystemController.js' %}">
+
+		</script>
+
+		<script type="text/javascript" src = "{% static 'javascript/usuarioComun/base/base.js' %}">
+
+		</script>
+
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+		</link>
+
+		<script type="text/javascrip" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js">
+
+		</script>
+
+	{% endblock javascriptCodes %}
+
+	{% bootstrap_javascript %}
+
+</body>
+
+<footer>
+
+	<div class="row container">
+
+		<p>
+
+			Todos los derechos reservados 2018
+
+		</p>
+
+	</div>
+
+</footer>
+
+</html>

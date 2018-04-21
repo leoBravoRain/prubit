@@ -1,0 +1,180 @@
+{% load static %}
+
+{% if section == "garmentsStack" %}
+
+	<div class="panel panel-default text-center prendaPanelCola" id="{{garment.id}}">
+
+{% elif section == "catalogCompany" %}
+
+	<div class="eachGarmentPanel panel panel-default text-center col-md-2" id="{{garment.id}}">
+
+{% elif view == "catalog" or section == "myFavoriteGarments" %}
+
+	<div class="panel panel-default text-center col-md-2" >
+
+{% elif source == "siteAdministration" %}
+
+	<div class="panel panel-default text-center">
+
+{% else %}
+
+	<div class="panel panel-default text-center smallMargin ">
+
+{% endif %}
+
+	<div class="panel-body" >
+
+		{% if section == "garmentsStack" %}
+
+			<div>
+
+				<button id="{{garment.id }}" class = "btn btn-default ForTryGarment forTry" type="	button" > 
+
+					<!-- <span class="glyphicon glyphicon-sunglasses">
+
+					</span> -->
+
+					Probarmela
+
+				</button>
+
+			</div>
+
+		{% endif %}
+
+		<div>
+
+			{% if source == "siteAdministration"%}
+
+				<img class="img-responsive center-block" src="{% static garment.photo.url %}">
+
+			{% else %}
+
+				<img class="thumbnail img-responsive center-block" src="{% static garment.photo.url %}">
+
+			{% endif %}
+
+		</div>
+
+		<div>
+
+			{% if source == "company" %}
+
+				{% if view == "toCheck" %}
+
+					<a href="{% url 'prendas:garmentDetailsCompany' garment.id 'toCheck' %}">
+
+				{% elif view == "acceptedGarments" %}
+
+					<a href="{% url 'prendas:garmentDetailsCompany' garment.id 'accepted' %}">
+
+				{% elif view == "refusedGarments" %}
+
+					<a href="{% url 'prendas:garmentDetailsCompany' garment.id 'refused' %}">
+
+				{% endif %}
+
+			{% elif source == "siteAdministration" %}
+
+					<a href = "{% url 'prendas:garmentDetailsSiteAdministration' garment.id %}">
+
+			{% elif source == "user"%}
+
+					<a href = "{% url 'prendas:garmentDetails' garment.id %}" class="name" >
+
+			{% endif %}
+
+				{{garment.name}}
+
+			</a>
+
+		</div>
+
+		{% if source != "user" and view != "dressingRoom" %}
+
+			<div>
+
+				{{garment.price}}
+
+			</div>	
+
+			<div >
+
+				{{garment.size}}
+
+			</div>
+
+			<div >
+
+				{{garment.dimensions}}
+
+			</div>
+
+		{% endif %}
+
+		<div >
+
+			{{garment.company_trademark.tradeMark}}
+
+		</div>
+
+		{% if source == "user" %}
+
+			<div>
+
+				<a class="name" href ="{% url 'prototype1:companyProfile' garment.company_trademark.company.id %}">
+
+					{{garment.company_trademark.company}}
+
+				</a>
+
+			</div>
+
+		{% elif source == "company" %}
+
+			<div>
+
+				<a class="name" href ="{% url 'prototype1:index' %}">
+
+					{{garment.company_trademark.company}}
+
+				</a>
+
+			</div>
+		{% endif %}					
+
+		{% if section == "prendasPanel" %}
+
+			<div>
+
+				<button id="{{garment.id }}" class="btn btn-default ForTryGarment" type="button" > 	
+
+					<!-- <span class="glyphicon glyphicon-sunglasses">
+
+					</span> -->
+
+					Probarmela
+					
+				</button>
+
+			</div>
+
+		{% endif %}
+
+		{% if section == "garmentsStack" %}
+
+			<div>
+
+				<button class="deleteStack btn btn-default" id ="{{garment.id}}">
+
+					Eliminar
+
+				</button>
+
+			</div>
+
+		{% endif %}
+
+	</div>
+
+</div>

@@ -1,0 +1,254 @@
+{% extends "comunes/base/baseNoLoginYet.html" %}
+
+{% block title %}
+
+	Login
+
+{% endblock title %}
+
+{% load static %}
+
+{% block jsVariables %}
+
+	<script type="text/javascript">
+		
+		// Redirigir hacia index
+		var urlIndex = "{% url 'inicioUsuario:login' %}";
+
+		// Redirigir hacia registro por SM
+		var urlRegistroUsuarioPorSM = "{% url 'inicioUsuario:registroPorSM' %}";
+
+	</script>
+
+{% endblock jsVariables %}
+
+{% block content %}
+
+	<!-- Div .container para  que div centre las columnas (funcionamiento de bootstrap)-->
+
+	<div class="flex-container" style="margin-top:-30px;">
+
+		<!-- Div para login -->
+
+		<div class="login-form">
+
+			<h2 class = "title"> 
+
+				Prubit 
+
+			</h2>
+
+			<form method = "post" action ="">
+
+				{% csrf_token %}
+
+				{% for field in formLogin %}
+
+						<div class="form-group bodyLetter">
+
+							{{field}}
+
+						</div>
+
+				{% endfor %}
+
+				<button class="btn btn-default bodyLetter" type ="submit" name ="login_button"> 
+
+					Ingresar 
+
+				</button> 
+
+			</form>
+
+		</div>
+
+		<!-- Boton para ingresar con Facebook -->
+		<fb:login-button scope="public_profile,email" onlogin="checkLoginState();" class = "btn">
+
+			Ingresar con Facebook
+
+		</fb:login-button>
+
+		<!-- Div de olvido de contraseña -->
+		<div class="forgotten-password">
+
+			<!-- Link para redirigir hacia olvido de contraseña -->
+
+			<a href="{% url 'inicioUsuario:forgottenPassword' %}" class="bodyLetter">
+			
+				¿Has olvidado tu contraseña?
+
+			</a>
+
+		<!-- Div de cierre de olvido de contraseña -->
+		</div>
+
+		<!-- Div para registro de usuario -->
+
+		<div>
+
+			<div class="register-form">
+
+				<h2 class="tittle"> 
+
+					¿Aún no estas registrado en Prubit? 
+
+				</h2>
+
+				<button type="button" class="btn btn-default bodyLetter" data-toggle="modal" data-target="#register" style="background-color: rgb(156,41,148); color: white;"> 
+
+					Registrarme
+
+				</button>
+
+			</div>
+
+			<div id="register" class="modal fade" role="dialog">
+
+			  	<div class="modal-dialog">
+
+				    <div class="modal-content">
+
+				      	<div class="modal-header">
+
+				        	<button type="button" class="close" data-dismiss="modal">
+
+				        		&times;
+
+				        	</button>
+
+				        	<h4 class="modal-title">
+
+				        		Registro
+
+				        	</h4>
+
+				      	</div>
+
+				      	<div class="modal-body">
+
+
+							<form class="form-register" method = "post" action="" >
+
+								{% csrf_token %}
+
+								{{form.as_p}}
+
+								{% for field in formRegister %}
+
+									{% with fc=forloop.counter %}
+
+										{% if fc == 1 or fc == 3 or fc == 5 or fc == 7 or fc == 9 %}
+
+											<div class="row"> 
+
+										{% endif %}
+
+										<label class=".col-form-label col-md-2">
+
+											{{field.label}}
+
+										</label>
+
+										<div class="col-md-3">
+
+											{{field}}
+
+											{{field.help_text}}
+
+										</div>
+
+										{% if fc == 2 or fc == 4 or fc == 6 or fc == 8 or fc == 10 %}
+
+											</div>
+
+										{% endif %}
+
+									{% endwith %}
+
+								{% endfor %}
+
+								<p class = "bodyLetter" style = "font-size: 10px;">
+
+									Al registrarme acepto las <a class = "linkParaAbrirEnOtraWindow" id ="{% url 'inicioUsuario:politicasDePrivacidad' %}" > Políticas de Seguridad </a> y <a class = "linkParaAbrirEnOtraWindow"  id = "{% url 'inicioUsuario:condicionesDeServicio' %}"> Condiciones de Servicio </a>
+
+								</p>
+
+								<button class="btn btn-default" type ="submit" name ="register_button"> 
+
+									Registrarse 
+
+								</button> 
+
+							</form>	
+
+			    		</div>
+
+			  		</div>
+
+				</div>
+
+			</div>
+
+
+		</div>
+
+		<!-- Video de presentacion de Prubit -->
+		<div style="padding-top: 10px; left: 5px; text-align: center;">
+
+			<!-- Boton para ver video -->
+			<button type="button" class="btn btn-default bodyLetter" data-toggle="modal" data-target="#queEsPrubit" > 
+
+				¿Que es Prubit?
+
+			</button>
+
+			<!-- Se muestra video -->
+			<div id = "queEsPrubit" class = "modal fade" role = "dialog">
+
+				<img style = "width: 80%; max-height: 100%; margin-top: 5px;" src = "{% static 'imagenes/fotoParaProbarEjemplo/queEsPrubit.png' %}" >
+
+			</div>
+
+		</div>
+
+		<!-- Video de presentacion de Prubit -->
+		<div style="padding-top: 10px; left: 5px; text-align: center;">
+
+			<!-- Boton para ver video -->
+			<button type="button" class="btn btn-default bodyLetter" data-toggle="modal" data-target="#video" > 
+
+				¿Cómo me puedo probar ropa?
+
+			</button>
+
+			<!-- Se muestra video -->
+			<div id = "video" class = "modal fade" role = "dialog" width = "560">
+
+				<iframe style= "margin-top: 40px; width: 80.01vw; height: 45vw;" src="https://www.youtube.com/embed/iF4_DDc0etY?rel=0&amp;showinfo=0&mute=1&autoplay=1&fullscreen=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+					
+				</iframe> 
+
+			</div>
+
+		</div>
+
+	</div>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	<script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+
+	</script>
+
+	<script type="text/javascript" src="{% static 'javascript/comun/commonFunctions.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src="{% static 'inicioUsuario/javascript/registroLoginLogout/login.js' %}">
+
+	</script>
+
+{% endblock javascriptCodes %}

@@ -1,0 +1,48 @@
+{% extends "comunes/base/base_Company.html" %}
+
+{% load static %}
+
+{% block jsVariables %}
+
+{% endblock jsVariables %}
+
+{% block content %}
+
+	<div>
+
+		<b>
+
+			¡ Recuerda que solo se puede editar la información, no la imagen !
+
+		</b>
+
+	</div>	
+
+<form method = "post" action ="">
+
+	{% csrf_token %}
+
+	{{form.as_p}}
+
+	<button type ="submit"> 
+
+		Actualizar Informacion 
+
+	</button> 
+
+</form>
+
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	{{ block.super }}
+
+	<!-- Se carga app de angular que carga las notificaciones -->
+	
+	<script type="text/javascript" src="{% static 'angularJS/comun/aplicaciones/startUpAppsManuallyJust1App.js' %}">
+
+	</script>
+
+{% endblock javascriptCodes %}

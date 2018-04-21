@@ -1,0 +1,158 @@
+
+{% extends "comunes/base/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+	{% if message %}
+
+		{{message}}
+
+	{% endif %}
+
+
+	<!-- Div para contener ayuda de foto para usuario -->
+	<div>
+
+		<!-- Imagen de ejemplo para probar -->
+
+		<div>
+
+			<!-- Boton para mostrar imagen ejemplo-->
+			<button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapsePhoto" aria-expanded="false" aria-controls="collapsePhoto">
+
+				Ver un ejemplo de foto correcta para probar 
+
+			</button>
+
+			<!-- div que contiene la imagen que se muestra cuando se selecciona boton  -->
+			<div class="collapse" id="collapsePhoto">
+
+				<!-- imagen de ejemplo-->
+				<img class="userImagePreview img-responsive" src="{% static 'imagenes/fotoParaProbarEjemplo/fotoParaProbarEjemplo.jpg' %}">
+
+				<!-- Boton para mostrar imagen ejemplo de foto ya probada-->
+				<button class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapseTestedPhoto" aria-expanded="false" aria-controls="collapseTestedPhoto">
+
+					Ver foto ejemplo con prendas probadas
+
+				</button>
+
+				<div class="collapse" id="collapseTestedPhoto">
+
+					<!-- imagen de ejemplo de foto ya probada-->
+				<img class="userImagePreview img-responsive" src="{% static 'imagenes/fotoParaProbarEjemplo/fotoProbadaEjemplo.png' %}">
+
+				</div>
+			  
+		  	</div>
+
+	  	</div>
+	  	
+		<!-- Consejos para foto para probar -->
+
+		<div>
+
+			<!-- Boton para desplegar los Consejos -->
+			<button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseTips" aria-expanded="false" aria-controls="collapseTips">
+
+				Consejos para una buena foto para probarse ropa
+
+			</button>
+
+			<!-- Div que se muestra cuando se apreta en el boton -->
+
+			<div class="collapse bodyLetter" id="collapseTips">
+
+				<!-- Lista de consejos -->
+				<ul>
+
+					<li class="smallMargin"> <b> 1.</b> Ojos descubiertos (sin lentes) para poder probarte lentes. </li>
+					<li class="smallMargin"> <b> 2.</b> Cabellera descubierta (sin sombrero) para poder probarte sombreros. </li>
+					<li class="smallMargin"> <b> 3.</b> Cuello descubierto (sin pañuelos ni cabello encima) para poder probarte pañuelos. </li>
+					<li class="smallMargin"> <b> 4.</b> Si quieres probarte zapatos, debes sacarte una foto en donde se vean tus pies de frente. </li>
+
+				</ul>
+			  
+		  	</div>
+
+	  	</div>
+		
+
+	</div>
+
+
+	<!-- Formulario para subir imagen -->
+	<form class = "center" enctype="multipart/form-data" method = "post" action ="">
+
+		{% csrf_token %}
+
+		{% for field in form %}
+
+			<div class="form-group">
+
+				<label class="filterCategoryTittle">
+
+					{{field.label}}
+
+				</label>
+
+				{% if field.name == "currentForTryPhoto" %}
+
+					<div class="inline smallMargin">
+
+				{% else %}
+
+					<div>
+
+				{% endif %}
+
+					{{field}}
+
+				</div>
+
+			</div>
+
+		{% endfor %}
+
+		<!-- preview de imagen -->
+
+		<div>
+			
+			<img id="userImagePreview" class="smallMargin"/>
+
+		</div>
+
+		<!-- Boton de agregar imagen -->
+
+		<div>
+
+			<button class="btn btn-default buttonStyle" type ="submit" name ="add_button"> 
+
+				Agregar 
+
+			</button> 
+
+		</div>
+
+	</form>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+	
+	{{ block.super }}
+
+	<!-- Se carga app de angular que carga las notificaciones -->
+	
+	<script type="text/javascript" src="{% static 'angularJS/comun/aplicaciones/startUpAppsManuallyJust1App.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'miCuenta/javascript/misFotosParaProbar/addForTryGarmentPhoto.js' %}">
+
+	</script>
+
+
+{% endblock javascriptCodes %}

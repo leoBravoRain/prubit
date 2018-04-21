@@ -1,0 +1,15 @@
+{% load static %}
+
+<div class="row">
+
+	<ul class="pagination">
+
+		{% for page in pagesList %}
+
+			<li class="numberPage" id="{{page}}"> <a>{{page}} </a></li>
+
+		{% endfor %}
+
+	</ul>
+	
+</div>

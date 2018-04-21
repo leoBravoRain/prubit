@@ -1,0 +1,194 @@
+{% extends "comunes/base/base.html" %}
+
+{% load static %}
+
+<!-- Se borra el templatetags -->
+
+{% block title %}
+
+	Prubit
+
+{% endblock title %}
+
+{% block jsVariables %}
+
+	<script type="text/javascript">
+
+		var urlAcceptInvitation = "{% url 'inicioUsuario:acceptInvitation' %}";
+	
+		var urlDeleleFriend = "{% url 'miCuenta:deleteFriend' %}";
+	
+		var urlFollowUser = "{% url 'miCuenta:followUser' %}";
+	
+		var urlUnfollowUser = "{% url 'miCuenta:unfollowUser' %}";
+	
+		var urlForRedirectToUsersWhoLikedPostBase = "{% url 'inicioUsuario:getUsersWhoLikedPost' 0 0 %}".substring(0,"{% url 'inicioUsuario:getUsersWhoLikedPost' 0 0 %}".length-4);
+		
+		var urlLikePhoto = "{{request.get_host}}{% url 'inicioUsuario:photoLike' %}";
+
+		// Se cambia nombre de variable urlAddComment por el actual
+
+		var urlAddUserCommentToTestedPost = "{{request.get_host}}{% url 'inicioUsuario:addComment' %}";
+
+		var urlDeleteComment = "{{request.get_host}}{% url 'inicioUsuario:deleteComment' %}";
+
+		var urlEditComment = "{{request.get_host}}{% url 'inicioUsuario:editComment' %}";
+
+		var urlTestedGarmentsPhotosUser = "{% url 'inicioUsuario:userTestedGarmentsPhotosUser' 0 %}".substring(0,"{% url 'inicioUsuario:userTestedGarmentsPhotosUser' 0 %}".length-2);
+
+		var urlDeleteTestedGarmentPhoto = "{{request.get_host}}{% url 'inicioUsuario:deleteTestedGarmentPhotoIndex' %}";
+
+		var urlEditOwnCommentTestedPhoto = "{{request.get_host}}{% url 'inicioUsuario:editOwnCommentTestedPhoto' %}";
+
+		var urlTestedGarmentsPhotosUser = "{% url 'inicioUsuario:userTestedGarmentsPhotosUser' 0 %}".substring(0,"{% url 'inicioUsuario:userTestedGarmentsPhotosUser' 0 %}".length-2);
+
+		// Para redireccionar a perfil de usuario seguido
+
+		var userSougthId = "{{userSougth.id}}";
+
+		// Para ver si se muestran los posteos del usuario 
+
+		var userIsPublic = {{userSougth.public|yesno:'true,false'}};
+
+		// | es un filtro de django template para cambiar string a boolean en javascript
+		var areFriends = {{friends|yesno:'true,false'}};
+
+		// Para pedir los datos a servidor
+
+		var source = "{{source}}";
+
+		var urlStatic = "{% get_static_prefix %}";
+
+		var myId = {{me.id}};
+
+		var myFullName ="{{me.getFullName}}";
+
+
+		var urlGarmentDetails = "{% url 'prendas:garmentDetails' 0 %}".substring(0,"{% url 'prendas:garmentDetails' 0 %}".length-2);
+
+
+		var messageNoGarmentsInPhoto="{{messageNoGarmentsInPhoto}}";
+
+		var urlCompanyProfile = "{% url 'inicioUsuario:companyProfile' 0%}".substring(0,"{% url 'inicioUsuario:companyProfile' 0%}".length-2);
+
+		// Quitar like a foto probada de alguna usuario
+
+		var urlDontLikePhoto = "{% url 'inicioUsuario:dontLikePhoto' %}";
+
+		// Redireccionar a foto probada de usuario
+
+		var urlTestedPhotoUser = "{% url 'inicioUsuario:testedPhotoUser' 0 %}".substring(0,"{% url 'inicioUsuario:testedPhotoUser' 0 %}".length-2);
+
+		// Agregar like a comentario de foto probada
+
+		var urlAddLikeToCommentOfTestedPhoto = "{% url 'inicioUsuario:addLikeToCommentOfTestedPhoto' %}";
+
+		// Remover like de foto probada
+
+		var urlRemoveLikeToCommentOfTestedPhoto = "{% url 'inicioUsuario:removeLikeToCommentOfTestedPhoto' %}";
+
+		// Variable utilizada por vista 
+		var typeOfUser = "{{typeOfUser}}";
+
+		// Url al folder de media
+		var urlMedia = "{% get_media_prefix %}";
+
+		// Para enviar invitacion de amigo
+		var urlInvitationFriend = '{% url "inicioUsuario:InvitationFriend" %}';
+
+		// Cancelar invitacion de amistad
+		var urlCancelInvitationFriend = "{% url 'miCuenta:cancelInvitationFriend' %}";
+		
+	</script>
+	
+{% endblock jsVariables %}
+
+{% block content %}
+
+	<!-- Informacion de perfil de usuario -->
+	{% include 'inicioUsuario/perfilDeOtroUsuario/userProfileStructure.html' %}
+	
+	<!-- Fotos probadas de usuario -->
+
+	<div id="divAngularApp" ng-controller="postsController">
+
+		<div infinite-scroll="getEndScroll()" infinite-scroll-distance="0" infinite-scroll-disabled="busy">
+
+			<div id = "photosPanel">
+
+				<div ng-if="postsList.length>0">
+
+					<div ng-repeat="post in postsList">
+
+						{% include 'estructurasComunes/angularJS/testedPost/testedPhotoStructureAngular.html' %}
+							
+					</div>
+
+				</div>
+
+			</div>
+
+			<!-- Requerido para el ng-infinteScroll -->
+
+			<div style='clear: both;'>
+
+			</div>
+
+			<!-- Div que contiene elemento para avisar que se esta cargando contenido usando AJAX -->
+			<div id ="loadingContent" class="center-block">
+
+				<span class="glyphicon glyphicon-refresh">
+
+				</span>
+
+			</div>
+
+		</div>
+
+	</div>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	{{ block.super }}
+
+	<script type='text/javascript' src="{% static 'angularJS/comun/aplicacionesConstruidas/ng-infinite-scroll.js' %}">
+
+	</script>
+
+	<script src ="{% static 'angularJS/comun/aplicaciones/postsApp.js' %}">
+
+	</script>
+
+	<script src ="{% static 'angularJS/comun/servicios/commentOfPostsService.js' %}">
+
+	</script>
+
+	<script src ="{% static 'angularJS/comun/servicios/testedPostService.js' %}">
+
+	</script>
+
+	<script src ="{% static 'inicioUsuario/angularJS/perfilDeOtroUsuario/userTestedController.js' %}">
+
+	</script>
+
+	<!-- Se inicializan las diferentes apps de angularjs (ya que no se pueden inicializar aut mas de 1 app en un template)  Se deben inicializar despues de cargar las apps y los controladores asociados-->
+
+	<script type="text/javascript" src="{% static 'angularJS/comun/aplicaciones/startUpAppsManually.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src="{% static 'javascript/comun/commonFunctions.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'javascript/comun/testedPostFunctions.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'inicioUsuario/javascript/perfilDeOtroUsuario/userTestedGarmentsPhotos.js' %}">
+
+	</script>
+	
+{% endblock javascriptCodes %}

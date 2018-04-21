@@ -1,0 +1,122 @@
+{% extends "comunes/base/base.html" %}
+
+
+{% load static %}
+
+{% block title %}
+
+	{{user.firstName}}
+
+{% endblock title %}
+
+{% block jsVariables %}
+
+{% endblock jsVariables %}
+
+{% block content %}
+
+<div class ="col-md-12 panel panel-default text-center container-fluid">
+
+	<div class ="panel-body">
+
+		<!-- Div que contiene la foto de perfil -->
+
+		<div class="col-md-7">
+
+			{% if userProfilePhoto %} 
+
+				<img class="img-responsive centerSmallMargin bigProfilePhoto" src="{% get_media_prefix %}{{ userProfilePhoto.photo }}">
+
+			{% else %}
+
+				<img class="img-responsive centerSmallMargin bigProfilePhoto" src="{% static 'imagenes/fotoDePerfilPorDefecto/fotoDePerfilPorDefecto.png' %}";>
+
+			{% endif %}
+
+			<button class="btn btn-default smallMargin" onClick="window.location.assign('{% url 'miCuenta:myProfilePhotos' %}');"> 
+
+				Editar foto
+
+				<span class="glyphicon glyphicon-picture">
+
+				</span>
+
+			</button>
+
+		</div>
+
+		<!-- Div que contiene la informacion del usuario -->
+
+		<div class="col-md-5">
+
+			<!-- Editar informacion de perfil-->
+
+			<button class="bodyLetter smallMargin btn btn-default" onClick="window.location.assign('{% url 'miCuenta:EditProfile'%}');"> 
+
+				Editar informacion
+
+				<span class="glyphicon glyphicon-edit">
+
+				</span>
+
+			</button>
+
+			<!-- Detalle de informacion -->
+
+			<div>
+
+				<div>
+
+					<a class="name" href="{% url 'inicioUsuario:userTestedGarmentsPhotosUser' user.id %}">
+
+						{{user.getFullName}}
+
+					</a>
+
+				</div>
+
+			</div>
+
+			<!-- Div para ver amigos de usuario -->
+			<div>
+
+				<a class = "bodyLetter" href="{% url 'miCuenta:getFriendsOfUser' %}">
+					
+					Ver mis amigos
+
+				</a>
+
+			</div>
+
+			<!-- Div para ver usuarios que me siguen actualmente -->
+			<div>
+
+				<a class = "bodyLetter" href="{% url 'miCuenta:getUsersWhoAreFollowingMe' %}">
+					
+					Ver usuarios que me siguen
+
+				</a>
+
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	{{ block.super }}
+
+	<!-- Se carga app de angular que carga las notificaciones -->
+	
+	<script type="text/javascript" src="{% static 'angularJS/comun/aplicaciones/startUpAppsManuallyJust1App.js' %}">
+
+	</script>
+
+{% endblock javascriptCodes %}
+
+
+

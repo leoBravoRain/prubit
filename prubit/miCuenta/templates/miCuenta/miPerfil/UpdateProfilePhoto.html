@@ -1,0 +1,78 @@
+{% extends "comunes/base/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<form class = "center" enctype="multipart/form-data" method = "post" action ="">
+
+	{% csrf_token %}
+
+	{% for field in form %}
+
+		<div class="form-group">
+
+			<label class="filterCategoryTittle smallMargin"> 
+
+				{{field.label}}
+
+			</label>
+
+		{% if field.name == "currentProfilePhoto" %}
+
+			<div class="inline smallMargin">
+
+		{% else %}
+
+			<div>
+
+		{% endif %}
+
+				{{field}}
+
+			</div>
+
+		</div>
+
+	{% endfor %}
+
+	<!-- Preview de imagen -->
+
+	<div>
+		
+		<img id="userImagePreview" class="smallMargin"/>
+
+	</div>
+
+	<!-- Boton de agregar imagen -->
+
+	<div>
+
+		<button class="btn btn-default buttonStyle" type ="submit" name ="update"> 
+
+			Agregar
+
+		</button>
+
+	</div>
+
+</form>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	{{ block.super }}
+
+	<!-- Se carga app de angular que carga las notificaciones -->
+	
+	<script type="text/javascript" src="{% static 'angularJS/comun/aplicaciones/startUpAppsManuallyJust1App.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'miCuenta/javascript/miPerfil/updateProfilePhoto.js' %}">
+
+	</script>
+
+
+{% endblock javascriptCodes %}

@@ -1,0 +1,86 @@
+{% extends "comunes/base/baseNoLoginYet.html" %}
+
+{% block title %}
+
+	Login
+
+{% endblock title %}
+
+{% load static %}
+
+{% block jsVariables %}
+
+	<script type="text/javascript">
+		
+		// Redirigir hacia index
+		var urlIndex = "{% url 'inicioUsuario:login' %}";
+
+		// Redirigir hacia registro por SM
+		var urlRegistroUsuarioPorSM = "{% url 'inicioUsuario:registroPorSM' %}";
+
+	</script>
+
+{% endblock jsVariables %}
+
+{% block content %}
+
+	<!-- Div .container para  que div centre las columnas (funcionamiento de bootstrap)-->
+
+	<div class="flex-container">
+
+		<!-- Div para login -->
+
+		<div class="login-form">
+
+			<h2 class = "title"> 
+
+				Prubit 
+
+			</h2>
+
+			<p class = "bodyLetter" style = "color: white;">
+
+				No estas registrado en Prubit, por lo que para completar tu registro solo debes ingresar una contraseña para Prubit (puede ser distinta a la de Facebook).
+
+			</p>
+
+
+			<p class="form-group bodyLetter">
+
+				<input id = "passwordInput" type = "password">
+
+			</p>
+
+			<p class = "bodyLetter" style = "color: white; font-size: 10px;">
+
+				Al registrarme acepto las <a class = "linkParaAbrirEnOtraWindow" id ="{% url 'inicioUsuario:politicasDePrivacidad' %}" style = "color: rgba(255,255,255,0.7);"> Políticas de Seguridad </a> y <a style = "color: rgba(255,255,255,0.7);" class = "linkParaAbrirEnOtraWindow"  id = "{% url 'inicioUsuario:condicionesDeServicio' %}"> Condiciones de Servicio </a>
+
+			</p>
+
+			<button class="btn btn-default bodyLetter" id = "registerButton"> 
+
+				Regitrarme 
+
+			</button> 
+
+		</div>
+
+	</div>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	<script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+
+	</script>
+
+	<script type="text/javascript" src="{% static 'javascript/comun/commonFunctions.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src="{% static 'inicioUsuario/javascript/registroLoginLogout/registroPorSM.js' %}">
+
+	</script>
+
+{% endblock javascriptCodes %}

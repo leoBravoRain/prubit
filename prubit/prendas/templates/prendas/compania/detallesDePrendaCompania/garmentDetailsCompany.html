@@ -1,0 +1,41 @@
+{% extends "comunes/base/base_Company.html" %}
+
+{% load static %}
+
+{% block jsVariables %}
+
+<script type="text/javascript">
+
+	var urlDeleteGarmentCompany = "{% url 'misPrendasEmpresa:deleteGarment' 0 0 %}".substring(0,"{% url 'misPrendasEmpresa:deleteGarment' 0 0 %}".length-4);
+
+	var urlIndex = "{{request.get_host}}{% url 'inicioUsuario:index' %}";
+
+	// variable para identificar el estado de la prenda
+
+	var view = "{{view}}";
+
+</script>
+
+{% endblock jsVariables %}
+
+{% block content %}
+
+	{% include 'estructurasComunes/html/garmentDetailsStructure.html' with source="company" %}
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	{{ block.super }}
+
+	<!-- Se carga app de angular que carga las notificaciones -->
+	
+	<script type="text/javascript" src="{% static 'angularJS/comun/aplicaciones/startUpAppsManuallyJust1App.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'prendas/javascript/detallesDePrendaCompania/garmentDetailsCompany.js' %}">
+
+	</script>
+
+{% endblock javascriptCodes %}

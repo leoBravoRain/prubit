@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+	<head>
+
+		<title>
+
+			{% block title %}
+
+			{% endblock title %}
+
+		</title>
+
+		{% load bootstrap3 %}
+
+		{% bootstrap_css %}
+
+		<meta charset="utf-8">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		{% load static %}
+
+		<link rel="stylesheet" type="text/css" href = "{% static 'inicioUsuario/css/login/login.css' %}">
+
+	</head>
+
+	<body>
+
+		{% if messages %}
+
+		    <ul class="messages">
+
+		        {% for message in messages %}
+
+		            <div 
+
+		            	{% if message.tags %} 
+
+		            		class="alert alert-{{ message.tags }} alert-dismissable"
+
+		            	{% endif %}
+
+		            >
+
+		            	<a href="#" class="close" data-dismiss="alert"> 
+
+		            		&times;
+
+		            	</a>
+
+		            	   	{{ message }}
+
+		            	</a>
+
+		            </li>
+
+		        {% endfor %}
+
+		    </ul>
+
+		{% endif %}
+
+		{% block jsVariables %}
+
+		{% endblock jsVariables %}
+
+		<div class="container-fluid">
+
+			{% block content %}
+
+			{% endblock content %}
+
+		</div>
+
+		{% block javascriptCodes %}
+
+		{% endblock javascriptCodes %}
+
+		{% bootstrap_javascript %}
+
+	</body>
+
+</html>

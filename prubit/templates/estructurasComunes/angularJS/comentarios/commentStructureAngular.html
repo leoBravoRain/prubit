@@ -1,0 +1,86 @@
+<div id="{[comment.nameOfParentDivOfComment]}" class="media divOfCommentToPost">
+
+	<!-- Lado izquierdo del comentario -->
+	
+	<!-- Foto de perfil de usuario -->
+
+	<div class="media-left">
+
+		<img class="media-object imgProfilePhotoOfCommentToPost" src="{[comment.urlToUserProfilePhoto ]}">
+
+	</div>
+
+	<!-- Lado derecho del comentario -->
+
+	<div class="media-body">
+
+		<!-- Cabezera del comentario -->
+		<div class="media-heading row"> 
+
+			<!-- Nombre completo del usuario -->
+			<a class="commentName col-md-8" href="{[ comment.urlRedirectToProfileOfUser ]}">
+
+				{[ comment.fullUserName ]}
+
+			</a>
+
+			<!-- Si es que el dueño del comentario es el usuario logeado -->
+			<div class="col-md-4" ng-if="comment.userIsMe">
+
+				<!-- Se agrega menu lateral desplegable derecho  -->
+				<div class="dropdown" >
+
+					<!-- Se agrega boton para  desplegar el menu-->
+					<button class="dropdown-toggle btn-xs btn" type="button" data-toggle="dropdown">
+
+						<!-- Se agrega icono del menu -->
+						<span class="glyphicon glyphicon-chevron-down">
+
+						</span>
+
+					</button>
+
+					<!-- Opciones de menu desplegable -->
+
+					<ul class = "dropdown-menu dropdownMenuOfCommentToPost">
+
+						<!-- Item de menu desplegable -->
+						
+						<li class = "dropdown-menu-choice-post {[comment.editCommentClass]}" id="{[ comment.pk ]}"> 
+
+							Editar comentario 
+
+						</li>
+
+						<!-- item de menu desplegable -->
+
+						<li class = "dropdown-menu-choice-post {[comment.deleteCommentClass ]}" id ="{[ comment.pk ]}"> 
+
+							Eliminar comentario
+
+						</li>
+
+					</ul>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<!-- Se agrega el comentario -->
+		<div class="commentText">
+
+			{[ comment.fields.comment ]} 
+
+		</div>
+
+		<!-- Input para editar comentario (permanece oculto) -->
+
+		<input type="text" class="inputCommentMadeText" style="display:none;" value="{[comment.fields.comment]}">
+
+
+
+	</div>
+
+</div>

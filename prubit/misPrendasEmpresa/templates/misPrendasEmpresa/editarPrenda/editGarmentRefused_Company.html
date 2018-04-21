@@ -1,0 +1,56 @@
+
+{% extends "comunes/base/base_Company.html" %}
+
+{% load static %}
+
+{% block jsVariables %}
+
+	<script type="text/javascript">
+
+		var maxGarmentWidth = {{maxGarmentWidth}};
+		var maxGarmentHeight = {{maxGarmentHeight}};
+		var defaultImage = "{% static garment.photo.url %}";
+
+	</script>
+
+{% endblock jsVariables %}
+
+{% block content %}
+
+	<form enctype="multipart/form-data" method = "post" action ="">
+
+		{% csrf_token %}
+
+		{{form.as_p}}
+
+		<button type ="submit"> 
+
+			Enviar nuevamente para un nuevo chequeo 
+
+		</button> 
+		
+	</form>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	{{ block.super }}
+
+	<!-- Se carga app de angular que carga las notificaciones -->
+	
+	<script type="text/javascript" src="{% static 'angularJS/comun/aplicaciones/startUpAppsManuallyJust1App.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'misPrendasEmpresa/javascript/misPrendas/editarPrendas/editGarmentRefused_Company.js' %}">
+	
+	</script>
+
+	<link rel="stylesheet" type="text/css" href="{%static 'javascript/picEdit/picedit.min.css' %}" />
+
+	<script type="text/javascript" src = "{% static 'javascript/picEdit/picedit.min.js' %}" >
+
+	</script>
+
+{% endblock javascriptCodes %}

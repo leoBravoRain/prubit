@@ -1,0 +1,285 @@
+{% load static %}
+
+<div class="col-md-2">
+
+	<div class="container-fluid panel panel-default" >
+
+		<div class="panel-body filterGarments" >
+
+			<div>
+
+				<div class="filterCategoryTittle"> 
+
+					Tipo de prendas
+
+				</div>
+
+				<div>
+
+					<ul>
+
+						<li class="itemOfGarmentFilter">
+
+							{% if source == "siteAdministration" %}
+
+								{% if view == "acceptedGarments" %}
+
+									<a href ="{% url 'historialDePrendas:acceptedGarmentsChangeType1' 'default' %}">
+
+								{% elif view == "checkGarments" %}
+
+									<a href ="{% url 'tareasAdministrador:checkGarmentsChangeType1' 'default' %}">
+
+								{% elif view == "refusedGarments" %}
+
+									<a href ="{% url 'historialDePrendas:refusedGarmentsChangeType1' 'default' %}">
+
+								{% endif %}
+
+							{% elif source == "company" %}
+
+								{% if view == "refusedGarments" %}
+
+									<a href ="{% url 'misPrendasEmpresa:myRefusedGarmentsChangeType1' 'default' %}">
+
+								{% elif view == "toCheckGarments" %}
+
+									<a href ="{% url 'misPrendasEmpresa:myToCheckGarmentsChangeType1' 'default' %}">
+
+								{% elif view == "acceptedGarments" %}
+
+									<a href ="{% url 'misPrendasEmpresa:changeType1MyGarmentsCompany' 'default' %}">
+
+								{% endif %}
+
+							{% elif source == "user" %}
+
+								{% if view == "catalog" %}
+
+									<a href ="{% url 'catalogo:catalogChangetype1' 'default' %}">
+
+								{% elif view == "favoriteGarments" %}
+
+									<a href ="{% url 'miCuenta:changeType1MyFavoriteGarments' 'default' %}">
+
+								{% endif %}
+
+							{% endif %}
+
+								Todas
+
+							</a>
+
+						</li>
+
+						{% if GarmentTypeList %}
+
+							{% for GarmentType in GarmentTypeList %}
+
+								<li class="itemOfGarmentFilter">
+
+								{% if source == "siteAdministration" %}
+
+									{% if view == "acceptedGarments" %}
+
+										<a href ="{% url 'historialDePrendas:acceptedGarmentsChangeType1' GarmentType.type1 %}">
+
+										{% elif view == "checkGarments" %}
+
+											<a href ="{% url 'tareasAdministrador:checkGarmentsChangeType1' GarmentType.type1 %}">
+
+										{% elif view == "refusedGarments" %}
+											<a href ="{% url 'historialDePrendas:refusedGarmentsChangeType1' GarmentType.type1 %}">
+										{% endif %}
+								{% elif source == "company" %}
+
+									{% if view == "refusedGarments" %}
+										<a href ="{% url 'misPrendasEmpresa:myRefusedGarmentsChangeType1' GarmentType.type1 %}">
+									{% elif view == "toCheckGarments" %}
+										<a href ="{% url 'misPrendasEmpresa:myToCheckGarmentsChangeType1' GarmentType.type1 %}">
+									{% elif view == "acceptedGarments" %}
+										<a href ="{% url 'misPrendasEmpresa:changeType1MyGarmentsCompany' GarmentType.type1 %}">
+									{% endif %}
+
+								{% elif source == "user" %}
+
+									{% if view == "catalog" %}
+
+										<a href="{% url 'catalogo:catalogChangetype1' GarmentType.type1 %}">
+
+									{% elif view == "favoriteGarments" %}
+
+										<a href="{% url 'miCuenta:changeType1MyFavoriteGarments' GarmentType.type1 %}">
+
+									{% endif %}
+
+								{% endif %}
+
+										{{GarmentType.type1}}
+									</a>
+								</li>
+							{% endfor %}
+						{% else %}
+							No hay tipos de prenda
+						{% endif %}
+
+					</ul>
+
+				</div>
+
+			</div>
+
+			{% if view != "catalog" %}
+
+				<div class="filterCategoryTittle">
+					Genero 
+				</div>
+				<div>
+					<ul>
+						{% for gender in gendersGarment %}
+							<li >
+
+								{% if source == "siteAdministration" %}
+
+									{% if view == "checkGarments" %}
+
+										<a href="{% url 'tareasAdministrador:checkGarmentsChangeGender' gender.0 %}">
+
+									{% elif view == "acceptedGarments" %}
+
+										<a href="{% url 'historialDePrendas:acceptedGarmentsChangeGender' gender.0 %}">
+
+									{% elif view == "refusedGarments" %}
+
+										<a href="{% url 'historialDePrendas:refusedGarmentsChangeGender' gender.0 %}">
+
+									{% endif %}
+								{% elif source == "company" %}
+									{% if view == "refusedGarments" %}
+										<a href="{% url 'misPrendasEmpresa:myRefusedGarmentsChangeGender' gender.0 %}">
+									{% elif view == "toCheckGarments" %}
+										<a href="{% url 'misPrendasEmpresa:myToCheckGarmentsChangeGender' gender.0 %}">
+									{% elif view == "acceptedGarments" %}
+										<a href="{% url 'misPrendasEmpresa:changeGenderMyGarmentsCompany' gender.0 %}">
+									{% endif %}
+
+								{% elif source == "user"%}
+
+									{% if view == "favoriteGarments" %}
+
+										<a href="{% url 'miCuenta:changeGenderMyFavoriteGarments' gender.0 %}">
+
+									{% endif %}
+
+								{% endif %}
+
+									{{gender.0}}
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+
+			<div class="filterCategoryTittle">
+
+				Marcas 
+
+			</div>
+
+			<div>
+				<select id="trademarkFilter" style="width:100px;">
+					<option></option>
+					<!-- Dropdown List Option -->
+				</select>
+				<ul id = "trademarksList">
+					<li class="trademarkElement itemOfGarmentFilter" id="default"> 
+
+						{% if source == "siteAdministration" %}
+
+							{% if view == "checkGarments" %}
+
+								<a href="{% url 'tareasAdministrador:checkGarmentsChangeTrademark' 'default' %}">
+
+							{% elif view == "acceptedGarments" %}
+
+								<a href="{% url 'historialDePrendas:acceptedGarmentsChangeTrademark' 'default' %}">
+							{% elif view == "refusedGarments" %}
+								<a href="{% url 'historialDePrendas:refusedGarmentsChangeTrademark' 'default' %}">									
+							{%endif%}
+						{% elif source == "company" %}
+							{% if view == "refusedGarments" %}
+								<a href="{% url 'misPrendasEmpresa:myRefusedGarmentsChangeTrademark' 'default' %}">
+							{% elif view == 'toCheckGarments' %}
+								<a href="{% url 'misPrendasEmpresa:myToCheckGarmentsChangeTrademark' 'default' %}">
+							{% elif view == "acceptedGarments" %}
+								<a href="{% url 'misPrendasEmpresa:changeTrademarkMyGarmentsCompany' 'default' %}">
+							{% endif %}	
+
+						{% elif source == "user" %}
+
+							{% if view == "catalog" %}
+
+								<a href="{% url 'catalogo:catalogChangeTrademark' 'default' %}">
+
+							{% elif view == "favoriteGarments" %}
+
+								<a href="{% url 'miCuenta:changeTrademarkMyFavoriteGarments' 'default' %}">
+
+							{% endif %}
+
+						{% endif %}
+							Todas 
+						</a> 
+					</li>
+					{% if trademarksList %}
+
+						{% for trademark in trademarksList %}
+						
+							<li class="trademarkElement itemOfGarmentFilter" id="{{trademark}}">  
+
+								{% if source == "siteAdministration" %}
+
+									{% if view == "checkGarments" %}
+
+										<a href="{% url 'tareasAdministrador:checkGarmentsChangeTrademark' trademark.name %}"> 
+
+									{% elif view == "acceptedGarments" %}
+
+										<a href="{% url 'historialDePrendas:acceptedGarmentsChangeTrademark' trademark.name %}"> 
+									{% elif view == "refusedGarments" %}
+										<a href="{% url 'historialDePrendas:refusedGarmentsChangeTrademark' trademark.name %}"> 
+									{% endif %}
+								{% elif source == "company" %}
+									{% if view == "refusedGarments" %}
+										<a href = "{% url 'misPrendasEmpresa:myRefusedGarmentsChangeTrademark' trademark.name %}">
+									{% elif view == "toCheckGarments" %}
+										<a href = "{% url 'misPrendasEmpresa:myToCheckGarmentsChangeTrademark' trademark.name %}">
+									{% elif view == "acceptedGarments" %}
+										<a href="{% url 'misPrendasEmpresa:changeTrademarkMyGarmentsCompany' trademark %}">
+									{% endif %}
+
+								{% elif source == "user" %}
+
+									{% if view == "catalog" %}
+
+										<a href="{% url 'catalogo:catalogChangeTrademark' trademark.name %}"> 
+
+									{% elif view == "favoriteGarments" %}
+
+										<a href="{% url 'miCuenta:changeTrademarkMyFavoriteGarments' trademark.name %}"> 
+
+									{% endif %}
+
+								{% endif %}
+
+									{{trademark}} 
+								</a>
+							</li>
+						{% endfor %}
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</div> 
+</div>

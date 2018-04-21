@@ -1,0 +1,267 @@
+
+ <div class="indexPost testedPost container-fluid col-md-6 col-md-offset-3 panel panel-default" id = "{[ post.post.pk ]}"> 
+
+ 	<div class="panel-body post" >
+
+ 		<!-- Nombre del usuario -->
+
+ 		<div class="name">
+
+ 			<a class="nameLink" href="{[ urlTestedGarmentsPhotosUser + post.post.fields.user ]}" >
+
+ 				{[ post.userFullName ]}
+
+ 			</a>
+
+ 		</div>
+
+
+ 		<!-- Comentario de la foto -->
+
+ 		<div class="ownCommentTestedPhoto" id="{[ post.post.pk]}"> 
+
+ 			<p style="max-width: 100%;"> {[ post.post.fields.ownComment ]} </p>
+
+ 		</div>
+ 		
+
+	 	<!--  Menu desplegable para editar y eliminar comentario-->
+
+	 	<div ng-if="post.userIsMe">
+
+	 		<div class="dropdown post">
+
+	 			<!-- Boton desplegable -->
+	 			<button class="btn btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+
+	 				<span class="glyphicon glyphicon-chevron-down">
+
+	 				</span>
+	 				
+	 			</button>
+
+	 			<!-- Submenu que se despliega al presionar el boton de menu desplegable -->
+
+	 			<ul class="dropdown-menu">
+
+	 				<!-- Editar comentario -->
+
+	 				<li class="editOwnCommentTestedPhoto dropdown-menu-choice-post" id="{[ post.post.pk ]}">
+ 
+	 					Editar comentario 
+
+	 				</li>
+
+	 				<!-- Elimiar comentario -->
+
+	 				<li class="deleteTestedGarmentPhoto dropdown-menu-choice-post" id ="{[ post.post.pk ]}">
+
+	 					Eliminar foto
+
+	 				</li>
+
+	 			</ul>
+
+	 		</div>
+
+	 	</div>
+
+
+	 	<!-- Input para editar comentario (solo si el dueño del posteo es el usuario logeado) -->
+
+	 	<div ng-if="post.userIsMe">
+
+	 		<div class="ownCommentTestedPhotoInput inline" id ="{[ post.post.pk]}" style="display:none">
+
+	 			<input type="text" class="form-control" value="{[ post.post.fields.ownComment ]}" maxlength="300"> 
+
+	 		</div>
+
+	 	</div>
+
+	 	<!-- Div de foto probada + prendas -->
+
+	 	<div class="row">
+
+		 	<!-- Foto probada -->
+
+		 	<div class="col-md-10">
+
+		 		<a href="{[ urlTestedPhotoUser + post.post.pk ]}">
+
+
+		 			<img class="img-responsive center-block" src="{[ urlMedia + post.post.fields.photo ]}">
+
+		 		</a>
+
+		 	</div>
+
+		 	<!-- Panel que muestra las prendas probadas de la foto -->
+
+		 	<!-- <div class="col-md-2 panel panel-default panelGarments"> -->
+		 	<div class="col-md-2  panelGarments">
+
+		 		<!-- Si es que falla alguna funcionalidad de las prendas borrar panelGarments de arriba y descomentar el de abajo -->
+		 		<!-- <div class="panel-body panelGarments"> -->
+
+		 		<div class="panel-body ">
+
+			 		<!-- Si es que el posteo tiene prendas	 -->
+
+		 			<div ng-if="post.postHasGarments">
+
+		 				<!-- Se itera sobre cada prenda del posteo -->
+
+		 				<div ng-repeat="garment in post.garmentsOfTestedPost">
+
+		 					<!-- Imagen de cada prenda -->
+
+			 				<div class=""> 
+
+			 					<a href="{[ urlGarmentDetails + garment.pk ]}">
+
+			 						<img class ="garmentImgLink" src="{[ urlMedia + garment.fields.photo ]}"> 
+
+			 					</a>
+
+			 				</div>
+
+			 			</div>
+
+		 			</div>
+
+		 			<!-- Si es que posteo no tiene prendas, entonces se muestra mensaje -->
+
+		 			<div ng-if="!post.postHasGarments">
+
+		 				<div> 
+
+		 					{{messageNoGarmentsInPhoto}} 
+
+		 				</div>
+
+		 			</div>
+
+		 		</div>
+
+		 	</div>
+
+	 	</div>
+
+	 	<!-- div para contener al contador y boton de like -->
+	 	
+	 	<div class="row divForLikeCountAndButton">
+	 	
+	 	<!-- Contador de likes -->
+
+		 	<!-- <div class="likeCountOfPost inline" id="likeCountOfTestedPhoto{[ post.post.pk]}"> -->
+
+		 	<div class="likeCountOfPost inline">
+
+		 		<a href="{[ post.urlForRedirectToUsersWhoLikedPost ]}">
+
+			 		<span class="badge" id="likeCountOfTestedPhoto{[ post.post.pk]}">
+
+			 			{[ post.post.fields.likeCount ]}
+
+			 		</span> 
+
+			 	</a>
+
+		 	</div>
+
+
+		<!-- Boton para darle like a la foto-->
+
+		 	<div ng-if="post.dontLikeYet" class="inline likeButton ">
+
+
+		 		<button class = "btn btn-default likePhotoButton" id="{[ post.post.pk ]}"> 
+
+		 			<span class="glyphicon glyphicon-thumbs-up">
+
+		 			</span>
+
+		 		</button>
+
+		 	</div>
+
+		 	<!-- Boton para quitarle like a la foto -->
+
+		 	<div ng-if="!post.dontLikeYet" class="inline likeButton">
+
+		 		<button class = " btn btn-default  dontLikePhotoButton" id ="{[ post.post.pk ]}">
+
+		 			<span class ="glyphicon glyphicon-thumbs-down">
+
+		 			</span>
+
+		 		</button>
+
+		 	</div>
+
+		</div>	
+	 	
+
+	 	<!-- Panel que contiene todos los comentarios del posteo -->
+
+		<div id="divAllComment{[ post.post.pk ]}" class="divForAllCommentsOfPost">
+
+			<!-- Si es que el posteo tiene comentario -->
+
+			<div ng-if="post.postHasComments">
+
+				<!-- Se itera sobre los primeros comentarios permitidos -->
+
+ 				<div ng-repeat="comment in post.comments.slice(0,1)">
+
+ 					<!-- Se utiliza estructura de comentario angular -->
+
+					{% include 'estructurasComunes/angularJS/comentarios/commentStructureAngular.html' %}
+
+ 				</div>
+
+ 				<!-- Si es que el n° de comentario es mayor al permitido se agrega a menu collapse para mostrarse si es qeu el usuario presiona en el boton para mostar mas comentarios -->
+
+				<div ng-if ="post.comments.length > 1" >
+
+					<!-- panel qeu contiene los comentarios que superan el n° maximo de comentarios -->
+
+					<div id="{[ post.hiddenCommentsId ]}" class="row collapse">
+
+						<div ng-repeat = "comment in post.comments.slice(1,post.comments.length)">
+
+							{% include 'estructurasComunes/angularJS/comentarios/commentStructureAngular.html' %}
+
+						</div>
+
+					</div>
+
+				<!-- Boton para mostrar mas comentarios -->
+					<div class="row">
+
+						<button class="btn btn-default " data-toggle="collapse" data-target="#{[ post.hiddenCommentsId ]}"> 
+
+							Ver mas comentarios
+
+						</button>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<!-- Input para agrega comentario al posteo -->
+
+		<div>
+
+			<input id ="{[ post.post.pk ]}" class="form-control commentTextInputOfUserTestedPost" type="text" placeholder ="Escribe un comentario" maxlength="300">
+
+		</div>
+
+ 	</div>
+
+</div> 

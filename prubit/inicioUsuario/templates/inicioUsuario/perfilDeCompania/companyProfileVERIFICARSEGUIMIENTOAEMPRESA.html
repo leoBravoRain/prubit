@@ -1,0 +1,86 @@
+{% extends "comunes/base/base.html" %}
+
+{% load static %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block jsVariables %}
+
+<script type="text/javascript">
+
+	var urlCompanyProfile = "{% url 'inicioUsuario:companyProfile' 0 %}".substring(0,"{% url 'inicioUsuario:companyProfile' 0 %}".length-2);
+	var urlMedia = "{% get_media_prefix %}";
+	var urlGarmentDetails = "{% url 'prendas:garmentDetails' 0%}".substring(0,"{% url 'prendas:garmentDetails' 0%}".length-2);
+	var source = "{{source}}";
+	var companyId = "{{me.id}}";
+	var urlAddFollowUserCompany = "{% url 'miCuenta:addFollowUserCompany' %}";
+	var urlRemoveFollowUserCompany = "{% url 'miCuenta:removeFollowUserCompany' %}";
+	var myId = "{{me.id}}";
+
+</script>
+
+{% endblock jsVariables %}
+
+{% block content %}
+
+	{% include 'estructurasComunes/html/companyProfileStructure.html' %}
+	
+	<div ng-app="posts" ng-controller="postsController">
+
+		<div infinite-scroll="getEndScroll()" infinite-scroll-distance="0" infinite-scroll-disabled="busy">
+			<div id = "photosPanel">
+				<div ng-if="postsList.length>0">
+					<div ng-repeat="post in postsList">
+
+						{% include 'estructurasComunes/angularJS/garmentPostStructureAngular.html' %}
+						
+					</div>
+				</div>
+			</div>
+			<!-- Requerido para el ng-infinteScroll -->
+			<div style='clear: both;'>
+			</div>
+		</div>
+	</div>
+{% endblock content %}
+{% block javascriptCodes %}
+
+	<script type = "text/javascript" src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+
+	</script>
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js">
+
+	</script>
+
+	<script type='text/javascript' src="{% static 'angularJS/comun/aplicacionesConstruidas/ng-infinite-scroll.js' %}">
+
+	</script>
+
+	<script src ="{% static 'angularJS/comun/aplicaciones/postsApp.js' %}">
+
+	</script>
+
+	<script src ="{% static 'angularJS/comun/servicios/commentOfPostsService.js' %}">
+
+	</script>
+	
+	<script src ="{% static 'angularJS/comun/servicios/garmentPostService.js' %}">
+
+	</script>
+
+	<script src ="{% static 'inicioUsuario/angularJS/perfilDeCompania/companyProfileController.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src="{% static 'javascript/comun/commonFunctions.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'inicioUsuario/javascript/perfilDeCompania/companyProfile.js' %}">
+
+	</script>
+	
+{% endblock javascriptCodes %}

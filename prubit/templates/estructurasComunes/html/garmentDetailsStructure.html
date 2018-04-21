@@ -1,0 +1,229 @@
+{% load static %}
+
+<div class ="col-md-12 panel panel-default">
+
+	<div class ="panel-body">
+
+		<!-- Div para contener la imagen y botones asociados
+		 -->
+		<div class="col-md-7 text-center">
+
+			<!-- Imagen -->
+
+			<div>
+
+				<img src="{% get_media_prefix %}{{garment.photo}}">		
+
+			</div>
+
+			<!-- Botones  -->
+
+			{% if source == "user" %}
+
+				<!-- Boton de agregar a cola de probador -->
+
+				<div class="inline"> 
+				
+					<button class="btn btn-default 
+					 inline addDressingRoomStack" id = "{{garment.id}}">
+
+						<span class="glyphicon glyphicon-sunglasses">
+
+						</span>
+
+						Agregar a cola de probador
+
+					</button>
+
+				</div>
+				
+				<!-- Boton para agrega a prenda favorita -->
+
+				<div class="inline"> 
+
+					<!-- Boton para quitar de prenda favorita -->
+
+					{% if isFavorite %}
+
+						<button class="btn btn-default removeFavoriteGarment" id ="{{garment.id}}">
+
+							<span class="glyphicon glyphicon-remove">
+
+							</span>
+
+							Quitar de prendas favoritas
+
+						</button>
+
+					<!-- Boton para agregar a prenda favorita -->
+
+					{% else %}
+
+						<button class="btn btn-default addFavoriteGarment" id ="{{garment.id}}">
+
+							<span class="glyphicon glyphicon-heart">
+
+							</span>
+
+							Agregar a prendas favoritas
+
+						</button> 
+
+					{% endif %}
+
+				</div>
+
+				<!-- Boton para redirigir hacia compra -->
+				
+				<div class="inline">
+
+					<button class="btn btn-default redirectToBuy" id="{{garment.id}}" >
+
+						<span class="glyphicon glyphicon-shopping-cart">
+
+						</span>
+
+						Ir a comprar
+
+					</button>
+
+				</div>
+
+			{% endif %}
+		</div>
+
+		<!-- Div que contiene informacion de prenda -->
+
+		<div class="col-md-5">
+			{% if source == "siteAdministration" %}
+				{% if garment.checkState == "refused" %}
+					{% if garment.refusedText %}
+						<div>
+							<b>
+								{{garment.refusedText}}
+							</b>
+						</div>
+					{% else %}
+						<div>
+							<b>
+								No hay razon especifica
+							</b>
+						</div>
+					{% endif %}
+				{% endif %}
+			{% elif source == "company" %}
+				{% if view == "refused" %}
+					<div>
+						Razon de rechazo:
+					</div>
+					{% if garment.refusedText %}
+						<div>
+							<b>
+								{{garment.refusedText}}
+							</b>
+						</div>
+					{% else %}
+						<div>
+							<b>
+								No hay razon especifica
+							</b>
+						</div>
+					{% endif %}
+				{% endif %}
+			{% endif %}
+			{% if source == "company" %}
+				<div>
+					{% if view == "accepted" %}
+						<button class="btn btn-default" onClick="window.location.assign('{% url 'misPrendasEmpresa:editGarmentCompany' garment.id %}');"> 
+					{% elif view == "toCheck" %}
+						<button class="btn btn-default" onClick="window.location.assign('{% url 	'misPrendasEmpresa:editGarmentCompanyToCheck' garment.id %}');">
+
+					{% elif view == "refused" %}
+
+						<button class="btn btn-default" onClick="window.location.assign('{% url 	'misPrendasEmpresa:editGarmentCompanyRefused' garment.id %}');">
+
+					{% endif %}
+
+							Editar 
+							
+					</button>
+
+					<button class="deleteGarmentCompany btn btn-default" id ="{{garment.id}}">
+
+						Eliminar
+
+					</button>
+
+				</div>
+			{%endif%}
+
+			<!-- Div de nombre de prenda -->
+			<div>
+
+				{% if source == "company" %}
+
+					<a class="name nameGarment" href="{% url 'prendas:garmentDetailsCompany' garment.id view %}">
+
+				{% else %}	
+
+					<a class="name nameGarment" href="{% url 'prendas:garmentDetails' garment.id %}">
+
+				{% endif %}
+
+					{{garment.name}} 
+
+				</a>
+
+			</div>
+
+			<!-- Informacion de prenda -->
+			<div class="col-md-12 bodyLetter">
+				<div>
+					Precio: {{garment.price}}
+				</div>
+				<div>
+					Genero: {{garment.gender}}
+				</div>
+				<div>
+					Talla: {{garment.size}}
+				</div>
+				<div>
+					Dimensiones: {{garment.dimensions}}
+				</div>
+				<div>
+					Observación: {{garment.observation}}
+				</div>
+				{% if source == "siteAdministration" and garment.checkState == "toCheck" %}
+					<div>
+						<button class = "acceptGarment btn btn-default" id="{{garment.id}}">
+							Aceptar Prenda
+						</button>
+					</div>
+					<div>
+						<button class="refuseGarment btn btn-default" id="{{garment.id}}">
+							Rechazar Prenda
+						</button>
+					</div>
+					<div>
+						<input class="refusedText btn btn-default" type="text" placeholder="Razon por rechazo">
+						</input>
+					</div>
+				{% endif %}
+
+				<div>
+					Marca: {{garment.company_trademark.tradeMark.name}}
+				</div>
+				<div>
+					Empresa distribuidora:
+					{% if source == "user" %}
+						<a class = "name companyName" href="{% url 'inicioUsuario:companyProfile' garment.company_trademark.company.id %}">
+					{% elif source == "company" %} 
+						<a class="name companyName" href="{% url 'inicioUsuario:index' %}">
+					{% endif %}
+						{{garment.company_trademark.company.name}}
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

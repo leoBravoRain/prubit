@@ -1,0 +1,52 @@
+{% extends "comunes/base/base.html" %}
+
+{% load static %}
+
+{% block jsVariables %}
+
+	<script>
+
+		urlAddDressingRoomStack = "{{request.get_host}}{% url 'probador:addDressingRoomStack' %}";
+
+		urlAddFavoriteGarment = "{{request.get_host}}{% url 'miCuenta:addFavoriteGarment' %}";
+
+		urlRemoveFavoriteGarment = "{% url 'miCuenta:removeFavoriteGarment' %}";
+
+		// Url para redirigir hacia compra de prenda
+
+		urlRedirectToBuyGarment = "{% url 'inicioEmpresa:redirectToBuyGarment' %}";
+		
+
+	</script>
+
+{% endblock jsVariables %}
+
+{% block content %}
+
+	<div id="garmentPanel" >
+		
+		{% include 'estructurasComunes/html/garmentDetailsStructure.html' with source="user" %}
+
+	</div>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	{{ block.super }}
+
+	<!-- Se carga app de angular que carga las notificaciones -->
+	
+	<script type="text/javascript" src="{% static 'angularJS/comun/aplicaciones/startUpAppsManuallyJust1App.js' %}">
+
+	</script>
+	
+	<script type="text/javascript" src="{% static 'javascript/comun/commonFunctions.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'prendas/javascript/detallesDePrenda/garmentDetails.js' %}">
+
+	</script>
+
+{% endblock javascriptCodes %}

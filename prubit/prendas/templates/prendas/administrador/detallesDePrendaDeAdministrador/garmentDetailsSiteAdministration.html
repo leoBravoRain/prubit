@@ -1,0 +1,48 @@
+{% extends "comunes/base/baseSiteAdministration.html" %}
+
+{% load static %}
+
+{% block title %}
+
+	Prubit
+
+{% endblock title %}
+
+{% block jsVariables %}
+
+<script type="text/javascript">
+
+	var urlAcceptGarment = "{% url 'tareasAdministrador:acceptGarment' 0%}".substring(0,"{% url 'tareasAdministrador:acceptGarment' 0%}".length-2);
+
+	var urlRefuseGarment ="{% url 'tareasAdministrador:refuseGarment' 0%}".substring(0,"{% url 'tareasAdministrador:refuseGarment' 0%}".length-2);
+
+</script>
+
+{% endblock jsVariables %}
+
+{% block content %}
+
+	<div id="garmentPanel">
+
+
+		{% include 'estructurasComunes/html/garmentDetailsStructure.html' with source="siteAdministration" %}
+
+	</div>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	<script type = "text/javascript" src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+
+	</script>
+
+	<script type="text/javascript" src="{% static 'javascript/comun/commonFunctions.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'prendas/javascript/detallesDePrendaAdministrador/garmentDetailsSiteAdministration.js' %}">
+		
+	</script>
+
+{% endblock javascriptCodes %}

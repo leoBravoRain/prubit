@@ -1,0 +1,211 @@
+<div class="post indexPost garmentCompanyPost garmentPostPanel panel panel-default panel-body  col-md-6 col-md-offset-3" id ="{[ post.post.pk ]}">
+
+
+	<!-- Se verifica si es que el usuario logeado es compañia  (si lo es se agrega el menu para edicion de posteo-->
+	<div ng-if = "post.post.isCompany">
+
+		<!-- Se agrega menu lateral desplegable derecho  -->
+		<div class="dropdown right">
+
+			<!-- Se agrega boton para  desplegar el menu-->
+			<button class="dropdown-toggle btn btn-xs" type="button" data-toggle="dropdown">
+
+				<!-- Se icono del menu -->
+				<span class="glyphicon glyphicon-chevron-down">
+
+				</span>
+
+			</button>
+
+			<!-- Opciones de menu desplegable -->
+
+			<ul class = "dropdown-menu">
+
+				<!-- Item de menu desplegable -->
+				
+				<li class = "dropdown-menu-choice-post editOwnCommentOfGarmentCompanyPost" id="{[ post.post.pk ]}"> 
+				
+					Editar comentario 
+
+				</li>
+
+				<!-- item de menu desplegable -->
+
+				<li class = "dropdown-menu-choice-post deleteGarmentCompanyPost" id ="{[ post.post.pk ]}"> 
+
+					Eliminar posteo
+
+				</li>
+
+			</ul>
+
+		</div>
+
+	</div>
+
+	<!-- Nombre de la prenda -->
+
+	<div class="name">
+
+		<a class="nameLink" href="{[ post.post.urlGarmentDetails ]}">		
+
+			{[ post.garment.fields.name ]} 
+
+		</a>
+
+	</div>
+
+	<div class="ownCommentOfGarmentCompanyPost" id="{[ post.post.pk]}">
+
+		{[ post.post.fields.comment ]}
+
+	</div>
+
+	<!-- Input para editar comentario (solo si el dueño del posteo es el usuario logeado) -->
+
+	<div ng-if="post.post.isCompany">
+
+		<div class="editOwnCommentOfGarmentCompanyPostInput inline" id ="{[ post.post.pk]}" style="display:none">
+
+			<input type="text" class="form-control" value="{[ post.post.fields.comment ]}" maxlength="300"> 
+
+		</div>
+
+	</div>
+
+	<!-- Div para la foto de la prenda del posteo -->
+
+	<div class="row">
+
+
+		<a href="{[ post.post.urlRedirectToGarmentCompanyPost ]}">
+
+			<img class="img-responsive center-block garmentImageOfGarmentCompanyPost" src="{[post.post.urlToPhoto ]}" >
+
+		</a>
+
+	</div>
+
+
+	<!-- Div para contener contador y boton de like -->
+
+	<div class="row divForLikeCountAndButton">
+
+		<!-- Contador de likes -->
+
+		<!-- <div id="{[ post.post.idOfDivOfLikeCountOfPost ]}" class = "inline likeCountOfPost"> -->
+		<div class="likeCountOfPost inline">
+
+			<a href="{[ post.urlForRedirectToUsersWhoLikedPost ]}">
+
+				<!-- <span class="badge" > -->
+				<span class="badge" id="likeCountOfGarmentCompanyPost{[ post.post.pk]}">
+
+					{[ post.post.fields.likeCount ]}
+
+				</span> 
+
+			</a>
+			
+		</div>
+
+		<!-- Boton para darle like a la foto -->
+		
+		<div ng-if="post.post.addLikeButton" class="inline likeButton">
+
+			<div ng-if="post.dontLikeYet">
+
+				<button class = " btn btn-default likeGarmentPostCompanyButton" id="{[ post.post.pk ]}"> 
+
+					<span class="glyphicon glyphicon-thumbs-up">
+
+					</span>
+
+				</button>
+
+			</div>
+
+			<div ng-if="!post.dontLikeYet" class="inline likeButton">
+
+				<button class = " btn btn-default dontLikeGarmentPostCompanyButton" id ="{[ post.post.pk ]}">
+
+					<span class ="glyphicon glyphicon-thumbs-down">
+
+					</span>
+
+				</button>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- Nombre de compañia -->
+
+	<div class="name">
+
+		<a class="nameLink" href ="{[ post.post.urlToGarmentCompanyProfile ]}">
+
+			{[ post.company.fields.name ]}
+
+		</a>
+		
+	</div>
+
+	<!-- Comentarios de posteo -->
+
+	<div id="{[ post.post.idOfDivForAllCommentsOfPost ]}" class="divForAllCommentsOfPost">
+
+		<div ng-if="post.postHasComments">
+			
+			<!-- Se itera sobre los primeros comentarios permitidos -->
+			
+			<div ng-repeat="comment in post.comments.slice(0,1)">
+				
+				{% include 'estructurasComunes/angularJS/comentarios/commentStructureAngular.html' %}
+
+			</div>
+
+			<!-- Si es que el n° de comentario es mayor al permitido se agrega a menu collapse para mostrarse si es qeu el usuario presiona en el boton para mostar mas comentarios -->
+
+			<div ng-if ="post.comments.length > 1">
+
+				<!-- panel qeu contiene los comentarios que superan el n° maximo de comentarios -->
+
+				<div id="{[ post.hiddenCommentsId ]}" class="row collapse">
+
+					<div ng-repeat = "comment in post.comments.slice(1,post.comments.length)">
+
+						{% include 'estructurasComunes/angularJS/comentarios/commentStructureAngular.html' %}
+
+					</div>
+					
+				</div>
+
+				<!-- Boton para mostrar mas comentarios -->
+				<div class="row">
+
+					<button class="btn btn-default" data-toggle="collapse" data-target="#{[ post.hiddenCommentsId ]}">
+
+						Ver mas comentarios
+
+					</button>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>	
+
+	<!-- Input para agregar un comentario -->
+
+	<div>
+
+		<input id ="{[ post.post.pk ]}" class="form-control commentTextInputOfGarmentCompanyPost" type="text" placeholder ="Escribe comentario" maxlength="300">
+
+	</div>
+
+</div>

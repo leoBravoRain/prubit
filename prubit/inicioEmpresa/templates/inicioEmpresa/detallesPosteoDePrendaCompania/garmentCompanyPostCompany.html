@@ -1,0 +1,151 @@
+{% extends "comunes/base/base_Company.html" %}
+
+{% load static %}
+
+{% block jsVariables %}
+
+
+<script type="text/javascript">
+
+	var urlForRedirectToUsersWhoLikedPostBase = "{% url 'inicioUsuario:getUsersWhoLikedPost' 0 0 %}".substring(0,"{% url 'inicioUsuario:getUsersWhoLikedPost' 0 0 %}".length-4);
+
+	var urlMyAcceptedGarments = "{% url 'misPrendasEmpresa:myGarmentsCompany' %}";
+
+	var urlGetGarmentIndexPost = "{% url 'inicioEmpresa:getGarmentIndexPost' %}";
+
+	var urlGarmentDetails = "{% url 'prendas:garmentDetailsCompany' 0 0 %}".substring(0,"{% url 'prendas:garmentDetailsCompany' 0 0%}".length-4);
+
+	var urlStatic = "{% get_static_prefix %}";
+
+	var urlMedia = "{% get_media_prefix %}";
+
+	var urlSaveGarmentPostCompany = "{% url 'inicioEmpresa:saveGarmentPostCompany' %}";
+
+	var urlIndex = "{% url 'inicioUsuario:index' %}";
+
+	var companyName = "{{me.name}}";
+
+	var source = "{{source}}";
+
+	// usada para cargar los detalles de la prenda
+
+	var view = "{{view}}";
+
+	// usada para cargar los detalles de la prenda
+	
+	var typeOfUser = "{{typeOfUser}}";
+
+	// Usada para cargar los detalles de la prenda
+
+	var postId = "{{postId}}";
+	
+
+	var myId = "{{me.id}}";
+	
+	// Garment Company Post angular service
+
+	// link para redirigir hacia pantalla qeu solo muestra un posteo de prenda de una compañia
+
+	// ARREGLAR: ya que no esta implementado el ver un solo posteo de compañia
+	
+	var urlGarmentCompanyPost = "{% url 'inicioUsuario:garmentCompanyPost' 0 0 %}".substring(0,"{% url 'inicioUsuario:garmentCompanyPost' 0 0 %}".length-4);
+
+	// Garment company post
+	// Link para agregar un comentario de una compañia en un garment company post
+	var urlAddCommentToGarmentCompanyPost = "{% url 'inicioEmpresa:addCompanyCommentToGarmentCompanyPost' %}";
+
+	var urlEditCommentOfGarmentCompanyPost = "{% url 'inicioEmpresa:editCompanyCommentOfGarmentCompanyPost'%}";
+	
+	var urlDeleteCommentToGarmentCompanyPost = "{% url 'inicioEmpresa:deleteCompanyCommentToGarmentCompanyPost' %}";
+
+	// Agregar like de una compañia a un comentario de un usuario comun a un posteo de prenda de compañia
+	var urlAddLikeToUserCommentToGarmentCompanyPost = "{% url 'inicioEmpresa:addCompanyLikeToUserCommentToGarmentCompanyPost' %}";
+
+	// Agregar like de una compañia a un comentario de una compañia a un posteo de prenda de compañia
+	var urlAddLikeToCompanyCommentToGarmentCompanyPost = "{% url 'inicioEmpresa:addCompanyLikeToCompanyCommentToGarmentCompanyPost' %}";
+
+	// Quitar like de un usuario a un comentario de compañia de un posteo de prenda de compañia
+	var urlRemoveLikeToCompanyCommentToGarmentCompanyPost = "{% url 'inicioEmpresa:removeCompanyLikeToCompanyCommentToGarmentCompanyPost' %}";
+
+	var urlRemoveLikeToUserCommentToGarmentCompanyPost = "{% url 'inicioEmpresa:removeCompanyLikeToUserCommentToGarmentCompanyPost' %}";
+
+</script>
+
+{% endblock jsVariables %}
+
+{% block content %} 
+
+	<!-- App angular para cargar posteos y utilizar el scroll infinito -->
+
+	<div id="divAngularApp" ng-controller="postsController">
+
+		<div infinite-scroll="getEndScroll()" infinite-scroll-distance="0" infinite-scroll-disabled="busy">
+
+			<div id = "photosPanel">
+
+				<div ng-if="postsList.length>0">
+
+					<div ng-repeat="post in postsList">
+
+						{% include 'estructurasComunes/angularJS/garmentPostStructureAngular.html' %}
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+		</div>
+
+	</div>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	{{ block.super }}
+
+	<script type='text/javascript' src="{% static 'angularJS/comun/aplicacionesConstruidas/ng-infinite-scroll.js' %}">
+
+	</script>
+
+	<script src ="{% static 'angularJS/comun/aplicaciones/postsApp.js' %}">
+
+	</script>
+
+	<script src ="{% static 'angularJS/comun/servicios/commentOfPostsService.js' %}">
+
+	</script>
+
+	<script src ="{% static 'angularJS/comun/servicios/garmentPostService.js' %}">
+
+	</script>
+
+	<script src ="{% static 'inicioEmpresa/angularJS/detallesPosteoDePrendaCompania/garmentCompanyPostController.js' %}">
+
+	</script>
+
+	<!-- Se inicializan las diferentes apps de angularjs (ya que no se pueden inicializar aut mas de 1 app en un template)  Se deben inicializar despues de cargar las apps y los controladores asociados-->
+
+	<script type="text/javascript" src="{% static 'angularJS/comun/aplicaciones/startUpAppsManually.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src="{% static 'javascript/comun/commonFunctions.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'javascript/comun/garmentCompanyPostFunctions.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'inicioEmpresa/javascript/index/index_Company.js' %}">
+
+	</script>
+
+{% endblock javascriptCodes %}
+
+
+
+

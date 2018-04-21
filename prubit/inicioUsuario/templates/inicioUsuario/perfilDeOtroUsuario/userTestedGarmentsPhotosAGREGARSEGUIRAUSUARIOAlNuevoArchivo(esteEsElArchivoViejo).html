@@ -1,0 +1,121 @@
+{% extends "comunes/base/base.html" %}
+
+{% load static %}
+
+{% block jsVariables %}
+
+<script>
+
+	var urlLikePhoto = "{{request.get_host}}{% url 'inicioUsuario:photoLike' %}";
+	var urlDontLikePhoto = "{% url 'inicioUsuario:dontLikePhoto' %}";
+	var urlAddComment = "{{request.get_host}}{% url 'inicioUsuario:addComment' %}";
+	var urlDeleteComment = "{{request.get_host}}{% url 'inicioUsuario:deleteComment' %}";
+	var urlEditComment = "{{request.get_host}}{% url 'inicioUsuario:editComment' %}";
+	var urlDeleteTestedGarmentPhoto = "{{request.get_host}}{% url 'inicioUsuario:deleteTestedGarmentPhotoIndex' %}";
+	var urlEditOwnCommentTestedPhoto = "{{request.get_host}}{% url 'inicioUsuario:editOwnCommentTestedPhoto' %}";
+	var urlTestedGarmentsPhotosUser = "{% url 'inicioUsuario:userTestedGarmentsPhotosUser' 0 %}".substring(0,"{% url 'inicioUsuario:userTestedGarmentsPhotosUser' 0 %}".length-2);
+	var urlStatic = "{% get_static_prefix %}";
+	var myId = {{me.id}};
+	var myFullName ="{{me.getFullName}}";
+	var urlGarmentDetails = "{% url 'prendas:garmentDetails' 0 %}".substring(0,"{% url 'prendas:garmentDetails' 0 %}".length-2);
+	var messageNoGarmentsInPhoto="{{messageNoGarmentsInPhoto}}";
+	var userSougthId = "{{userSougth.id}}";
+	var source = "{{source}}";
+	// var urlInvitationFriend = '{% url "inicioUsuario:InvitationFriend" %}';
+	var messageISentInvitation = "{{messageISentInvitation}}";
+	// var urlFollowUser = "{% url 'miCuenta:followUser' %}";
+	// var urlUnfollowUser = "{% url 'miCuenta:unfollowUser' %}";
+	// var urlAcceptInvitation = "{% url 'inicioUsuario:acceptInvitation' %}";
+	var messageFriends = "{{messageFriends}}";
+	// var urlDeleleFriend = "{% url 'miCuenta:deleteFriend' %}";
+	var urlCancelInvitationFriend = "{% url 'miCuenta:cancelInvitationFriend' %}";
+
+	var urlTestedPhotoUser = "{% url 'inicioUsuario:testedPhotoUser' 0 %}".substring(0,"{% url 'inicioUsuario:testedPhotoUser' 0 %}".length-2);
+
+	// Url para cargar imagenes
+	
+	var urlMedia = "{% get_media_prefix %}";
+
+</script>
+{% endblock jsVariables %}
+
+{% block content %}
+
+	<!-- Informacion de perfil de usuario -->
+	{% include 'inicioUsuario/perfilDeOtroUsuario/userProfileStructure.html' %}
+
+	<!-- Fotos probadas de usuario -->
+	
+	<div class="row ">
+
+		<div ng-app="posts" ng-controller="postsController">
+
+			<div infinite-scroll="getEndScroll()" infinite-scroll-distance="0" infinite-scroll-disabled="busy">
+
+				<div id = "photosPanel">
+
+					<div ng-if="postsList.length>0">
+
+						<div ng-repeat="post in postsList">
+
+							{% include 'estructurasComunes/angularJS/testedPost/testedPhotoStructureAngular.html' %}
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- This is required for the ng-infinteScroll -->
+
+				<div style='clear: both;'>
+
+				</div>
+
+			</div>
+
+		</div>
+		
+	</div>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	<script type = "text/javascript" src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+
+	</script>
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js">
+
+	</script>
+
+	<script type='text/javascript' src="{% static 'angularJS/comun/aplicacionesConstruidas/ng-infinite-scroll.js' %}">
+
+	</script>
+
+	<script src ="{% static 'angularJS/comun/aplicaciones/postsApp.js' %}">
+
+	</script>
+
+	<script src ="{% static 'angularJS/comun/servicios/commentOfPostsService.js' %}">
+	
+   	</script>
+
+	<script src ="{% static 'angularJS/comun/servicios/testedPostService.js' %}">
+
+	</script>
+
+	<script src ="{% static 'inicioUsuario/angularJS/perfilDeOtroUsuario/userTestedController.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src="{% static 'javascript/comun/commonFunctions.js' %}">
+
+	</script>
+
+	<script type="text/javascript" src = "{% static 'inicioUsuario/javascript/perfilDeOtroUsuario/userTestedGarmentsPhotos.js' %}">
+
+	</script>
+
+{% endblock javascriptCodes %}

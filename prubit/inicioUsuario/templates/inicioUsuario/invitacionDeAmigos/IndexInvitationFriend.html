@@ -1,0 +1,111 @@
+{% extends "comunes/base/base.html" %}
+
+{% load static %}
+
+{% block jsVariables %}
+
+<script type="text/javascript">
+
+	urlCancelInvitation = "{{reques.get_host}}{% url 'inicioUsuario:cancelInvitation' %}";
+	
+	urlAcceptInvitation = "{{request.get_host}}{% url 'inicioUsuario:acceptInvitation' %}";
+
+	messageNoFriendsInvitation = "{{messageNoFriendsInvitation}}";
+
+</script>
+
+{% endblock jsVariables %}
+
+{% block content %}
+
+	<div id="Parent">
+
+	<!-- Si es que tienen invitacion de amistad -->
+	{% if friendsInvitation %}
+
+		<!-- Se itera sobre cada invitacion de amistad -->
+
+		{% for friendInvitation in friendsInvitation %}
+
+			{% if not friendInvitation.state %}
+
+				<div class ="row container-fluid" id ={{friendInvitation.id}} >
+
+					<div class ="col-md-7 panel panel-default text-center">
+
+						<div class ="panel-body">
+
+							<div class="col-md-12">
+
+								<!-- Link hacia perfil de persona -->
+
+								<p> 
+									<a href="{% url 'inicioUsuario:userTestedGarmentsPhotosUser' friendInvitation.user1.id %}" class="name">
+
+										{{friendInvitation.user1.getFullName}}
+
+									</a>
+
+								</p>
+
+								<!-- Boton para aceptar invitacion -->
+
+								<button class = "acceptInvitation btn btn-default buttonStyle" id="{{friendInvitation.user1.id}}"> 
+
+									Aceptar Amistad 
+
+								</button>
+
+								<!-- Boton para cancelar invitacion -->
+
+								<button class = "cancelInvitation btn btn-default buttonStyle" id="{{friendInvitation.user1.id}}"> 
+
+									Cancelar Amistad 
+
+								</button>
+
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+
+			{% endif %}
+
+		{% endfor %}
+
+	<!-- Si es que no tienen invitacion de amistad -->
+	{% else %}
+
+		<div class="h2"> 	
+
+			{{messageNoFriendsInvitation}}
+
+		</div>
+
+	{% endif %}
+
+	</div>
+
+{% endblock content %}
+
+{% block javascriptCodes %}
+
+	{{ block.super }}
+
+	<!-- Se carga app de angular que carga las notificaciones -->
+	
+	<script type="text/javascript" src="{% static 'angularJS/comun/aplicaciones/startUpAppsManuallyJust1App.js' %}">
+
+	</script>
+	
+	<script type="text/javascript" src="{% static 'javascript/comun/commonFunctions.js' %}">
+
+	</script>
+
+	<script type ="text/javascript" src = "{% static 'inicioUsuario/javascript/invitacionDeAmigos/IndexInvitationFriend.js' %}">
+
+	</script>
+
+{% endblock javascriptCodes %}

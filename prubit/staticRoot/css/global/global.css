@@ -1,0 +1,429 @@
+/* FUENTES DE LETRAS */
+
+@font-face{
+	font-family: firaSansExtraBold;
+    src: url('../../fuentes/FiraSansExtraCondensed-ExtraBold.ttf');
+}
+
+@font-face{
+	font-family: latoItalic;
+    src: url('../../fuentes/Lato-Italic.ttf');
+}
+
+
+/* GENERAL */
+
+/* Color blanco (ejemplo: iconos de barra de navegacion */
+.whiteColor{
+	color: white;
+}
+
+/* Esconder la cruz para cerrar la ventana de dialog de jquery */
+.ui-dialog-titlebar-close {
+    visibility: hidden;
+}
+
+ /* Animacion para aviso de contenido cargando */
+ /* Aparece y desaparece */
+@keyframes desaparer {
+    from {opacity: 1}
+    to {opacity: 0.05}
+}
+
+/* Aviso de contenido cargando*/
+#loadingContent {
+	margin-top: 10px;
+	margin-bottom: 10px;	
+    max-width: 600px;
+    height: "auto";
+    text-align: center;
+} 
+
+/* Preview de imagen de prenda*/
+
+/* Los valores DEBEN cambiarse si se cambian en el archivo constantesGlobalesDeModelos*/
+#garmentImagePreview{
+	max-width: 200px;
+	max-height: 150px;
+	border: 2px solid black;
+}
+
+/* Preview de fotos de perfil y para probar*/
+
+/* Los valores DEBEN cambiarse si se cambian en el archivo constantesGlobalesDeModelos*/
+#userImagePreview{
+	max-width: 600px;
+	max-height: 450px;
+}
+
+/* Contenedor de lista de usuarios. Hace que se muestren en columna*/
+.flex-container-column{
+	display: flex;
+	flex-direction: column;
+}
+
+/* contenedor de prendas en catalogo. Hace que se muestren en filas*/
+.flex-container{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+}
+
+/* Foto de perfil grande*/
+.bigProfilePhoto{
+	max-height: 300px; 
+	max-width: auto; 
+	border-radius: 50%;
+}
+
+/*Se agrega padding*/
+.smallPadding{
+	padding: 10px;
+}
+/*Centrar elemento dentro de su padre  y agregar */
+.centerSmallMargin{
+	margin: 5px auto;
+}
+
+
+/* Numero de paginas en el probador (Se debe hacer por css ya que por bootstrap no se puede y al parecer es que porque tiene metido el ng-repeat dentro del ul (debería ir solamente elementos li y no el ng-repeat)*/
+.paginationInDressingRoom{
+	float: left;
+}
+
+/* letra de cuerpo (como la letra pequeño) */
+.bodyLetter{
+	font-family: latoItalic;
+	color: black;
+}
+
+
+/*Se aplica el mismo estilo anterior (buttonStyle) a todos los botones*/
+.btn{
+	margin: 5px;
+	font-family: latoItalic;	
+}
+
+/* fijar en tope derecho de pantalla */
+.right-top-fixed{
+	position: fixed;
+	right: 20px;
+	top:85px;
+	box-shadow: 5px 5px 5px grey;
+	z-index: 1;
+}
+
+/* Pequeño margen */
+.smallMargin{
+	margin: 5px;
+}
+
+/* para quitar diseño de lista desordenada pro defecto */
+ul {
+  list-style-type: none;
+}
+
+/* Cuerpo de toda la pagina */
+body{
+	background-color: rgba(239, 239, 245,0.3);
+	/*se corre el inicio del body para que se vea la bara de nav*/
+	padding-top:70px;
+}
+
+/* Clase en linea*/
+.inline{
+	display: inline;
+}
+
+ /*agrega una barra lateral para navegar sobre el panel*/
+.scroll-y{
+	overflow-y:scroll;
+}
+
+/* BARRA DE NAVEGACION */
+
+/*items de la barra de navegacion*/
+.itemOfNavBar{
+	color: white;
+	font-family: latoItalic;
+	font-size: 14px;
+}
+
+/* titulo de la pagina */
+#titleOfNavBar{
+	margin-top: 8%;
+	color: white;
+	letter-spacing: 10px;
+	font-family: firaSansExtraBold;
+	transform: scale(1,1.3);
+	/*font-weight: bold;*/
+}
+
+
+
+/* Barra superior de navegacion */
+.nav{
+	/*Color original */
+	/*background-color: black;*/
+	/*background-color: rgb(235,101,255);*/
+	background-color: rgb(156,41,148);
+	/*max-height: 60px;*/
+}
+
+/*Color de barra de navegacion (se coloca para los fondos de los iconos de la barra de navegacion */
+.navBarColor{
+	background-color: rgb(156,41,148);
+}
+
+.searchEngine{
+	margin: 10px;
+	width: 40%;
+	font-family: latoItalic;
+}
+
+/* NOTIFICACIONES */
+
+/* Notificaciones */
+.notification{
+	border-bottom: 1px solid;
+	border-bottom-color: gray;
+	border-width: 2px;
+}
+
+/* POSTEO */
+
+/*posteo de prenda de compañia y foto probada*/
+.testedPost, .garmentCompanyPost{
+	border-color: rgb(208, 213, 225);
+	/*background-color: rgba(239, 239, 245,0.5);*/
+	border-radius: 0.5%;
+}
+
+/*nombre de usuario o nombre de prenda en posteo*/
+.name{
+	font-family: firaSansExtraBold;
+	/*background-color: yellow;*/
+	font-size: 20px;
+ 	transform: scale(1,1.3);
+ 	text-align: center;
+ 	color: black;
+ 	max-width: 100%;
+ 	max-height: auto;
+}
+
+/* Nombre del usuario que contiene link para redirigir hacia perfil */
+.nameLink{
+	color:black;
+ 	letter-spacing: 5px;
+}
+
+/* Al posicionar curso sobre el nombre */
+.nameLink:hover{
+	font-weight: bold;
+	text-decoration: none;
+	color: black;
+}
+
+/* menu para editar/eliminar comentario de foto probada*/
+.dropdown.post{
+	position: absolute;
+	right: 2%;
+	top: 2%;
+}
+
+/* Textos de menu desplegable para editar posteo */
+.editOwnCommentTestedPhoto, .deleteTestedGarmentPhoto, .editCommentOfTestedPhotoPost, .deleteCommentOfTestedPhotoPost, .editCommentOfGarmentCompanyPost, .deleteCommentOfGarmentCompanyPost, .editOwnCommentOfGarmentCompanyPost, .deleteGarmentCompanyPost{
+	margin: 10px;
+	font-family: latoItalic;
+}
+
+/* Textos de menu desplegable para editar posteo al pasar sobre ellos */
+.editOwnCommentTestedPhoto:hover, .deleteTestedGarmentPhoto:hover, .editCommentOfTestedPhotoPost:hover, .deleteCommentOfTestedPhotoPost:hover, .editCommentOfGarmentCompanyPost:hover, .deleteCommentOfGarmentCompanyPost:hover, .editOwnCommentOfGarmentCompanyPost:hover, .deleteGarmentCompanyPost:hover{
+	transform: scale(1.1);
+	cursor: pointer;
+}
+
+/* Imagen de la prenda en foto probada para redirigir hacia prenda*/
+.garmentImgLink{
+	width:50px;
+	height: 50px;
+	margin: 5px;
+}
+
+/* Cuando se pasa sobre imagen de la prenda en foto probada para redirigir hacia prenda*/
+.garmentImgLink:hover{
+	/*escala argumento veces el tamaño real*/
+	transform: scale(1.5);
+}
+
+/* Al posar cursor sobre imagen de prenda de posteo de prenda de compañia */
+.garmentImageOfGarmentCompanyPost{
+	border-radius: 0%;
+	/*Se aumenta el tamaño ya que el maximo tamaño se ve pequeño en el posteo*/
+	width: 50%;
+	height: 50%;
+}
+
+/* Imagen de prenda de posteo de prenda de compañia */
+.garmentImageOfGarmentCompanyPost:hover{
+	transform: scale(1,1.1);
+}
+
+/*div que contiene al contador y el boton de likes */
+.divForLikeCountAndButton{
+	margin: 20px;
+	text-align: center;
+}
+
+/* contador de likes de un posteo*/
+.likeCountOfPost{
+	text-align: center;
+	margin: 5px;
+}
+
+/* boton de like a posteo*/
+.likeButton{
+	text-align: center;
+	margin: 5px;
+}
+
+/* Comentario de un posteo de prenda probada y posteo de prenda de compañia*/
+.ownCommentTestedPhoto, .ownCommentOfGarmentCompanyPost{
+	font-family: latoItalic;
+	font-size: 15px;
+	color: gray;
+	text-align: center;
+	margin-bottom: 15px;
+	display: flex; 
+	flex-wrap: wrap; 
+	justify-content: center;
+}
+
+
+/*COMENTARIOS*/
+
+/* Div que contiene todos los comentarios a un posteo */
+.divForAllCommentsOfPost{
+	padding: 15px;
+	margin: 15px;
+	border-top: solid;
+	border-top-color: rgb(208, 213, 225);
+	border-bottom: solid;
+	border-bottom-color: rgb(208, 213, 225);
+}
+
+/* div que contiene cada comentario*/
+.divOfCommentToPost{
+	margin: 10px;
+}
+
+/*Menu desplegable de cada comentario de posteo */
+.dropdownMenuOfCommentToPost{
+	position: relative;
+}
+
+/* imagenes de perfil de los comentarios */
+.imgProfilePhotoOfCommentToPost{
+	display: block;
+	max-height:60px;
+	width: auto;
+	height: auto;
+	border-radius: 50%;
+}
+
+/* Nombre de usuario de comentario*/
+.commentName{
+	color: rgba(0,0,0,0.8);
+	font-family: firaSansExtraBold;
+}
+
+/* Texto del comentario */
+.commentText{
+	color: gray;
+	font-family: latoItalic;
+}
+/* Input para agregar nuevo comentario a posteo */
+.commentTextInputOfUserTestedPost, .commentTextInputOfGarmentCompanyPost{
+	margin: 10px;
+	font-family: latoItalic;
+}
+
+/* PROBADOR */
+
+/* Cuadro de cargando contenido */
+#loadingAjax{
+	top:0%;
+	left: 0%;
+	background-color: black; 
+	display: none; 
+	width: 100%;
+	height: 100%;
+	position: fixed; 
+	z-index: 1;
+	justify-content: center;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 30px;
+	color: white;
+	font-family: firaSansExtraBold;
+	letter-spacing: 3px;
+	opacity: 0.85;
+	line-height: 1000%; 
+}
+
+/*Texto de cargando contenido*/
+#loadingAjaxText{
+
+	animation-name: desaparer;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+	
+}
+
+/*  Panel que contiene las prendas para que el usuarios las vea (como un catalogo) */
+#PrendasPanelBody{
+	max-width: 300px;
+	max-height: 500px;
+}
+
+/* Columna de filtro y cola de probador */
+.marginForPanels{
+	margin: 10px;
+}
+
+/* Filtro de prendas */
+.itemOfGarmentFilter{
+	/*Se aplica a todos los textos excepto a los que se sobreescriben*/
+	font-family: latoItalic;
+	text-decoration: none;
+	color: black;
+}
+
+/* titulo de las categorias de los filtros de prendas*/
+.filterCategoryTittle{
+	font-family: firaSansExtraBold;
+	font-size: 20px;
+	color: black;
+}
+
+/* Cuando se pasa sobre las categorias de los filtros de prendas*/
+.itemOfGarmentFilter:hover{
+	transform: scale(1.1);
+	cursor: pointer;
+	text-decoration: none;
+	color: black;
+}
+
+/*Cola de probador*/
+#prendasPanelColaBody{
+	max-height: 200px;
+}
+
+/* MINIATURA DE PRENDA*/
+
+/* Div de prenda de miniatura */
+.garmentThumbnail{
+	width: 90%;
+}

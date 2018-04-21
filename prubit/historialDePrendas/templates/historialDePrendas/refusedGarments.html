@@ -1,0 +1,72 @@
+
+{% extends "comunes/base/baseSiteAdministration.html" %}
+
+{% load static %}
+
+{% block title %}
+
+	Pruvit
+
+{% endblock title %}
+
+{% block jsVariables %}
+
+	<script type="text/javascript">
+
+		var trademarkList = {{trademarksListFormat|safe}};
+		var garmentsJson = {{garmentsJson|safe}};
+		var tradeMarksJson = {{trademarksJson|safe}};
+		var companiesJson = {{companiesJson|safe}};
+		var urlStatic = "{% get_static_prefix %}";
+		var urlGarmentDetailsSiteAdministration = "{% url 'prendas:garmentDetailsSiteAdministration' 0 %}".substring(0,"{% url 'prendas:garmentDetailsSiteAdministration' 0 %}".length-2);
+		var currentPageNumber = 1;
+		var urlRefusedGarmentsChangeTrademark = "{% url 'historialDePrendas:refusedGarmentsChangeTrademark' 0 %}".substring(0,"{% url 'historialDePrendas:refusedGarmentsChangeTrademark' 0 %}".length-2);
+
+	</script>
+
+{% endblock jsVariables %}
+
+{% block content %}
+
+	{% include 'estructurasComunes/html/filterGarmentsStructure.html' with source="siteAdministration" view="refusedGarments"%}
+
+	<div class="col-md-10 panel panel-default text-center" id="garmentsPanel">
+		<div class="panel-heading">
+			Prendas rechazadas
+		</div>
+		<div class="panel-body" id="garmentsPanelBody" style="max-height:400px;overflow-y:scroll;">
+			{% if garments.1 %}
+				{% for garment in garments.1 %}
+					{% include 'estructurasComunes/html/garmentThumbnailStructure.html' with source="siteAdministration"%}
+				{% endfor %}
+			{% else %}
+				<div >
+					{{messageNoGarments}}
+				</div>
+				
+			{% endif %}
+		</div>
+			{% include 'estructurasComunes/html/indexOfPagesStructure.html' %}
+	</div>
+{% endblock content %}
+{% block javascriptCodes %}
+
+	<script type = "text/javascript" src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+		
+	</script>
+	
+	<script type="text/javascript" src="{% static 'javascript/comun/commonFunctions.js' %}">
+		
+	</script>
+
+	<script type="text/javascript" src = "{% static 'historialDePrendas/javascript/refusedGarments.js' %}">
+		
+	</script>
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js">
+		
+	</script>
+
+{% endblock javascriptCodes %}
