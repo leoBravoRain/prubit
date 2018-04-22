@@ -10,7 +10,7 @@ $(document).ready(function() {
 	// Se inicializa la api sdk de login de facebook
 	window.fbAsyncInit = function() {
 	  FB.init({
-	    appId      : '838172236391556',
+	    appId      : '170915740276293',
 	    xfbml      : true,
 	    version    : 'v2.12'
 	  });
