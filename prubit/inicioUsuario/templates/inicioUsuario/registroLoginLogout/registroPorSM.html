@@ -21,6 +21,9 @@
 		// Redirigir hacia login inicial
 		var urlLogin = "{% url 'inicioUsuario:login' %}";
 		
+		// Evento de facebook para hacer tracking con pixel de FB
+  		fbq('track', 'CompleteRegistration');
+
 	</script>
 
 {% endblock jsVariables %}
