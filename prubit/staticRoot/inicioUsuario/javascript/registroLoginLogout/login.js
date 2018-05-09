@@ -60,7 +60,7 @@ function loginAPrubit() {
 		  			console.log("Se obtienen respuesta desde server");
 
 		  			console.log(responseAJAX);
-		  			
+
 		  			// Si fue todo correcto
 		  			if(responseAJAX.usuarioExiste && responseAJAX.logueado){
 
@@ -111,7 +111,7 @@ function checkLoginState() {
 
 		console.log("se chequea estado de usuario en app de Prubit en FB");
 
-		consol.log(response);
+		console.log(response);
 
 	    // Si usuario esta logeado en Facebook y en mi app de Facebook
 		if (response.status === 'connected') {
