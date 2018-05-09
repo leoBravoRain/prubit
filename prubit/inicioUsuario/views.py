@@ -2212,6 +2212,8 @@ def login_view(request):
 			# Se intenta logeuar a usuario
 			logueado = autenticarUsuario(email, password, request)
 
+			print logueado
+
 			# Si usuario fue logueado
 			if logueado:
 
@@ -2373,13 +2375,19 @@ def login_view(request):
 # Funcion para logeuar a UserSite
 def autenticarUsuario(email, password, request):
 
+	print "ingresa a autenticarUsuario"
+
 	# funcion para autenticar a usuario
-	user = authenticate(username=email, password=password)
+	user = authenticate(username = email, password=password)
+
+	print user
 
 	#Si es correcto el login 
 	if user is not None:
 
 		if user.is_active:
+
+			print "usuario esta activo"
 
 			login(request,user)
 

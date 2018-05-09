@@ -44,6 +44,8 @@ function loginAPrubit() {
   		// se chequea si se obtiene el email (ya que aveces se puede obtener solo el numero de contacto)
   		if(re.test(String(response.email).toLowerCase())){
 
+  			console.log(response.email);
+  			
 	  		// Se hace llamada AJAX
 		  	$.ajax({
 
