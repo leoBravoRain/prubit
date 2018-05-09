@@ -56,6 +56,9 @@ function loginAPrubit() {
 		  			// Si fue todo correcto
 		  			if(responseAJAX.usuarioExiste && responseAJAX.logueado){
 
+		  				// Mensaje de exito de login
+		  				console.log("success login with FB");
+
 		  				// Se redirige hacia el index
 						location.assign(urlIndex);
 
