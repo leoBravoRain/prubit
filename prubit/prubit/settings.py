@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'django_extensions',
     
-    "sslserver",
+    # "sslserver",
 ]
 
 MIDDLEWARE = [
