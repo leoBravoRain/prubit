@@ -118,3 +118,5 @@ def imageAutorotate(foto):
                     image = image.transpose(rotate_values[orientation])
 
             image.save(foto.path, file_format)
+
+            print "se rota imagen"

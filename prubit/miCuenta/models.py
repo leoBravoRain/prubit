@@ -79,6 +79,7 @@ class ProfilePhoto(models.Model):
 	user = models.ForeignKey(UserSite, on_delete=models.CASCADE)
 	photo = models.ImageField(upload_to='images/profile')
 	currentProfilePhoto = models.BooleanField()
+	
 	def __str__(self):
 		return self.user.firstName
 
