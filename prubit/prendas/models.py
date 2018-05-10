@@ -11,7 +11,7 @@ from django.db.models.signals import pre_delete
 
 from prubit.constantesGlobalesDeModelos import checkGarmentsStatesChoices, canvasWidth, canvasHeight
 
-from prubit.funcionesGlobales import resizePhoto
+from prubit.funcionesGlobales import resizePhoto, imageAutorotate
 
 #  Constantes
 
@@ -45,6 +45,7 @@ class GarmentsToCheck(models.Model):
 	creationDate = models.DateTimeField(auto_now=False,auto_now_add=False)
 	checkState = models.CharField(max_length=12,null=False, choices=checkGarmentsStatesChoices)
 	refusedText = models.CharField(max_length=200,null=True)
+
 	# Se agrega link para redireccionar a pagina de compra de la compania
 	linkToBuyOnCompanySite = models.CharField(max_length = 100,null=True)
 	def __str__(self):
@@ -53,6 +54,19 @@ class GarmentsToCheck(models.Model):
 	def getUniqueName(self):
 		name = self.name + self.creationDate
 		return name
+
+	# Se sobreescribe metodo save
+	def save(self):
+
+		# Se llama al metodo anterior
+		super(GarmentsToCheck, self).save()
+
+		# Se aplica rotacion de la imagen
+		imageAutorotate(self.photo)
+
+		# Se aplica rotacion de imagen secundaria
+		imageAutorotate(self.secondaryPhoto)		
+
 
 @receiver(pre_delete, sender=GarmentsToCheck)
 def mymodel_delete(sender, instance, **kwargs):
@@ -106,6 +120,20 @@ class Garment(models.Model):
 	def resizePhoto(self):
 
 		resizePhoto(self,maxGarmentWidth, maxGarmentHeight, Garment, GarmentsToCheck)
+
+	# Se sobreescribe metodo save
+	def save(self):
+
+		# Se llama al metodo anterior
+		super(Garment, self).save()
+
+		# Se aplica rotacion de la imagen
+		imageAutorotate(self.photo)
+
+		# Se aplica rotacion de la imagen secundaria
+		imageAutorotate(self.secondaryPhoto)
+
+
 
 
 @receiver(pre_delete, sender=Garment)

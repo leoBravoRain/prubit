@@ -16,7 +16,7 @@ from django.conf import settings
 
 from prubit.constantesGlobalesDeModelos import canvasWidth, canvasHeight
 
-from prubit.funcionesGlobales import resizePhoto
+from prubit.funcionesGlobales import resizePhoto, imageAutorotate
 
 
 # Constantes
@@ -54,6 +54,9 @@ class ForTryOnGarmentPhoto(models.Model):
 		# Se aplica resize de la imagen
 		resizePhoto(self, maxForTryPhotoWidth, maxForTryPhotoHeight,Garment, GarmentsToCheck)
 
+		# Se aplica rotacion de imagen si proviene de iOs
+		imageAutorotate(self.photo)
+
 		print 'termina el save method'
 
 
@@ -87,6 +90,8 @@ class ProfilePhoto(models.Model):
 		# Se aplica resize de la imagen
 		resizePhoto(self, maxProfilePhotoWidth, maxProfilePhotoHeight,Garment, GarmentsToCheck)
 
+		# Se aplica rotacion de la imagen
+		imageAutorotate(self.photo)
 
 # Se usa para eliminar archivo al eliminar el registro de la base de datos
 @receiver(pre_delete, sender=ProfilePhoto)

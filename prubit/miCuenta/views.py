@@ -940,14 +940,18 @@ def defineForTryGarmentPhotoCurrent_view(request):
 
 
 
-#Vista utilziada para editar la informacion de perfil del usuario
+# Vista utilziada para editar la informacion de perfil del usuario
 @login_required
 def EditProfile_view(request):
+
 	user = UserSite.objects.get(email__exact=request.user)
+	
 	#Si es que la lalmanda es POST entonces se actualiza la informacion
 	if request.method =="POST":
+
 		#se crea el formulario con los datos envaidos por el usuario
 		form = EditProfileForm(request.POST,user = user)
+
 		#Si es que el formulario es valido se actualizan los datos
 		if form.is_valid():
 
@@ -962,7 +966,9 @@ def EditProfile_view(request):
 				
 			firstSurname = form["firstSurname"]
 			middleSurname = form["middleSurname"]
+
 			#Se actualizan los datos
+
 			user.firstName = firstName
 			user.firstSurname = firstSurname
 			user.middleSurname = middleSurname
@@ -971,13 +977,18 @@ def EditProfile_view(request):
 			
 			#se guardan los cambiso definitamvente
 			user.save()
+
 			#Se agrega un mensaje de exito 
 			messages.add_message(request, messages.SUCCESS, mSuccessEditProfile)
+
 			return redirect(reverse('miCuenta:myProfile'))
+
 		#Si es que no sno validos, se reenvia hacia la misma vista (con peticion get) y se agrega un mensaje de error
 		else:
+
 			messages.add_message(request, messages.SUCCESS, mErrorEditProfile)
 			return redirect(reverse('miCuenta:EditProfile'))
+
 	#Si es que es GET, entonces se envia el formualrio para que actualice la informacion
 	else:
 		#Se crea el formualrio, el cual rquiere el parametro user, utilizado para rellenar inicialmente el formualrio conla finromacion actual del usuario

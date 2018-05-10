@@ -2167,7 +2167,7 @@ def registroPorSM_view(request):
 		password = request.POST["password"]
 
 		# Se crea usuario
-		crearUserSite(email, password,request.POST["firstName"],request.POST["lastName"] , " ", request.POST["gender"])
+		crearUserSite(email, password, request.POST["firstName"], request.POST["lastName"] , " ", request.POST["gender"])
 
 		# Se intenta loguear a usuario
 		logueado = autenticarUsuario(email, password, request)
@@ -2346,9 +2346,7 @@ def login_view(request):
 				else:
 
 					# Se toman todos los campos
-
 					crearUserSite(email,cleaned_data.get('password'),cleaned_data.get('primer_nombre'), cleaned_data.get('primer_apellido'), cleaned_data.get('segundo_apellido'), cleaned_data.get("gender"))
-
 
 					# Se agrega mensaje en pantalla
 					messages.add_message(request, messages.SUCCESS, mSuccessRegisterInPrubit)

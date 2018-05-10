@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.conf import settings
-
 from django.db import models
+from prubit.funcionesGlobales import imageAutorotate
 
 # Parametros
 
@@ -42,6 +41,17 @@ class Company(models.Model):
 	def __str__(self):
 
 		return self.name
+
+
+	# Se sobreescribe metodo save
+	def save(self):
+
+		# Se llama al metodo anterior
+		super(Company, self).save()
+
+		# Se aplica rotacion de la imagen
+		imageAutorotate(self.photo)
+		
 
 # Marcas de empresas
 class TradeMark(models.Model):

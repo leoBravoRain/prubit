@@ -1,18 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.db import models
-
 from usuarios.models import UserSite
-
 from prubit.constantesGlobalesDeModelos import commentLength
-
+from prubit.funcionesGlobales import imageAutorotate
 from django.dispatch.dispatcher import receiver
-
 from django.db.models.signals import pre_delete
-
 from prendas.models import Garment
-
 
 # CONSTANTES
 
@@ -25,6 +19,7 @@ canvasHeight = 450
 # Modelo que almacena un posteo de una foto probada por un usuario
 
 class TestedGarmentPhoto(models.Model):
+
 	photo = models.ImageField(upload_to='images/TestedGarmentPhoto')
 	likeCount = models.IntegerField(default = 0)
 	ownComment = models.CharField(max_length=commentLength, null=True)
@@ -33,6 +28,15 @@ class TestedGarmentPhoto(models.Model):
 
 	def __str__(self):
 		return str(self.id)
+
+	# Se sobreescribe metodo save
+	def save(self):
+
+		# Se llama al metodo anterior
+		super(TestedGarmentPhoto, self).save()
+
+		# Se aplica rotacion de imagen
+		imageAutorotate(self.photo)
 
 # Se usa para eliminar archivo al eliminar el registro de la base de datos
 @receiver(pre_delete, sender=TestedGarmentPhoto)
