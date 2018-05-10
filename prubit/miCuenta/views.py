@@ -847,7 +847,8 @@ def addForTryGarmentPhoto_view(request):
 		if form.is_valid():
 			#Se limpian los datos
 			form = form.cleaned_data
-			photo = form.get("photo")
+			# photo = form.get("photo")
+			photo = form["photo"]
 			me = UserSite.objects.filter(email__exact=request.user)[0]
 			#se crea la foto par probar 
 			photo1 = ForTryOnGarmentPhoto(creationDate = timezone.now(),user=me, photo = photo)

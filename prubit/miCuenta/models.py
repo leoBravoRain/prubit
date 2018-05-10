@@ -88,11 +88,12 @@ class ProfilePhoto(models.Model):
 		# Se llama al metodo anterior
 		super(ProfilePhoto, self).save()
 		
+		# Se aplica rotacion de la imagen
+		imageAutorotate(self.photo)
+		
 		# Se aplica resize de la imagen
 		resizePhoto(self, maxProfilePhotoWidth, maxProfilePhotoHeight,Garment, GarmentsToCheck)
 
-		# Se aplica rotacion de la imagen
-		imageAutorotate(self.photo)
 
 # Se usa para eliminar archivo al eliminar el registro de la base de datos
 @receiver(pre_delete, sender=ProfilePhoto)

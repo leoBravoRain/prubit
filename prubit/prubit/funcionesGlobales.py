@@ -95,8 +95,6 @@ def imageAutorotate(foto):
 
     with Image.open(foto) as image:
 
-        image.show()
-
         file_format = image.format
 
         print file_format
