@@ -29,14 +29,6 @@ class TestedGarmentPhoto(models.Model):
 	def __str__(self):
 		return str(self.id)
 
-	# Se sobreescribe metodo save
-	def save(self):
-
-		# Se llama al metodo anterior
-		super(TestedGarmentPhoto, self).save()
-
-		# Se aplica rotacion de imagen
-		imageAutorotate(self.photo)
 
 # Se usa para eliminar archivo al eliminar el registro de la base de datos
 @receiver(pre_delete, sender=TestedGarmentPhoto)

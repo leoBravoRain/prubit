@@ -55,19 +55,6 @@ class GarmentsToCheck(models.Model):
 		name = self.name + self.creationDate
 		return name
 
-	# Se sobreescribe metodo save
-	def save(self):
-
-		# Se llama al metodo anterior
-		super(GarmentsToCheck, self).save()
-
-		# Se aplica rotacion de la imagen
-		imageAutorotate(self.photo)
-
-		# Se aplica rotacion de imagen secundaria
-		imageAutorotate(self.secondaryPhoto)		
-
-
 @receiver(pre_delete, sender=GarmentsToCheck)
 def mymodel_delete(sender, instance, **kwargs):
     # Pass false so FileField doesn't save the model.
@@ -120,20 +107,6 @@ class Garment(models.Model):
 	def resizePhoto(self):
 
 		resizePhoto(self,maxGarmentWidth, maxGarmentHeight, Garment, GarmentsToCheck)
-
-	# Se sobreescribe metodo save
-	def save(self):
-
-		# Se llama al metodo anterior
-		super(Garment, self).save()
-
-		# Se aplica rotacion de la imagen
-		imageAutorotate(self.photo)
-
-		# Se aplica rotacion de la imagen secundaria
-		imageAutorotate(self.secondaryPhoto)
-
-
 
 
 @receiver(pre_delete, sender=Garment)

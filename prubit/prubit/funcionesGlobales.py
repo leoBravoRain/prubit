@@ -93,29 +93,32 @@ def resizePhoto(self, maxWidth, maxHeight, Garment, GarmentsToCheck):
 # Funcion para rotar imagens si provienen de iOs (ya que por defecto se rotan en PC, pero en cellphones no aparecen rotadas)
 def imageAutorotate(foto):
 
-    with Image.open(foto) as image:
+    # with Image.open(foto) as image:
 
-        file_format = image.format
+    image = Image.open(foto)
 
-        # Se chequea si es JPEG, ya que solo se puede extraer el exif solo desde JPEG (Usando PIL)
-        if file_format == "JPEG":
+    file_format = image.format
 
-            exif = image._getexif()
+    # Se chequea si es JPEG, ya que solo se puede extraer el exif solo desde JPEG (Usando PIL)
+    if file_format == "JPEG":
 
-            # if image has exif data about orientation, let's rotate it
-            orientation_key = 274 # cf ExifTags
+        exif = image._getexif()
 
-            if exif and orientation_key in exif:
-                
-                orientation = exif[orientation_key]
+        # if image has exif data about orientation, let's rotate it
+        orientation_key = 274 # cf ExifTags
 
-                rotate_values = {
-                    3: Image.ROTATE_180,
-                    6: Image.ROTATE_270,
-                    8: Image.ROTATE_90
-                }
+        if exif and orientation_key in exif:
+            
+            orientation = exif[orientation_key]
 
-                if orientation in rotate_values:
+            rotate_values = {
+                3: Image.ROTATE_180,
+                6: Image.ROTATE_270,
+                8: Image.ROTATE_90
+            }
 
-                    image = image.transpose(rotate_values[orientation])
-                    image.save(foto.path, file_format)
+            if orientation in rotate_values:
+
+                image = image.transpose(rotate_values[orientation])
+                image.save(foto.path, file_format)
+
