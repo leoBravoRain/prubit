@@ -100,6 +100,8 @@ def imageAutorotate(foto):
 
         file_format = image.format
 
+        print file_format
+
         # Se chequea si es JPEG, ya que solo se puede extraer el exif solo desde JPEG (Usando PIL)
         if file_format == "JPEG":
 
@@ -120,9 +122,9 @@ def imageAutorotate(foto):
                 }
 
                 if orientation in rotate_values:
+
                     image = image.transpose(rotate_values[orientation])
-                    
-            print "se rota imagen"
+                    print image
 
             image.save(foto.path, file_format)
 
