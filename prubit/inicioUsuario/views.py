@@ -2209,6 +2209,14 @@ def login_view(request):
 			# Se obtiene password de usuario
 			password = user[0].password
 
+			print user
+
+			print email
+
+			print password
+
+			print request
+
 			# Se intenta logeuar a usuario
 			logueado = autenticarUsuario(email, password, request)
 
@@ -2376,6 +2384,10 @@ def login_view(request):
 def autenticarUsuario(email, password, request):
 
 	print "ingresa a autenticarUsuario"
+
+	print email
+
+	print password
 
 	# funcion para autenticar a usuario
 	user = authenticate(username = email, password=password)
