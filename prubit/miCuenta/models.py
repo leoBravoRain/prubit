@@ -51,11 +51,12 @@ class ForTryOnGarmentPhoto(models.Model):
 		# Se sobreescribe metodo anterior
 		super(ForTryOnGarmentPhoto, self).save()
 
+		# Se aplica rotacion de imagen si proviene de iOs
+		imageAutorotate(self.photo)
+		
 		# Se aplica resize de la imagen
 		resizePhoto(self, maxForTryPhotoWidth, maxForTryPhotoHeight,Garment, GarmentsToCheck)
 
-		# Se aplica rotacion de imagen si proviene de iOs
-		imageAutorotate(self.photo)
 
 		print 'termina el save method'
 
