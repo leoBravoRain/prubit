@@ -113,7 +113,10 @@ def imageAutorotate(foto):
             orientation_key = 274 # cf ExifTags
 
             if exif and orientation_key in exif:
+            	
                 orientation = exif[orientation_key]
+
+                print orientation
 
                 rotate_values = {
                     3: Image.ROTATE_180,
