@@ -179,20 +179,9 @@
 			<!-- Informacion de prenda -->
 			<div class="col-md-12 bodyLetter">
 				<div>
-					Precio: {{garment.price}}
-				</div>
-				<div>
 					Genero: {{garment.gender}}
 				</div>
-				<div>
-					Talla: {{garment.size}}
-				</div>
-				<div>
-					Dimensiones: {{garment.dimensions}}
-				</div>
-				<div>
-					Observación: {{garment.observation}}
-				</div>
+				
 				{% if source == "siteAdministration" and garment.checkState == "toCheck" %}
 					<div>
 						<button class = "acceptGarment btn btn-default" id="{{garment.id}}">

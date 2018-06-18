@@ -58,11 +58,13 @@ posts.controller("dressingRoomController",function($scope,addGarmentsOfSpecificP
 	// Funcion que consulta si es que existen nuevos cambios en el garmentStack
 	// Esta funcion se ejecuta cada cierto tiempo (definido al final de la funcion)
 	(function askGarmentsStack(){
-		console.log("consulta");
+
 		//Toma las prendas que actualmente hay en la cola de probador
 		var prendasPanelCola = document.getElementById("prendasPanelColaBody").getElementsByClassName("prendaPanelCola");
+
 		//Se almacenan los id de las prendas actuales de la cola del probador
 		var garmentsIdList = [];
+
 		// Se itera sobre cada prenda para obtener su Id
 		for(var i = 0;i<prendasPanelCola.length;i++){
 			// var garmentId = prendasPanelCola[i].id;
@@ -93,10 +95,16 @@ posts.controller("dressingRoomController",function($scope,addGarmentsOfSpecificP
 		  				var trademark = trademarks[garment.pk][0];
 		  				// Se toma la compañia asociada a la prenda
 		  				var company = companies[garment.pk][0];
+
+		  				// url para redirigir hacia companyProfile (cambia si es user o company)
+		  				var urlForRedirectToCompanyProfile = urlCompanyProfile + company.pk;
+
 		  				// Objetvo para agregarlo a la lista a mostar en template
-		  				var garmentForAddToList =  {"garment":garment,"trademark":trademark,"company":company};
+		  				var garmentForAddToList =  {"garment":garment,"trademark":trademark,"company":company, "urlForRedirectToCompanyProfile": urlForRedirectToCompanyProfile};
+
 		  				// Se agrega el objeto a lista a agregar
 		  				garmentsOfGarmentStackList.push(garmentForAddToList);
+		  				
 	  				}
 	  				// Se agrega la lista a la variable del template que muestra las prendas
 	  				$scope.$apply(function(){
