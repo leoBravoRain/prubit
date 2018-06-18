@@ -5,6 +5,8 @@ posts.service('addGarmentsOfSpecificPageNumberService', function(){
 	// Funcion para agregar las prendas de una determinada pagina
 	// Ademas actualiza el numero de pagina actual
 	this.addGarmentsOfSpecificPageNumber = function (pageNumber){
+
+
 		// Se remueven las prendas anteriores (de clase posts)
 		$(".post").remove();
 		// Se actualiza el numero de pagina (variable global)
@@ -22,8 +24,13 @@ posts.service('addGarmentsOfSpecificPageNumberService', function(){
 			var trademark = trademarksJson[garment.pk][0];
 			// Se obtiene la empresa de la prenda
 			var company = companiesJson[garment.pk][0];
+
+			// url para redirigir hacia companyProfile (cambia si es user o company)
+			var urlForRedirectToCompanyProfile = urlCompanyProfile + company.pk;
+
 			// Se crea objeto a agregar a postsList
-			postObject = {"garment":garment,"trademark":trademark,"company":company};
+			postObject = {"garment":garment,"trademark":trademark,"company":company, "urlForRedirectToCompanyProfile": urlForRedirectToCompanyProfile};
+			
 			// Se agrega el objeto a la lista 
 			postsList.push(postObject);
 		};
