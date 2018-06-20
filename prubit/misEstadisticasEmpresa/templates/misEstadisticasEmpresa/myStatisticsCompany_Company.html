@@ -39,11 +39,11 @@
 
 		<!-- <div ng-controller="myStaticticsController"> -->
 
-			<!-- Contenedor de grafico dibujado desde controlador angularjs usando canvasjs -->
+			<!-- canvas para montar el grafico usando chartjs -->
 
-			<div id="chartContainer" style="height:300px; width:100%;">
+			<canvas id="myChart" >
 				
-			</div>
+			</canvas>
 
 			<button class="btn btn-default numberOfTimessItHasBeenTried buttonStyle">
 
@@ -66,6 +66,7 @@
 		<!-- </div> -->
 
 	</div>
+
 
 {% endblock content %}
 
@@ -91,12 +92,11 @@
 
 	</script>
 	
-	<!-- Se carga libreria canvasjs que dibuja los graficos en pantalla-->
+	<!-- Se carga libreria chartJs que dibuja los graficos en pantalla-->
 
-	<script type ="text/javascript" src="{% static 'misEstadisticasEmpresa/javascript/canvasJs/canvasjs.min.js' %}">
+	<script type ="text/javascript" src="{% static 'misEstadisticasEmpresa/javascript/chartJs/Chart.min.js' %}">
 
 	</script>
-	
-	
+
 {% endblock javascriptCodes %}
 

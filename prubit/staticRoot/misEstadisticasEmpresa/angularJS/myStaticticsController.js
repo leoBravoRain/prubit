@@ -1,8 +1,6 @@
 posts.controller("myStaticticsController",function($scope){
 
-
 	// Se crea grafico inicial
-
 
 	createChart(numberOfTimesItHasBeenTried);
 
@@ -49,6 +47,19 @@ posts.controller("myStaticticsController",function($scope){
 
 	function createChart(typeOfDataToDisplay){
 		
+		// Se chequea si existia un grafico anterior 
+
+		// Se chequea si existe la funcion que actualiza algun grafico
+		if(typeof refreshInterevalId !== "undefined"){
+
+			// Se detiene la funcion que actualiza grafico
+			clearInterval(refreshInterevalId);
+
+			// Se destruye el grafico anterior
+			chart.destroy();
+
+		};
+
 
 		// Se realiza peticion AJAX para obtener datos
 
@@ -70,7 +81,7 @@ posts.controller("myStaticticsController",function($scope){
 
 				// Se crea lista que almacena datos del grafico
 
-				dataPoints = [];
+				var dataPoints = {};
 
 
 				// Se analiza el tipo de dato a mostrar para setear propiedades iniciales del grafico
@@ -142,36 +153,90 @@ posts.controller("myStaticticsController",function($scope){
 
 				assignValuesToDataPoints(garments,valueOfGarmentInChart,dataPoints);
 
-				console.log(dataPoints);
+				// Se toma el canvas en donde se dibujara el grafico
+				var ctx = document.getElementById("myChart");
 
-				// Se crea el objeto asociado al grafico
+				// Se crea el grafico utilizando el ChartJs 
+				chart = new Chart(ctx,{
 
-				var chart = new CanvasJS.Chart("chartContainer",{
-					theme: "theme2",
-					title:{
-						text: chartTitle
+					type: "bar",
+					data: {
+
+						// Se agregan labels de los datos al hacer hover sobre el dato
+						labels: dataPoints["labels"],
+
+						// Se agregan los datos 
+						datasets: [{
+
+							backgroundColor: "rgba(173,18,212,0.4)",
+
+							// Label del x axis
+							label: dataPoints["labelForDatasets"],
+
+							// Datos
+							data: dataPoints["datasets"],
+
+						}],
+
 					},
-					axisY: {
-						title: yAxisTitle,
-						labelFontSize: 16,
-					},
-					data: [{
-						type: "column",
-						indexLabel: "{y}",
-						dataPoints: dataPoints
-					}]
+
+					options: {
+
+						title: {
+
+							display: true,
+							text: chartTitle,
+
+						},
+
+					    // Es responsive
+						responsive: true,
+
+						// duracino de animacion en cambiar los datos a responsive
+						responsiveAnimationDuration: 1000,
+
+						scales: {
+
+							// opciones del ejex x
+							xAxes: [{
+
+						       position: 'bottom',
+
+						       ticks: {
+
+						       		// Se ocultan las etiquetas debido a que si son nombres muy largos se corre todo para poder ajustar el nombre.
+						       		display: false,
+
+						       },
+
+						     }],
+
+							// Opciones del eje y
+							yAxes: [{
+
+						        ticks: {
+
+						          beginAtZero: true,
+
+						          stepSize: 1,
+
+						          scaleIntegersOnly: true,
+
+
+						        }
+
+						    }],
+
+						},
+
+				    },
+
 
 				});
-
-				
-				// Se renderiza el objeto grafico
-
-				chart.render();
 
 
 
 				// ACTUALIZACION DE GRAFICO
-
 
 
 
@@ -209,9 +274,11 @@ posts.controller("myStaticticsController",function($scope){
 							// Se actualizan los datos
 							assignValuesToDataPoints(garments,valueOfGarmentInChart,dataPoints);
 
-							
-							// Se renderiza el grafico con los datos actualizados
-							chart.render();
+							// Se actualiza el grafico con los datos actualizados
+							chart.data.datasets[0].data = dataPoints["datasets"];
+
+							// Se actualiza grafico
+						    chart.update();
 
 						},
 
@@ -223,7 +290,7 @@ posts.controller("myStaticticsController",function($scope){
 
 				// Actualizar periodicamente los datos del grafico
 
-				setInterval(function(){updateChart()}, updateInterval);					
+				refreshInterevalId = setInterval(function(){updateChart()}, updateInterval);					
 
 			},
 		});
@@ -236,35 +303,64 @@ posts.controller("myStaticticsController",function($scope){
 
 	function assignValuesToDataPoints(garments,valueOfGarmentInChart,dataPoints){
 
+		// lista para almacenar las labels  de los datos
+		var labels = [];
+
+		// Lista para almacenar la data asociada a cada label
+		var datasets = [];
 
 		// Se itera sobre cada prenda para crear los datos iniciales 
 
 		for(var i = 0 ; i < garments.length;i++){
 
+			// Se agrega el nombre de la prenda a la lista labels
+			labels[i] = garments[i].fields.name;
 			
-			// Se crea objeto (diccionario) que almacena el nombre y el valor del dato a mostrar en grafico
-
-			// La clave del 2° elemento debe llamarse "y"
+			// Se agrega el dato al datasets, el cual depende del tipo de grafico seleccionado
 
 			if (valueOfGarmentInChart == numberOfTimesItHasBeenTried){
 
-				dataPoints[i] = {label:garments[i].fields.name, y: garments[i].fields.numberOfTimesItHasBeenTried};
+				// dataPoints[i] = {label:garments[i].fields.name, y: garments[i].fields.numberOfTimesItHasBeenTried};
+
+				datasets[i] = garments[i].fields.numberOfTimesItHasBeenTried;
+
+				// Etiqueta usada en el grafico
+				labelForDatasets = "# veces probada";				
 
 			}
 
 			else if (valueOfGarmentInChart == numberOfTimesItHasBeenRedirectedToBuy){
 
-				dataPoints[i] = {label:garments[i].fields.name, y: garments[i].fields.numberOfTimesItHasBeenRedirectedToBuy};
+				// dataPoints[i] = {label:garments[i].fields.name, y: garments[i].fields.numberOfTimesItHasBeenRedirectedToBuy};
+
+				datasets[i] = garments[i].fields.numberOfTimesItHasBeenRedirectedToBuy;
+
+				// Etiqueta usada en el grafico
+				labelForDatasets = "# veces comprada";				
 
 			}
 
 			else if (valueOfGarmentInChart == numberOfTimesItHasBeenPublished){
 
-				dataPoints[i] = {label:garments[i].fields.name, y: garments[i].fields.numberOfTimesItHasBeenPublished};
+				// dataPoints[i] = {label:garments[i].fields.name, y: garments[i].fields.numberOfTimesItHasBeenPublished};
+
+				datasets[i] = garments[i].fields.numberOfTimesItHasBeenPublished;
+
+				// Etiqueta usada en el grafico
+				labelForDatasets = "# veces publicada";				
 
 			};
 
+			// Se crea el objeto dataPoinst para ser usado para graficar. Se utiliza dataPoints ya que se cambio el grafico utilizado (antes se usabaa canvasjs, pero ahora se utiliza charts.js (opensource)), por lo que la estructura es diferente.
+			// Se continua utilizando dataPoints ya que todo lo anterior utiliza esta variable
+			dataPoints["labels"] = labels;
+
+			dataPoints["datasets"] = datasets;
+
+			dataPoints["labelForDatasets"] = labelForDatasets;
+
 		};
+
 	};
 		
 
