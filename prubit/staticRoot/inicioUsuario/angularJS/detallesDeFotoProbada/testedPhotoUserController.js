@@ -255,10 +255,6 @@ posts.controller("postsController",function($scope,testedPost,commentOfPostsServ
 							// Se agrega el comentario al posteo
 							postsList[i].comments.push(comment);
 							
-							// Mensaje en pantalla
-							console.log("Se agrega comenario a posteo %s".replace("%s",postsList[i].post.pk));
-
-
 						});
 
 

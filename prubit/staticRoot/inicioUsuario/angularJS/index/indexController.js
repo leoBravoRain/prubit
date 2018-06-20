@@ -134,7 +134,7 @@ posts.controller("postsController",function($scope,testedPost,garmentPostService
 		if($scope.busy){
 			return;
 		}
-		console.log("end");
+		
 		$scope.busy = true;		
 		var photosPanel = document.getElementById("photosPanel");
 		var testedPost = photosPanel.getElementsByClassName("testedPost");

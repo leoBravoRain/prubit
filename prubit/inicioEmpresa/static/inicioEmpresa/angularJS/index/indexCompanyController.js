@@ -80,8 +80,6 @@ posts.controller("postsController",function($scope,garmentPostService,commentOfP
 			return;
 		};
 
-		console.log("end");
-
 		$scope.busy = true;		
 
 		var photosPanel = document.getElementById("photosPanel");

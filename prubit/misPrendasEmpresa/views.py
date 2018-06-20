@@ -408,8 +408,17 @@ def AddGarmentPhotoCompany_view(request):
 			# Foto principal
 			photo = form["photo"]
 
-			# Foto secundaria
-			secondaryPhoto = form["secondaryPhoto"]
+			# Se chequea si formulario tiene foto secundaria
+			if "secondaryPhoto" in form:
+
+				# Foto secundaria
+				secondaryPhoto = form["secondaryPhoto"]
+
+			# Si no esta en formulario
+			else:
+
+				# Se setea como valor nulo
+				secondaryPhoto = None
 
 			observation=form["observation"]
 			type1 = form["type1"]
@@ -481,8 +490,10 @@ def myToCheckGarments_view(request):
 	request.session["genderMyToCheckGarments"] = "Female"
 	request.session["type1MyToCheckGarments"] = "default"
 	request.session["trademarkMyToCheckGarments"] = "default"
+
 	# Se obtienen las prendas ordendas por paginas
 	context = getContextMyGarmentsCompany(request,"default","Female","default",view=toCheckGarmentState)
+
 	# Se retornan las prendas
 	return render(request,templateMyToCheckGarmentsCompany,context)
 
@@ -509,8 +520,10 @@ def getContextMyGarmentsCompany(request,type1,gender,trademark,view=""):
 	# Se obtienen las prendas a mostrar
 	# Parametro vista corresponde a la fuente desde donde se envia la peticion (ya sea prendas aceptadas, rechazadas, por chequear) 
 	garmentsQuery = getGarmentQuery(type1,gender,trademark,company=True,companyId=me.id,view=view)
+
 	# Se obtienen los id de las marcas asociadas a la compania (usuario actual)
 	companyTrademarksIdsList = map(lambda x: x.tradeMark.id,Company_TradeMark.objects.filter(company__exact=me))
+
 	company = True
 	maxGarmentsPerPage = maxGarmentsPerPageMyGarmentsCompany
 	# Se otbienen las prendas ordenadas por numero de pagina

@@ -22,32 +22,38 @@ maxGarmentHeight = canvasWidth/3
 # MODELOS
 
 class GarmentType(models.Model):
+	
 	type1 = models.CharField(max_length=20)
 
+	# Definir el tipo de prenda
+	def __str__(self):
+
+		return self.type1
 
 class GarmentsToCheck(models.Model):
 
 	name = models.CharField(max_length=50)
-	price = models.CharField(max_length=15)
+	price = models.CharField(max_length=15, blank = True)
 
 	# Se define como foto principal
 	photo = models.ImageField(upload_to= 'images/GarmentsToCheck')
 
 	# Se agrega foto secundaria
-	secondaryPhoto = models.ImageField(upload_to= 'images/GarmentsToCheck', null=True)
+	secondaryPhoto = models.ImageField(upload_to= 'images/GarmentsToCheck', null=True, blank = True)
 
-	observation = models.CharField(max_length= 100, null=True)
+	observation = models.CharField(max_length= 100, null=True, blank = True)
 	type1 = models.ForeignKey(GarmentType, on_delete=models.CASCADE)
 	gender = models.CharField(max_length=12,null=False, choices=GENDER_CHOICE)
-	size = models.CharField(max_length=2,null=True)
+	size = models.CharField(max_length=2,null=True, blank = True)
 	company_trademark = models.ForeignKey(Company_TradeMark, on_delete=models.CASCADE)
-	dimensions = models.CharField(max_length=50,null=True)
+	dimensions = models.CharField(max_length=50,null=True, blank = True)
 	creationDate = models.DateTimeField(auto_now=False,auto_now_add=False)
 	checkState = models.CharField(max_length=12,null=False, choices=checkGarmentsStatesChoices)
-	refusedText = models.CharField(max_length=200,null=True)
+	refusedText = models.CharField(max_length=200,null=True, blank = True)
 
 	# Se agrega link para redireccionar a pagina de compra de la compania
 	linkToBuyOnCompanySite = models.CharField(max_length = 100,null=True)
+
 	def __str__(self):
 		return self.name
 
@@ -65,20 +71,20 @@ class Garment(models.Model):
 	#This has the same definition in forms.py AddPhotoGarmentForm
 
 	name = models.CharField(max_length=50)
-	price = models.CharField(max_length=15)
+	price = models.CharField(max_length=15, blank = True)
 
 	# Imagen principal
 	photo = models.ImageField(upload_to= 'images/Garment')
 
 	# Se agrega foto secundaria
-	secondaryPhoto = models.ImageField(upload_to= 'images/Garment', null=True)
+	secondaryPhoto = models.ImageField(upload_to= 'images/Garment', null=True, blank = True)
 
-	observation = models.CharField(max_length= 100, null=True)
+	observation = models.CharField(max_length= 100, null=True, blank = True)
 	type1 = models.ForeignKey(GarmentType, on_delete=models.CASCADE)
 	gender = models.CharField(max_length=12,null=False, choices=GENDER_CHOICE)
-	size = models.CharField(max_length=2,null=True)
+	size = models.CharField(max_length=2,null=True, blank = True)
 	company_trademark = models.ForeignKey(Company_TradeMark, on_delete=models.CASCADE)
-	dimensions = models.CharField(max_length=50,null=True)
+	dimensions = models.CharField(max_length=50,null=True, blank = True)
 	creationDate = models.DateTimeField(auto_now=False,auto_now_add=False)
 	# Se agrega link para redireccionar a pagina de compra de la compania
 	linkToBuyOnCompanySite = models.CharField(max_length = 100,null=True)

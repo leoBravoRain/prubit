@@ -73,14 +73,16 @@ class EditGarmentForm(forms.Form):
 #This has the same definition in models.py Garment
 class AddPhotoGarmentForm(forms.Form):
 
-	name = forms.CharField(required=False,initial="BORRAR")
-	price = forms.DecimalField(help_text="19,99",required=False,initial=9)
+	name = forms.CharField(required = True, help_text = "Obligatorio")
+
+	price = forms.DecimalField(help_text="Obligatorio",required=True)
 
 	# Foto principal
-	photo = forms.ImageField(required=True,label="Foto", error_messages={'required': "Por favor, agregue una imagen"})
+	photo = forms.ImageField(required=True,label="Foto", error_messages={'required': "Por favor, agregue una imagen"}, help_text = "Obligatorio")
 
 	# Foto principal
-	secondaryPhoto = forms.ImageField(required=False,label="Foto secundaria",help_text="Ponga una foto de la prenda en otra posicion")
+
+	# secondaryPhoto = forms.ImageField(required=False,label="Foto secundaria",help_text="Ponga una foto de la prenda en otra posicion")
 
 	observation = forms.CharField(required=False)
 
@@ -97,14 +99,17 @@ class AddPhotoGarmentForm(forms.Form):
 	# 	initialGarmentType = []
 
 	# type1 = forms.ModelChoiceField(required=False,queryset = GarmentType.objects.all().values_list("type1",flat=True), initial=initialGarmentType)
-	type1 = forms.ModelChoiceField(required=False,queryset = GarmentType.objects.all(), initial=initialGarmentType)
+	type1 = forms.ModelChoiceField(required = True,queryset = GarmentType.objects.all(), initial=initialGarmentType, help_text = "Obligatorio")
 
-	gender = forms.ChoiceField(choices=GENDER_CHOICE,required=False)
+	gender = forms.ChoiceField(choices=GENDER_CHOICE,required=True, help_text = "Obligatorio")
 
-	size = forms.CharField(help_text="max 2",required=False)
+	size = forms.CharField(required=False)
+
 	dimensions = forms.CharField(required=False)
+
 	# Link para dirigir a sitio de compra de la compañia
-	linkToBuyOnCompanySite = forms.CharField(required=False,max_length = 1000,initial="www.pruvit.com (Borrar parte que dice 'http://')",help_text="No colocar http://",label="Link para que cliente pueda comprar la prenda")
+	linkToBuyOnCompanySite = forms.CharField(required=True,max_length = 1000,help_text="Obligatorio. No colocar http://",label="Link para que cliente pueda comprar la prenda")
+
 	# Se obtiene Id para seleccionar las marcas de la compania
 	def __init__(self,*args,**kwargs):
 		myCompany = kwargs.pop("meId")
@@ -112,7 +117,7 @@ class AddPhotoGarmentForm(forms.Form):
 		trademarksList = []
 		choices = [(trademarks[i],trademarks[i]) for i in range(0,len(trademarks))]
 		super(AddPhotoGarmentForm,self).__init__(*args,**kwargs)
-		self.fields["tradeMark"]=forms.ChoiceField(choices=choices)
+		self.fields["tradeMark"]=forms.ChoiceField(choices=choices, help_text = "Obligatorio")
 		# self.fields["photo"].widget.attrs.update({
 		# 	'class': "image"
 		# 	}) #override class to "image" because this is used by the picedit.js
