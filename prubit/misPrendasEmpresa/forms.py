@@ -108,7 +108,7 @@ class AddPhotoGarmentForm(forms.Form):
 	dimensions = forms.CharField(required=False)
 
 	# Link para dirigir a sitio de compra de la compañia
-	linkToBuyOnCompanySite = forms.CharField(required=True,max_length = 1000,help_text="Obligatorio. No colocar http://",label="Link para que cliente pueda comprar la prenda")
+	linkToBuyOnCompanySite = forms.CharField(required=True,max_length = 1000,help_text="Obligatorio. Copiar y pegar link hacia donde se quiere redirigir la compra de la prenda. Ej: 'http://www.prubit.com/miTiendaOnline' ",label="Link para que cliente pueda comprar la prenda")
 
 	# Se obtiene Id para seleccionar las marcas de la compania
 	def __init__(self,*args,**kwargs):

@@ -16,12 +16,15 @@ $(document).ready(function(){
 			data: {garmentId: garmentId},
 			success: function(response){
 
-				// Se redirige
+				// Se toma url para redirigir
+				var linkForRedirectToBuy = response.linkForRedirectToBuy;
 
-				// Si es que no funciona la redireccion probalmente sea por que se requiere agregar "http://" a la direccion
-				// window.location.href = response.linkForRedirectToBuy;
-				// window.open(response.linkForRedirectToBuy);
-				alert("¡ Pronto tendremos disponible la compra !");
+				// Se chequea que url contenga http
+				// Si no tiene http, se agrega al link
+				linkForRedirectToBuy = linkForRedirectToBuy.includes("http") ? linkForRedirectToBuy : "http://" + linkForRedirectToBuy;
+
+				// Se redirige
+				window.open(linkForRedirectToBuy);
 
 			},
 
