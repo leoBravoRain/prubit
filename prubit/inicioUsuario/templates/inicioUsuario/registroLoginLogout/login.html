@@ -25,7 +25,16 @@
 		/*Imagen de fondo*/
 		body {
 
-			background-image: url('{% static "imagenes/fondoLogin.jpg" %}');
+			background: url('{% static "imagenes/fondoLogin.jpg" %}') no-repeat center center fixed;
+
+			background-size: cover;
+			height: 100%;
+			overflow: hidden;
+
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
 
 		}
 
@@ -52,7 +61,7 @@
 
 				</h2>
 
-				<h5 class = "bodyLetter" style="color: white; background-color: rgba(211,211,211,0.5)">
+				<h5 class = "bodyLetter " style="color: white; background-color: rgba(211,211,211,0.0); padding: 3px; " >
 
 					La red social de moda
 					
@@ -81,7 +90,7 @@
 				</form>
  -->
 				<!-- Boton para ingresar con Facebook -->
-				<fb:login-button size = "large" scope="public_profile,email" onlogin="checkLoginState();" data-max-rows="1" style = "margin: 20px;">
+				<fb:login-button size = "large" scope="public_profile,email" onlogin="checkLoginState();" data-max-rows="1" style = "margin: 15px;">
 
 					Ingresar con Facebook
 
