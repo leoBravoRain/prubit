@@ -2209,18 +2209,8 @@ def login_view(request):
 			# Se obtiene password de usuario
 			password = user[0].password
 
-			print user
-
-			print email
-
-			print password
-
-			print request
-
 			# Se intenta logeuar a usuario
 			logueado = autenticarUsuario(email, password, request)
-
-			print logueado
 
 			# Si usuario fue logueado
 			if logueado:
@@ -2381,23 +2371,13 @@ def login_view(request):
 # Funcion para logeuar a UserSite
 def autenticarUsuario(email, password, request):
 
-	print "ingresa a autenticarUsuario"
-
-	print email
-
-	print password
-
 	# funcion para autenticar a usuario
 	user = authenticate(username = email, password=password)
-
-	print user
 
 	#Si es correcto el login 
 	if user is not None:
 
 		if user.is_active:
-
-			print "usuario esta activo"
 
 			login(request,user)
 
@@ -2530,11 +2510,20 @@ def index_view(request):
 				# Variable para definir si es primera vez que usuario se loguea
 				firstTimeLogged = userSite[0].firstTimeLogged
 
-				# Se crea contexto
-				context = {"firstTimeLogged":firstTimeLogged,"typeOfUser":typeOfUserCommonUser,"me":user,"messageNoGarmentsInPhoto":mNoTestedGarments}
+				# Si es primera vez que se loguea, entonces se redirige hacia seccion de agregar prenda para probar
+				if firstTimeLogged:
 
-				# Se renderiza respuesta
-				return render(request,templateIndexUser,context)
+					# Redirigir hacia agregar foto para probarse
+					return redirect(reverse('miCuenta:addForTryGarmentPhoto'))
+
+				# Si es que ya se ha logueado antes
+				else:
+
+					# Se crea contexto
+					context = {"firstTimeLogged":firstTimeLogged,"typeOfUser":typeOfUserCommonUser,"me":user,"messageNoGarmentsInPhoto":mNoTestedGarments}
+
+					# Se renderiza respuesta
+					return render(request,templateIndexUser,context)
 
 		# Si es que no existe el usuario, entonces el usuario es una compañia (modelo Company)
 

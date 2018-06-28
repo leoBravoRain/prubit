@@ -152,8 +152,6 @@ def addDressingRoomStack_view(request):
 				garments = map(int,garments)
 
 
-			print garments
-
 			# Si es que la lista esta vacia
 			if len(garments) == 0:
 
@@ -585,9 +583,8 @@ def dressingRoom_view(request, gender):
 	# Se debe enviar el valor actual y no el valor que posiblemente se actualice despues (en caso de ser True)
 	firstTimeLogged = user.firstTimeLogged
 
-	# Si variable es verdadera
 	if firstTimeLogged:
-
+		
 		# Se cambia valor de variable del usuario a False (ya que se logueo)
 		user.firstTimeLogged = False
 

@@ -28,7 +28,7 @@ class EditProfileForm(forms.Form):
 
 class AddPhotoForTryForm(forms.Form):
 
-	photo = forms.ImageField(required=True,label="Foto", error_messages={'required': "Por favor, agregue una imagen"})
+	photo = forms.ImageField(required=True,label="Selecciona una foto para probarte prendas", error_messages={'required': "Por favor, agregue una imagen"})
 
 	currentForTryPhoto = forms.BooleanField(label = "Definir como foto para probar", required=False, initial=False)
 

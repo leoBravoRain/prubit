@@ -33,8 +33,11 @@ posts.controller("postsController",function($scope,testedPost,garmentPostService
 	// Si es que el usuario es primera vez que se loguea
 	if(firstTimeLogged){
 
+		// Cuerpo del mensaje
+		var message = "<h4 class='name'> ¡ Disfruta de Prubit ! </h4> <p class='bodyLetter'> No olvides buscar a tus amigos en la barrita superior 'Buscar amigos' para compartir tus gustos por la moda </p>";
+
 		// Se crea cuadro de dialogo de ayuda a usuario
-		$("<div class='dialog'> <h4 class='name'> ¡ Bienvenido a Prubit ! </h4> <p class='bodyLetter'> La red social en donde te puedes probar la ropa que tu quieras y compartirla con tus amigos. </p> <p class='bodyLetter'> Para empezar, debes tener una foto para probarte ropa. </p> </div>").dialog({
+		$("<div class='dialog'> " + message + " </div>").dialog({
 			
 			title: '¡ Hola !',
 
