@@ -2231,6 +2231,9 @@ def login_view(request):
 		# Si no existe el usuario, se debe registrar
 		else:
 
+			# Se almacena para tracking de usaurio registrado con FB
+			usuarioRegistradoConFB()
+
 			response = {"usuarioExiste": usuarioExiste}
 
 			return JsonResponse(response)

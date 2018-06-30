@@ -24,7 +24,10 @@ $(document).ready(function(){
 				linkForRedirectToBuy = linkForRedirectToBuy.includes("http") ? linkForRedirectToBuy : "http://" + linkForRedirectToBuy;
 
 				// Se redirige
-				window.open(linkForRedirectToBuy);
+				// Esto abre una neva pestaña. Sin embargo safari lo bloquea por lo que se cambia.
+				// window.open(linkForRedirectToBuy);
+				// Actualiza la misma pagina
+				location.href = linkForRedirectToBuy;
 
 			},
 
