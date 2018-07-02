@@ -2232,7 +2232,7 @@ def login_view(request):
 		else:
 
 			# Se almacena para tracking de usaurio registrado con FB
-			usuarioRegistradoConFB()
+			# usuarioRegistradoConFB()
 
 			response = {"usuarioExiste": usuarioExiste}
 
