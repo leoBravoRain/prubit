@@ -2438,6 +2438,20 @@ def	crearUserSite(email,password,firstName, firstSurname, middleSurname, gender)
 
 		userM.save()
 
+		# Se agrega que usuario siga a leo bravo rain
+		
+		# se chequea que exista el usuario leo bravo
+		usuarioASeguir = UserSite.objects.filter(Q(firstName__exact = "Leo") & Q(firstSurname__exact = "Bravo") & Q(public__exact = True))
+
+		# Si existe usuario 
+		if usuarioASeguir:
+
+			# Se crea relacion para seguir
+			uf0 = UsersFollowing(following = userM, followed = usuarioASeguir[0])
+
+			# Se almacena de forma permantee en BD
+			uf0.save()
+
 
 #Funcion usada por login_view en la cual se crean los formularios de registro y de login y ademas,
 # se agregan mensajes en el caso de que haya algun error con datos en los formularios.

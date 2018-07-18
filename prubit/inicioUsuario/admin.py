@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from usuarios.models import UserSite,Company,siteAdministration, TradeMark,Company_TradeMark
+from usuarios.models import UserSite,Company,siteAdministration, TradeMark,Company_TradeMark, UsersFollowing
 
 from miCuenta.models import ForTryOnGarmentPhoto
 
@@ -29,3 +29,4 @@ admin.site.register(ForTryOnGarmentPhoto)
 admin.site.register(TestedGarmentPhoto)
 admin.site.register(RecuperacionPassword)
 admin.site.register(GarmentCompanyPost)
+admin.site.register(UsersFollowing)
