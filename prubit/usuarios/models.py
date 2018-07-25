@@ -38,6 +38,8 @@ class Company(models.Model):
 
 	photo = models.ImageField(upload_to= 'images/CompanyPhoto',null=True)
 	
+	linkAPaginaPropia = models.CharField(max_length = 1000)
+
 	def __str__(self):
 
 		return self.name

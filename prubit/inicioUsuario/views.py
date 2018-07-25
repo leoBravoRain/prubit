@@ -2438,7 +2438,7 @@ def	crearUserSite(email,password,firstName, firstSurname, middleSurname, gender)
 
 		userM.save()
 
-		# Se agrega que usuario siga a leo bravo rain
+		# Se agrega que usuario siga a leo bravo rain y andrea tapia
 		
 		# se chequea que exista el usuario leo bravo
 		usuarioASeguir = UserSite.objects.filter(Q(firstName__exact = "Leo") & Q(firstSurname__exact = "Bravo") & Q(public__exact = True))
@@ -2451,6 +2451,37 @@ def	crearUserSite(email,password,firstName, firstSurname, middleSurname, gender)
 
 			# Se almacena de forma permantee en BD
 			uf0.save()
+
+		# se chequea que exista el usuario Andrea Tapia
+		usuarioASeguir = UserSite.objects.filter(Q(firstName__exact = "Andrea") & Q(firstSurname__exact = "Tapia") & Q(middleSurname__exact = "Salinas") & Q(public__exact = True))
+
+		print usuarioASeguir
+
+		# Si existe usuario 
+		if usuarioASeguir:
+
+			# Se crea relacion para seguir
+			uf0 = UsersFollowing(following = userM, followed = usuarioASeguir[0])
+
+			# Se almacena de forma permantee en BD
+			uf0.save()		
+
+		# Se agrega que usuario siga a todas las tiendas creadas 
+
+		# Se obtienen todas las compañias
+		companies = Company.objects.all()
+
+		# Si existe alguna company
+		if companies:
+
+			# Se itera sobre cada company
+			for company in companies:
+
+				# Se crea relacion de seguir
+				userFollowingCompany = 	CompanyUserFollowing(user = userM, company = company)		
+
+				# se almacena en la base de datos
+				userFollowingCompany.save()
 
 
 #Funcion usada por login_view en la cual se crean los formularios de registro y de login y ademas,
@@ -2477,9 +2508,12 @@ def loginGenerateEmptyForm(type1,request):
 
 		messages.add_message(request, messages.WARNING, mErrorUncompleteInformation)
 
+	# Se obtienen las imagenes de los logos de las empresas para ser mostradas en el login
+	logosCompanies	= list(map(lambda x: x.photo, Company.objects.all()))
+
 	# Se crea respuesta
 
-	context = {"formLogin": formLogin, "formRegister": formRegister}
+	context = {"formLogin": formLogin, "formRegister": formRegister, "logosCompanies": logosCompanies}
 
 	return {"template": template,"context":context}
 

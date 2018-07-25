@@ -156,7 +156,7 @@
 
 			<!-- Div para registro de usuario -->
 
-		<!-- 	<div>
+			<!-- <div>
 
 				<div class="register-form">
 
@@ -285,6 +285,53 @@
 				</div> -->
 
 			<!-- </div> -->
+
+
+			<!-- Galeria de imagenes de marcas en Prubit -->
+
+			<div style="margin-top: 30px;">
+
+				<h4 class = "bodyLetter " style="text-align: center; color: white; background-color: rgba(63,178,0,0.3); padding: 10px; color: rgba(255,255,255,0.8); border-radius: 10%;" >
+
+					Marcas en Prubit
+					
+				</h4>
+				
+
+				<!-- Galeria de imagenes (carousel with bootstrap) -->
+				<div id = "myCarousel" class = "carousel slide" data-ride = "carousel">
+					
+					<!-- Wrapper para imagenes -->
+					<div class = "carousel-inner">
+
+
+						{% for logo in logosCompanies %}
+
+							<!-- Si es el primer elemento -->
+							{% if forloop.first %}
+
+								<!-- Se necesita que el primero diga item active -->
+								<div class = "item active">
+									
+							<!-- Si no es el primer elemento -->
+							{% else %}
+
+								<!-- Cada imagen -->
+								<div class = "item">
+
+							{% endif %}
+
+								<img src="{{ logo.url }}" class = "img-responsive center-block thumbnail" style="opacity: 0.75; border-radius: 10%; max-height: 60px; width: auto;">
+
+							</div>
+
+						{% endfor %}
+
+					</div>
+
+				</div>
+
+			</div>
 
 		</div>
 
